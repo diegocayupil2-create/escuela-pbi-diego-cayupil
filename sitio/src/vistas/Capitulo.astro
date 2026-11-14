@@ -1,0 +1,118 @@
+---
+// Capítulo: para qué sirve, requisitos, micro-lecciones, prácticas, tarjetas y fuentes.
+import Base from '../layouts/Base.astro';
+import Icono from '../components/Icono.astro';
+import Fuentes from '../components/Fuentes.astro';
+import Tarjetas from '../components/Tarjetas.astro';
+import { TEXTOS, t } from '../lib/textos.mjs';
+import { rutaRelativa } from '../lib/enlaces.mjs';
+import { reemplazarClaves } from '../lib/formato.mjs';
+import { cargarContenido, datosNavegador, jsonEnHtml, valoresDe } from '../lib/contenido.mjs';
+
+const { lang, actual, alterno, cap: id } = Astro.props;
+const T = TEXTOS[lang];
+const BASE = import.meta.env.BASE_URL;
+const contenido = await cargarContenido();
+const cap = contenido.porId.get(id);
+const nivel = contenido.curriculo.niveles.find((n) => n.id === cap.nivel);
+const lecciones = cap.lecciones[lang];
+const estadoFuncion = T.estadoFuncion[cap.estado];
+const { capitulos, textos } = datosNavegador(contenido, lang);
+const datos = { id, capitulos: capitulos.map(({ id, nivel, requiere }) => ({ id, nivel, requiere })), textos };
+const url = (tipo, extra = {}) => `${BASE}${rutaRelativa(lang, tipo, { cap: id, ...extra })}`;
+---
+<Base lang={lang} titulo={`${cap.num} · ${cap.titulo[lang]}`} descripcion={cap.resumen[lang]} actual={actual} alterno={alterno} seccion="mapa">
+  <a class="volver" href={`${BASE}${rutaRelativa(lang, 'mapa')}`}><Icono nombre="atras" />{T.volverMapa}</a>
+  <header class="cabeza-capitulo">
+    <span class="num-cap num-grande">{cap.num}</span>
+    <div>
+      <p class="sobretitulo">{T.nivel} {cap.nivel} · {nivel.nombre[lang]}</p>
+      <h1>{cap.titulo[lang]}</h1>
+    </div>
+  </header>
+  <p class="intro">{cap.resumen[lang]}</p>
+  <div class="fila-estado">
+    <span class="estado" data-estado-texto></span>
+    {estadoFuncion && <span class="chip">{estadoFuncion}</span>}
+  </div>
+  {cap.nota_estado && <p class="nota">{cap.nota_estado[lang]}</p>}
+
+  <div class="elegir">
+    <button type="button" class="boton" data-elegir><Icono nombre="aqui" /><span>{T.capituloPagina.elegir}</span></button>
+    <p class="nota" data-no-disponible hidden>
+      {T.capituloPagina.noDisponible} <a href={`${BASE}${rutaRelativa(lang, 'mapa')}`}>{T.hoy.cambiar}</a>
+    </p>
+  </div>
+
+  {cap.requiere.length > 0 && (
+    <section aria-labelledby="req">
+      <h2 id="req" class="h-chica">{T.capituloPagina.requisitos}</h2>
+      <ul class="chips">
+        {cap.requiere.map((r) => {
+          const req = contenido.porId.get(r);
+          return <li><a class="chip chip-enlace" href={`${BASE}${rutaRelativa(lang, 'capitulo', { cap: r })}`}>{req.num} · {req.titulo[lang]}</a></li>;
+        })}
+      </ul>
+    </section>
+  )}
+
+  {cap.competencias.length > 0 && (
+    <section aria-labelledby="comp">
+      <h2 id="comp" class="h-chica">{T.capituloPagina.competencias}</h2>
+      <ul class="lista-simple">{cap.competencias.map((k) => <li>{k[lang]}</li>)}</ul>
+    </section>
+  )}
+
+  {lecciones.length === 0 && cap.practicas.length === 0 && <p class="aviso-vacio">{T.capituloPagina.sinContenido}</p>}
+
+  {lecciones.length > 0 && (
+    <section aria-labelledby="lec">
+      <h2 id="lec" class="h-chica">{T.capituloPagina.lecciones}</h2>
+      <ol class="lista-items">
+        {lecciones.map((l, i) => (
+          <li>
+            <a class="item" href={url('leccion', { id: l.data.id })}>
+              <span class="item-num">{i + 1}</span>
+              <span class="item-titulo">{l.data.titulo}</span>
+              <span class="item-min"><Icono nombre="reloj" />{l.data.minutos} {T.min}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )}
+
+  {cap.practicas.length > 0 && (
+    <section aria-labelledby="pra">
+      <h2 id="pra" class="h-chica">{T.capituloPagina.practicas}</h2>
+      <ol class="lista-items">
+        {cap.practicas.map((p, i) => (
+          <li>
+            <a class="item" href={url('practica', { id: p.id })}>
+              <span class="item-num item-num-practica"><Icono nombre="practica" /></span>
+              <span class="item-titulo">{reemplazarClaves(p.titulo[lang], valoresDe(p, contenido.respuestas), lang)}</span>
+              <span class="item-min"><Icono nombre="reloj" />{p.minutos} {T.min}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )}
+
+  {cap.tarjetas.length > 0 && (
+    <section aria-labelledby="tar">
+      <h2 id="tar" class="h-chica">{T.capituloPagina.tarjetas} · {cap.tarjetas.length}</h2>
+      <Tarjetas tarjetas={cap.tarjetas} lang={lang} />
+    </section>
+  )}
+
+  {cap.cierre && <p class="nota">{t(T.capituloPagina.cierre, { n: cap.cierre.preguntas.length, p: cap.cierre.aprobar_con })}</p>}
+
+  <Fuentes fuentes={cap.fuentes} lang={lang} titulo={T.capituloPagina.fuentes} />
+
+  <script type="application/json" id="datos-capitulo" set:html={jsonEnHtml(datos)}></script>
+  <script>
+    import { iniciarCapitulo } from '../lib/cliente/capitulo-vista.mjs';
+    iniciarCapitulo();
+  </script>
+</Base>

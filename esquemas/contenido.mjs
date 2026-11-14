@@ -282,3 +282,48 @@ export const deprecados = z
       .min(1),
   })
   .strict();
+
+// Respuestas de un dataset (datos/datasets/<nombre>/respuestas.json): una clave por práctica.
+export const respuestas = z
+  .object({ dataset: z.string().regex(/^[a-z0-9-]+$/), semilla: z.number().int() })
+  .catchall(z.record(z.string(), z.unknown()));
+
+// Semana tipo: el día decide el tipo de práctica; el capítulo en que vas decide el contenido.
+export const temaDia = z.enum([
+  'dax-modelado', 'storytelling', 'rendimiento', 'caso-negocio', 'novedad', 'reto-portafolio', 'repaso-retro',
+]);
+
+// Plan de la semana: lo genera la IA el domingo (fase 5) en contenido/semanas/<fecha del lunes>.yaml.
+// «Hoy» lo lee según la fecha de Chile; si no hay plan, muestra el siguiente paso de la ruta.
+export const semana = z
+  .object({
+    lunes: fecha,
+    generado: fecha,
+    dias: z
+      .array(
+        z
+          .object({
+            fecha,
+            tema: temaDia,
+            leccion: z.string().regex(/^c\d{2}-l\d{2}$/).nullable(),
+            practica: z.string().regex(/^c\d{2}-p\d{2}$/).nullable(),
+            repaso: z.array(z.string().regex(/^c\d{2}-t\d{2}$/)),
+            nota: bilingue.optional(),
+          })
+          .strict(),
+      )
+      .min(1)
+      .max(7),
+  })
+  .strict()
+  .refine((s) => new Set(s.dias.map((d) => d.fecha)).size === s.dias.length, 'hay días repetidos en el plan');
+
+// Última corrida de cada automatización (datos/automatizacion.json). La escriben los workflows desde la fase 4.
+// «Hoy» avisa si la más reciente tiene más de 2 días.
+export const automatizacion = z
+  .object({
+    corridas: z
+      .record(z.string().regex(/^[a-z0-9-]+$/), z.iso.datetime({ offset: true }))
+      .refine((c) => Object.keys(c).length > 0, 'falta al menos una corrida'),
+  })
+  .strict();

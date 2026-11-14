@@ -1,0 +1,89 @@
+---
+// Marco de todas las páginas: encabezado con Hoy y Mapa, botón ES/EN, tema claro u oscuro y modo sin conexión.
+import Icono from '../components/Icono.astro';
+import { TEXTOS, fechaCorta } from '../lib/textos.mjs';
+import { cssPaleta, PALETA } from '../lib/paleta.mjs';
+import { REPO, rutaRelativa } from '../lib/enlaces.mjs';
+import { fechaChile } from '../lib/hoy.mjs';
+import '../estilos/global.css';
+
+const { lang, titulo, descripcion, actual, alterno, seccion = null } = Astro.props;
+const T = TEXTOS[lang];
+const BASE = import.meta.env.BASE_URL;
+const enlaceIdioma = { es: lang === 'es' ? actual : alterno, en: lang === 'en' ? actual : alterno };
+const compilado = fechaChile();
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{titulo ? `${titulo} · ${T.marca}` : T.marcaLarga}</title>
+    <meta name="description" content={descripcion ?? T.descripcion} />
+    <meta name="robots" content="noindex" />
+    <link rel="manifest" href={`${BASE}manifest.webmanifest`} />
+    <link rel="icon" href={`${BASE}favicon.svg`} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={`${BASE}iconos/apple-touch-icon.png`} />
+    <meta name="apple-mobile-web-app-title" content={T.marca} />
+    <meta name="theme-color" content={PALETA.claro.fondo} media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content={PALETA.oscuro.fondo} media="(prefers-color-scheme: dark)" />
+    <link rel="alternate" hreflang="es" href={`${BASE}${enlaceIdioma.es}`} />
+    <link rel="alternate" hreflang="en" href={`${BASE}${enlaceIdioma.en}`} />
+    <style is:inline set:html={cssPaleta()}></style>
+    <script is:inline>
+      // Tema antes de pintar, para que no parpadee.
+      try {
+        var t = localStorage.getItem('escuela.tema') || 'sistema';
+        var o = t === 'oscuro' || (t === 'sistema' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.tema = o ? 'oscuro' : 'claro';
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <a class="saltar" href="#contenido">{T.saltar}</a>
+    <header class="barra">
+      <a class="marca" href={`${BASE}${rutaRelativa(lang, 'hoy')}`}>
+        <Icono nombre="marca" clase="icono marca-icono" /><span>{T.marca}</span>
+      </a>
+      <nav class="pestanas" aria-label={T.marca}>
+        <a href={`${BASE}${rutaRelativa(lang, 'hoy')}`} aria-current={seccion === 'hoy' ? 'page' : undefined}>
+          <Icono nombre="hoy" /><span>{T.nav.hoy}</span>
+        </a>
+        <a href={`${BASE}${rutaRelativa(lang, 'mapa')}`} aria-current={seccion === 'mapa' ? 'page' : undefined}>
+          <Icono nombre="mapa" /><span>{T.nav.mapa}</span>
+        </a>
+      </nav>
+      <div class="ajustes">
+        <div class="idiomas" role="group" aria-label={T.idioma.boton}>
+          <a href={`${BASE}${enlaceIdioma.es}`} hreflang="es" lang="es" aria-label={T.idioma.es} aria-current={lang === 'es' ? 'true' : undefined}>ES</a>
+          <a href={`${BASE}${enlaceIdioma.en}`} hreflang="en" lang="en" aria-label={T.idioma.en} aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+        </div>
+        <button
+          type="button"
+          class="boton-icono"
+          data-boton-tema
+          aria-label={T.tema.boton}
+          title={T.tema.boton}
+          data-texto-sistema={T.tema.sistema}
+          data-texto-claro={T.tema.claro}
+          data-texto-oscuro={T.tema.oscuro}
+        >
+          <Icono nombre="tema" />
+        </button>
+      </div>
+    </header>
+    <main id="contenido" class="contenido">
+      <slot />
+    </main>
+    <footer class="pie">
+      <span>{T.marcaLarga}</span>
+      <span aria-hidden="true">·</span>
+      <a href={REPO}>GitHub</a>
+      <span aria-hidden="true">·</span>
+      <span>{fechaCorta(compilado, lang)}</span>
+    </footer>
+    <script>
+      import '../lib/cliente/base.mjs';
+    </script>
+  </body>
+</html>

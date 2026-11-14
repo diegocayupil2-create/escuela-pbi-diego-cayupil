@@ -2,7 +2,7 @@
 
 Escuela diaria de Power BI y storytelling para Diego: una web instalable (GitHub Pages) que cada día le da el siguiente paso de su ruta por capítulos, un radar de lo más valorado de la comunidad y una mejora pequeña del propio sitio. La propuesta aprobada está en `docs/propuesta-fase-0.md`: léela antes de cambiar la arquitectura.
 
-Estado: fase 1 de 9 (repo, reglas, comandos, subagentes, fuentes y currículo v1).
+Estado: fase 2 de 9. Ya están el repo, las reglas, el currículo v1 y el sitio publicado e instalable («Hoy», mapa, tres modos, lecciones y prácticas en ES/EN).
 
 ## Idioma
 - Todo en español. Los términos técnicos van como aparecen en el producto, en inglés: measure, fact table, filter context, field parameters.
@@ -48,7 +48,10 @@ Estado: fase 1 de 9 (repo, reglas, comandos, subagentes, fuentes y currículo v1
 - `contenido/capitulos/cNN-nombre/`: `lecciones/*.es.md` y `*.en.md`, `practicas/*.yaml`, `tarjetas.yaml` y `cierre.yaml`.
 - `contenido/fuentes.yaml`, `biblioteca.yaml`, `retos.yaml`, `excluidos.yaml` y `deprecados.yaml`.
 - `datos/datasets/<nombre>/`: CSV chicos (menos de 5 MB) generados con semilla fija por `scripts/generar_dataset.py`, más `respuestas.json` para corregir.
-- `esquemas/contenido.mjs`: reglas de formato de todo el contenido (las usará también el sitio).
+- `contenido/semanas/<lunes>.yaml`: plan de la semana (lo escribe la IA desde la fase 5). «Hoy» lo usa según la fecha de Chile; si no hay plan, muestra el siguiente paso de la ruta.
+- `datos/automatizacion.json`: última corrida de cada automatización (desde la fase 4). «Hoy» avisa si la más reciente tiene más de 2 días.
+- `esquemas/contenido.mjs`: reglas de formato de todo el contenido; las usan las pruebas y las colecciones de Astro (la misma copia de zod 4).
+- `sitio/`: Astro estático en GitHub Pages (`publicar.yml`). Lógica pura en `sitio/src/lib/` (la prueban los tests); textos de la interfaz en `textos.mjs`; colores de la identidad A · Pizarra en `paleta.mjs`. Modo, capítulo elegido, idioma y tema viven en `localStorage` hasta la fase 3.
 - `tests/`: `npm test` corre las pruebas de Node y de Python.
 - `trabajos/`: los PBIP de Diego, ignorados por Git.
 
@@ -58,7 +61,9 @@ Estado: fase 1 de 9 (repo, reglas, comandos, subagentes, fuentes y currículo v1
 - En los textos de las prácticas, los números que salen del dataset van como `{{clave}}` de `respuestas.json`; dentro del código DAX van escritos.
 - Python con la librería estándar, más PyYAML cuando haga falta leer YAML. Node solo para el sitio y las pruebas del contenido.
 - Workflows: comentados en español, a minutos raros (`:17`, `:37`), con `timezone: America/Santiago`, `workflow_dispatch`, `concurrency`, `timeout-minutes` y commit solo si cambió algo. Respetan la variable `ESCUELA_PAUSA`.
-- Antes de cada commit, `npm test` en verde.
+- Antes de cada commit, `npm test` en verde: incluye compilar el sitio y revisar sus links.
+- Sitio: «sí» en verde y «no» en rojo, siempre con ✓ o ✕ y texto. Imagen antes que texto: un ícono por bloque y lo importante arriba.
+- `npm run sitio` levanta el sitio en http://localhost:4321/escuela-pbi-diego-cayupil/ con la telemetría de Astro apagada.
 
 ## IA automática (desde la fase 5)
 - Una corrida diaria chica (Sonnet 5.5) y una grande el domingo (Opus 5.5, esfuerzo medio), con `--max-turns` y `timeout-minutes`.

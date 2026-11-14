@@ -1,0 +1,6 @@
+---
+// Ícono de línea por nombre (ver src/lib/iconos.mjs). Decorativo: el texto de al lado dice lo que significa.
+import { ICONOS } from '../lib/iconos.mjs';
+const { nombre, clase = 'icono' } = Astro.props;
+---
+<svg class={clase} viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ICONOS[nombre]} />

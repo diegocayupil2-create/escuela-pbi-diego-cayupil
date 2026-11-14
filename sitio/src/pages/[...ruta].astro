@@ -1,0 +1,40 @@
+---
+// Todas las páginas en los dos idiomas: Hoy, Mapa, capítulos, lecciones y prácticas.
+// Las rutas salen de src/lib/enlaces.mjs, así el botón ES/EN siempre apunta a la misma página en el otro idioma.
+import { IDIOMAS, otroIdioma, rutaRelativa } from '../lib/enlaces.mjs';
+import { cargarContenido } from '../lib/contenido.mjs';
+import Hoy from '../vistas/Hoy.astro';
+import Mapa from '../vistas/Mapa.astro';
+import Capitulo from '../vistas/Capitulo.astro';
+import Leccion from '../vistas/Leccion.astro';
+import Practica from '../vistas/Practica.astro';
+
+export async function getStaticPaths() {
+  const { capitulos } = await cargarContenido();
+  const paginas = [];
+  const agregar = (tipo, ids = {}) => {
+    for (const lang of IDIOMAS) {
+      const actual = rutaRelativa(lang, tipo, ids);
+      paginas.push({
+        params: { ruta: actual.replace(/\/$/, '') },
+        props: { tipo, lang, actual, alterno: rutaRelativa(otroIdioma(lang), tipo, ids), ...ids },
+      });
+    }
+  };
+  agregar('hoy');
+  agregar('mapa');
+  for (const c of capitulos) {
+    agregar('capitulo', { cap: c.id });
+    for (const l of c.lecciones.es) agregar('leccion', { cap: c.id, id: l.data.id });
+    for (const p of c.practicas) agregar('practica', { cap: c.id, id: p.id });
+  }
+  return paginas;
+}
+
+const props = Astro.props;
+---
+{props.tipo === 'hoy' && <Hoy {...props} />}
+{props.tipo === 'mapa' && <Mapa {...props} />}
+{props.tipo === 'capitulo' && <Capitulo {...props} />}
+{props.tipo === 'leccion' && <Leccion {...props} />}
+{props.tipo === 'practica' && <Practica {...props} />}

@@ -1,0 +1,22 @@
+---
+// Fuentes con su nivel (A, B o C), link y fecha de consulta.
+import { TEXTOS, t, fechaCorta } from '../lib/textos.mjs';
+const { fuentes, lang, titulo } = Astro.props;
+const T = TEXTOS[lang];
+---
+{fuentes.length > 0 && (
+  <section class="fuentes" aria-label={titulo ?? T.fuentes.titulo}>
+    <h2 class="h-chica">{titulo ?? T.fuentes.titulo}</h2>
+    <ul>
+      {fuentes.map((f) => (
+        <li>
+          <span class:list={['nivel-fuente', `nivel-${f.nivel}`]} title={T.fuentes.niveles[f.nivel]}>{f.nivel}</span>
+          <span>
+            {f.url ? <a href={f.url} rel="noopener">{f.titulo}</a> : <span>{f.titulo}</span>}
+            <span class="fuente-fecha">{t(T.fuentes.consultado, { f: fechaCorta(f.consultado, lang) })}</span>
+          </span>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

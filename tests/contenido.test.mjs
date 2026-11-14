@@ -104,6 +104,34 @@ test('retos y excluidos tienen el formato correcto', () => {
   validar(E.excluidos, leerYaml('contenido', 'excluidos.yaml'), 'excluidos.yaml');
 });
 
+test('los planes de la semana (si hay) cumplen el formato y apuntan a contenido que existe', () => {
+  const dir = ruta('contenido', 'semanas');
+  const planes = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.yaml')) : [];
+  if (!planes.length) return;
+  const ids = new Set();
+  for (const c of curriculo.capitulos.filter((x) => x.carpeta)) {
+    const base = ruta('contenido', 'capitulos', c.carpeta);
+    for (const f of readdirSync(join(base, 'lecciones'))) ids.add(f.split('.')[0]);
+    for (const f of readdirSync(join(base, 'practicas'))) ids.add(f.replace('.yaml', ''));
+    for (const t of YAML.parse(readFileSync(join(base, 'tarjetas.yaml'), 'utf8')).tarjetas) ids.add(t.id);
+  }
+  for (const archivo of planes) {
+    const plan = validar(E.semana, leerYaml('contenido', 'semanas', archivo), archivo);
+    assert.equal(archivo, `${plan.lunes}.yaml`, `${archivo}: el nombre debe ser la fecha del lunes`);
+    assert.equal(new Date(`${plan.lunes}T12:00:00Z`).getUTCDay(), 1, `${archivo}: ${plan.lunes} no es lunes`);
+    for (const d of plan.dias) {
+      const dias = (Date.parse(`${d.fecha}T12:00:00Z`) - Date.parse(`${plan.lunes}T12:00:00Z`)) / 86_400_000;
+      assert.ok(dias >= 0 && dias <= 6, `${archivo}: ${d.fecha} no es de esa semana`);
+      for (const id of [d.leccion, d.practica, ...d.repaso].filter(Boolean)) assert.ok(ids.has(id), `${archivo}: ${id} no existe`);
+    }
+  }
+});
+
+test('el registro de la automatización (si existe) cumple el formato', () => {
+  const archivo = ruta('datos', 'automatizacion.json');
+  if (existsSync(archivo)) validar(E.automatizacion, JSON.parse(readFileSync(archivo, 'utf8')), 'datos/automatizacion.json');
+});
+
 for (const cap of curriculo.capitulos.filter((c) => c.carpeta)) {
   test(`${cap.id}: lecciones en los dos idiomas, prácticas, tarjetas y cierre válidos`, () => {
     const base = ruta('contenido', 'capitulos', cap.carpeta);

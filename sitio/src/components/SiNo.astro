@@ -1,0 +1,6 @@
+---
+// «Sí» en verde con ✓ y «no» en rojo con ✕, siempre con texto: el color solo no basta con daltonismo.
+import Icono from './Icono.astro';
+const { valor } = Astro.props;
+---
+<span class:list={['sino', valor ? 'si' : 'no']}><Icono nombre={valor ? 'si' : 'no'} clase="icono sino-icono" /><span><slot /></span></span>

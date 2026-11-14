@@ -1,0 +1,18 @@
+---
+// Tarjetas de repaso: la pregunta a la vista y la respuesta al tocarla.
+import { TEXTOS } from '../lib/textos.mjs';
+const { tarjetas, lang } = Astro.props;
+const T = TEXTOS[lang];
+---
+<div class="repasos">
+  {tarjetas.map((x) => (
+    <details class="repaso">
+      <summary>
+        <span class="repaso-tipo">{T.tipoTarjeta[x.tipo]}</span>
+        <span class="repaso-frente">{x.frente[lang]}</span>
+        <span class="repaso-ver">{T.hoy.verRespuesta}</span>
+      </summary>
+      <p>{x.reverso[lang]}</p>
+    </details>
+  ))}
+</div>
