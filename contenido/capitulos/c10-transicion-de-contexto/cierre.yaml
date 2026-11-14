@@ -1,0 +1,50 @@
+# Cierre del capítulo 10: 5 preguntas y la práctica final. Se toma con /examen c10.
+capitulo: c10
+aprobar_con: 80
+practica_final: c10-p02
+preguntas:
+  - id: c10-q01
+    enunciado: {es: "En dim_cliente creas la columna calculada SUM ( fact_ventas[monto_neto] ). ¿Qué muestra?", en: "In dim_cliente you create the calculated column SUM ( fact_ventas[monto_neto] ). What does it show?"}
+    opciones:
+      - {es: "El total de la empresa en cada fila", en: "The company total on every row"}
+      - {es: "Lo que compró cada cliente", en: "What each customer bought"}
+      - {es: "Un error", en: "An error"}
+      - {es: "Blanco", en: "Blank"}
+    correcta: 0
+    explicacion: {es: "Sin CALCULATE no hay transición: el row context del cliente no filtra fact_ventas.", en: "Without CALCULATE there's no transition: the customer's row context doesn't filter fact_ventas."}
+  - id: c10-q02
+    enunciado: {es: "¿En cuál de estas fórmulas hay transición de contexto?", en: "Which of these formulas has context transition?"}
+    opciones:
+      - {es: "SUMX ( dim_cliente, [Ventas] )", en: "SUMX ( dim_cliente, [Ventas] )"}
+      - {es: "SUMX ( fact_ventas, fact_ventas[monto_neto] )", en: "SUMX ( fact_ventas, fact_ventas[monto_neto] )"}
+      - {es: "SUM ( fact_ventas[monto_neto] )", en: "SUM ( fact_ventas[monto_neto] )"}
+      - {es: "COUNTROWS ( dim_cliente )", en: "COUNTROWS ( dim_cliente )"}
+    correcta: 0
+    explicacion: {es: "Referenciar la medida [Ventas] dentro de un iterador agrega un CALCULATE implícito.", en: "Referencing the [Ventas] measure inside an iterator adds an implicit CALCULATE."}
+  - id: c10-q03
+    enunciado: {es: "fact_ventas trae dos líneas idénticas de $50.000 y nada más. ¿Cuánto da SUMX ( fact_ventas, [Ventas] )?", en: "fact_ventas has two identical lines of $50,000 and nothing else. What does SUMX ( fact_ventas, [Ventas] ) return?"}
+    opciones:
+      - {es: "$50.000", en: "$50,000"}
+      - {es: "$100.000", en: "$100,000"}
+      - {es: "$200.000", en: "$200,000"}
+      - {es: "$400.000", en: "$400,000"}
+    correcta: 2
+    explicacion: {es: "Cada fila filtra las filas iguales a ella y ve las dos: $100.000. SUMX suma eso dos veces: $200.000.", en: "Each row filters the rows equal to it and sees both: $100,000. SUMX adds that twice: $200,000."}
+  - id: c10-q04
+    enunciado: {es: "¿Qué tabla conviene iterar para contar clientes con ventas sobre un umbral?", en: "Which table should you iterate to count customers with sales above a threshold?"}
+    opciones:
+      - {es: "dim_cliente", en: "dim_cliente"}
+      - {es: "fact_ventas", en: "fact_ventas"}
+      - {es: "dim_fecha", en: "dim_fecha"}
+      - {es: "Cualquiera, da lo mismo", en: "Any, it doesn't matter"}
+    correcta: 0
+    explicacion: {es: "Una fila por cliente: la transición filtra exactamente a ese cliente y recorre 300 filas, no miles.", en: "One row per customer: the transition filters exactly that customer and walks 300 rows, not thousands."}
+  - id: c10-q05
+    enunciado: {es: "¿Dónde conviene corregir filas duplicadas que son un error de carga?", en: "Where should you fix duplicate rows caused by a load error?"}
+    opciones:
+      - {es: "En la fuente, con SQL o un script, y con un id de línea en la extracción", en: "At the source, with SQL or a script, plus a line id in the extract"}
+      - {es: "En una medida que use DISTINCT", en: "In a measure that uses DISTINCT"}
+      - {es: "Con un filtro en el visual", en: "With a visual-level filter"}
+      - {es: "Ocultando la tabla en el modelo", en: "By hiding the table in the model"}
+    correcta: 0
+    explicacion: {es: "Transformar lo más arriba posible: si el error queda en la fuente, aparece en todos los informes que la usan.", en: "Transform as far upstream as possible: if the error stays in the source, it shows up in every report that uses it."}

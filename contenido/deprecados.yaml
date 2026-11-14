@@ -1,0 +1,19 @@
+# Funciones deprecadas o que se retiran: ninguna lección ni práctica puede recomendarlas.
+# Las pruebas buscan sus palabras clave en las lecciones y prácticas. El verificador amplía la lista cada mes.
+version: 1
+verificado: "2026-11-14"
+deprecados:
+  - id: qna-visual
+    nombre: "Visual y experiencia Q&A de Power BI"
+    estado: se-retira
+    fecha: "2027-02"
+    reemplazo: "Copilot, y Prep data for AI para preparar el modelo"
+    fuente: "https://powerbi.microsoft.com/en-us/blog/deprecating-power-bi-qa/"
+    palabras_clave: ["visual Q&A", "Q&A visual", "visual de preguntas y respuestas"]
+  - id: selector-archivos-antiguo
+    nombre: "Selector de archivos antiguo de Power BI Desktop para guardar en OneDrive y SharePoint"
+    estado: retirado
+    fecha: "2026-10"
+    reemplazo: "Usar una versión de Power BI Desktop posterior a marzo de 2026"
+    fuente: "https://community.fabric.microsoft.com/blog/fbc_pbiupdatesblog/power-bi-september-2026-feature-summary/5325831"
+    palabras_clave: ["selector de archivos antiguo", "old file picker"]

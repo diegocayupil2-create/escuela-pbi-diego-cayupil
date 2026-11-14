@@ -1,0 +1,93 @@
+# Práctica 1 del capítulo 10. Los {{valores}} salen de datos/datasets/distribuidora-andes/respuestas.json.
+id: c10-p01
+capitulo: c10
+minutos: 30
+tipo_pregunta: diagnostico
+dataset: datos/datasets/distribuidora-andes
+respuestas: c10-p01
+titulo:
+  es: "¿Cuántos clientes grandes tenemos y dónde los estamos perdiendo?"
+  en: "How many large customers do we have, and where are we losing them?"
+objetivo:
+  es: "Contar los clientes que compran más de {{umbral}} pesos al año con una medida que usa la transición de contexto, y encontrar la región donde ese número cayó en 2025."
+  en: "Count the customers who buy more than CLP {{umbral}} a year with a measure that relies on context transition, and find the region where that number dropped in 2025."
+por_que_importa:
+  es: "Los clientes grandes concentran la mayor parte de la venta. Perder uno pesa más que perder diez chicos, y la gerencia comercial necesita saber dónde está pasando para actuar a tiempo."
+  en: "Large customers bring in most of the revenue. Losing one hurts more than losing ten small ones, and sales leadership needs to know where it's happening in time to act."
+contexto:
+  es: "Eres analista en Distribuidora Andes (ficticia), que vende abarrotes, bebidas, lácteos, limpieza y congelados a 300 clientes desde seis sucursales. La gerente comercial te pide, para el comité del lunes, cuántos clientes grandes hay por año y dónde se están yendo."
+  en: "You're an analyst at Distribuidora Andes (fictitious), a wholesaler selling groceries, beverages, dairy, cleaning products and frozen food to 300 customers from six branches. For Monday's committee, the sales director wants to know how many large customers there are each year and where they're leaving."
+pasos:
+  es:
+    - "Carga las cuatro tablas del dataset y arma el star schema: fact_ventas al centro, relacionada con dim_cliente, dim_producto y dim_fecha."
+    - "Crea la medida Ventas = SUM ( fact_ventas[monto_neto] )."
+    - "Crea la medida Clientes grandes iterando dim_cliente y comparando [Ventas] con el umbral."
+    - "Muéstrala por año y por región. El umbral es anual, así que el año tiene que estar en el visual."
+    - "Cierra con un titular de una frase y 3 puntos ejecutivos para la gerente comercial."
+  en:
+    - "Load the four tables of the dataset and build the star schema: fact_ventas in the middle, related to dim_cliente, dim_producto and dim_fecha."
+    - "Create the measure Ventas = SUM ( fact_ventas[monto_neto] )."
+    - "Create the measure Clientes grandes by iterating dim_cliente and comparing [Ventas] with the threshold."
+    - "Show it by year and region. The threshold is annual, so the year must be on the visual."
+    - "Close with a one-sentence headline and 3 executive points for the sales director."
+criterios_exito:
+  - es: "Clientes grandes da {{grandes_2024}} en 2024 y {{grandes_2025}} en 2025."
+    en: "Clientes grandes returns {{grandes_2024}} in 2024 and {{grandes_2025}} in 2025."
+  - es: "La medida itera dim_cliente (o VALUES de su clave), no fact_ventas."
+    en: "The measure iterates dim_cliente (or VALUES of its key), not fact_ventas."
+  - es: "Identificas la región donde más cayó el número de clientes grandes y cuántos perdió."
+    en: "You identify the region where the number of large customers dropped the most, and how many it lost."
+  - es: "El título del visual dice la conclusión, no el tema."
+    en: "The visual's title states the conclusion, not the topic."
+pistas:
+  - es: "Un FILTER sobre dim_cliente, con una medida adentro, ya trae la transición de contexto."
+    en: "A FILTER over dim_cliente with a measure inside already brings context transition."
+  - es: "COUNTROWS ( FILTER ( dim_cliente, [Ventas] > 20000000 ) )"
+    en: "COUNTROWS ( FILTER ( dim_cliente, [Ventas] > 20000000 ) )"
+  - es: "Si te da 300 o 0, estás comparando el total de la empresa: revisa que dentro del FILTER uses la medida [Ventas] y no SUM directo."
+    en: "If you get 300 or 0, you're comparing the company total: check that you use the [Ventas] measure inside the FILTER, not SUM directly."
+solucion:
+  es: |
+    ```dax
+    Ventas = SUM ( fact_ventas[monto_neto] )
+
+    Clientes grandes =
+    COUNTROWS (
+        FILTER ( dim_cliente, [Ventas] > 20000000 )
+    )
+
+    % ventas de clientes grandes =
+    DIVIDE (
+        SUMX ( FILTER ( dim_cliente, [Ventas] > 20000000 ), [Ventas] ),
+        [Ventas]
+    )
+    ```
+
+    FILTER recorre los clientes. En cada fila, [Ventas] se evalúa con un CALCULATE implícito y queda filtrada por ese cliente y por el año del visual: eso es la transición de contexto.
+
+    Resultado: {{grandes_2024}} clientes grandes en 2024 y {{grandes_2025}} en 2025. La mayor caída está en {{region_mayor_caida}}, que pasa de {{region_grandes_2024}} a {{region_grandes_2025}} clientes grandes: {{clientes_que_dejaron_de_comprar}} dejaron de comprar desde marzo de 2025 y el resto compró menos y quedó bajo el umbral. En 2025, los clientes grandes hicieron el {{pct_ventas_grandes_2025}} % de la venta.
+  en: |
+    ```dax
+    Ventas = SUM ( fact_ventas[monto_neto] )
+
+    Clientes grandes =
+    COUNTROWS (
+        FILTER ( dim_cliente, [Ventas] > 20000000 )
+    )
+
+    % ventas de clientes grandes =
+    DIVIDE (
+        SUMX ( FILTER ( dim_cliente, [Ventas] > 20000000 ), [Ventas] ),
+        [Ventas]
+    )
+    ```
+
+    FILTER walks the customers. On each row, [Ventas] is evaluated with an implicit CALCULATE and gets filtered by that customer and by the visual's year: that's context transition.
+
+    Result: {{grandes_2024}} large customers in 2024 and {{grandes_2025}} in 2025. The biggest drop is in {{region_mayor_caida}}, from {{region_grandes_2024}} to {{region_grandes_2025}} large customers: {{clientes_que_dejaron_de_comprar}} stopped buying in March 2025, and the rest bought less and fell below the threshold. In 2025, large customers made {{pct_ventas_grandes_2025}}% of sales.
+storytelling:
+  es: "Titular de ejemplo: «{{region_mayor_caida}} perdió {{clientes_que_dejaron_de_comprar}} clientes grandes desde marzo de 2025». Tres puntos: cuánto pesan los clientes grandes en la venta, desde cuándo dejaron de comprar y qué propones revisar con el equipo de esa sucursal."
+  en: "Sample headline: «{{region_mayor_caida}} lost {{clientes_que_dejaron_de_comprar}} large customers since March 2025». Three points: how much large customers weigh in sales, since when they stopped buying, and what you propose to review with that branch's team."
+fuentes:
+  - {titulo: "Understanding context transition in DAX", url: "https://www.sqlbi.com/articles/understanding-context-transition-in-dax/", nivel: A, consultado: "2026-11-14"}
+  - {titulo: "FILTER function (DAX)", url: "https://learn.microsoft.com/en-us/dax/filter-function-dax", nivel: A, consultado: "2026-11-14"}

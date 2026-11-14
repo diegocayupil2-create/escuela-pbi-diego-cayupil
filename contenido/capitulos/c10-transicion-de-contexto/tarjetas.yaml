@@ -1,0 +1,35 @@
+# Tarjetas de repaso del capítulo 10. Salen de las lecciones; las de tus errores se agregan después de /entregar.
+capitulo: c10
+tarjetas:
+  - id: c10-t01
+    tipo: concepto
+    frente: {es: "¿Qué hace la transición de contexto?", en: "What does context transition do?"}
+    reverso: {es: "Convierte el row context actual en un filter context equivalente. La hace CALCULATE.", en: "It turns the current row context into an equivalent filter context. CALCULATE does it."}
+  - id: c10-t02
+    tipo: concepto
+    frente: {es: "¿Cuándo hay transición de contexto sin escribir CALCULATE?", en: "When does context transition happen without writing CALCULATE?"}
+    reverso: {es: "Cuando referencias una medida dentro de un iterador o de una columna calculada: DAX la envuelve en un CALCULATE.", en: "When you reference a measure inside an iterator or a calculated column: DAX wraps it in a CALCULATE."}
+  - id: c10-t03
+    tipo: dax
+    frente: {es: "fact_ventas trae dos filas idénticas de 100 y nada más. ¿Cuánto da SUMX ( fact_ventas, [Ventas] )?", en: "fact_ventas has two identical rows of 100 and nothing else. What does SUMX ( fact_ventas, [Ventas] ) return?"}
+    reverso: {es: "400: cada fila ve a las dos (200) y SUMX suma eso dos veces.", en: "400: each row sees both (200) and SUMX adds that twice."}
+  - id: c10-t04
+    tipo: concepto
+    frente: {es: "¿Qué columnas usa la transición como filtro?", en: "Which columns does context transition use as filters?"}
+    reverso: {es: "Todas las columnas de la tabla que se itera, no solo la clave.", en: "Every column of the iterated table, not just the key."}
+  - id: c10-t05
+    tipo: dax
+    frente: {es: "¿Qué tabla conviene iterar para contar clientes con ventas sobre un umbral?", en: "Which table should you iterate to count customers above a sales threshold?"}
+    reverso: {es: "La dimensión de clientes, o VALUES de su clave; no la fact table.", en: "The customer dimension, or VALUES of its key; not the fact table."}
+  - id: c10-t06
+    tipo: concepto
+    frente: {es: "¿Por qué SUMX ( fact_ventas, [Ventas] ) es lento en una fact table grande?", en: "Why is SUMX ( fact_ventas, [Ventas] ) slow on a large fact table?"}
+    reverso: {es: "Hace una transición por cada fila: crea millones de filter contexts.", en: "It runs one transition per row: it creates millions of filter contexts."}
+  - id: c10-t07
+    tipo: dax
+    frente: {es: "En una columna calculada, ¿SUM ( fact_ventas[monto_neto] ) sin CALCULATE filtra por la fila?", en: "In a calculated column, does SUM ( fact_ventas[monto_neto] ) without CALCULATE filter by the row?"}
+    reverso: {es: "No: devuelve el total de la empresa en cada fila, porque el row context no filtra otras tablas.", en: "No: it returns the company total on every row, because row context doesn't filter other tables."}
+  - id: c10-t08
+    tipo: error
+    frente: {es: "Arreglo de fondo para filas duplicadas por error en una fact table", en: "Root fix for erroneous duplicate rows in a fact table"}
+    reverso: {es: "Un id de línea en la extracción y quitar los duplicados en la fuente, con SQL o un script; no en el informe.", en: "A line id in the extract, and removing the duplicates at the source with SQL or a script; not in the report."}

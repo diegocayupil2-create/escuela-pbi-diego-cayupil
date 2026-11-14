@@ -1,0 +1,311 @@
+# Catálogo de fuentes de la escuela.
+# Nivel A: documentación oficial y expertos reconocidos · B: comunidad · C: LinkedIn y redes.
+# Una «buena práctica» necesita 1 fuente A o 2 B que coincidan; lo de LinkedIn entra solo corroborado.
+# radar: true = la búsqueda automática la lee (desde la fase 4).
+# estado: activa · bloqueada (rechaza lectores automáticos: entra por la búsqueda web de la IA) · candidata · propuesta.
+version: 1
+verificado: "2026-11-14"
+fuentes:
+  # ---------- Nivel A ----------
+  - id: ms-learn-powerbi
+    nombre: "Microsoft Learn · documentación de Power BI"
+    nivel: A
+    tipo: documentacion
+    url: "https://learn.microsoft.com/en-us/power-bi/"
+    radar: false
+    estado: activa
+    idioma: varios
+    notas: "Incluye las guías de implementación y de optimización."
+  - id: ms-learn-novedades
+    nombre: "Microsoft Learn · novedades mensuales de Power BI Desktop"
+    nivel: A
+    tipo: novedades
+    url: "https://learn.microsoft.com/en-us/power-bi/fundamentals/desktop-latest-update"
+    radar: false
+    estado: activa
+    idioma: en
+    notas: "No tiene feed público: la corrida de IA revisa la página cada mes."
+  - id: ms-learn-dax
+    nombre: "Microsoft Learn · referencia de DAX"
+    nivel: A
+    tipo: documentacion
+    url: "https://learn.microsoft.com/en-us/dax/"
+    radar: false
+    estado: activa
+    idioma: varios
+  - id: powerbi-blog
+    nombre: "Blog de novedades de Power BI"
+    nivel: A
+    tipo: blog
+    url: "https://community.fabric.microsoft.com/blog/fbc_pbiupdatesblog"
+    radar: false
+    estado: bloqueada
+    idioma: en
+    notas: "Desde 2026 los resúmenes mensuales viven en la comunidad de Fabric, que rechaza lectores automáticos."
+  - id: fabric-blog
+    nombre: "Blog de Microsoft Fabric"
+    nivel: A
+    tipo: blog
+    url: "https://blog.fabric.microsoft.com/en-us/blog/"
+    feed: "https://blog.fabric.microsoft.com/en-us/blog/feed/"
+    radar: true
+    estado: activa
+    idioma: en
+  - id: sqlbi
+    nombre: "SQLBI · Marco Russo y Alberto Ferrari"
+    nivel: A
+    tipo: blog
+    url: "https://www.sqlbi.com/"
+    feed: "https://www.sqlbi.com/feed/"
+    radar: true
+    estado: activa
+    idioma: en
+  - id: sqlbi-newsletter
+    nombre: "Newsletter de SQLBI"
+    nivel: A
+    tipo: newsletter
+    url: "https://www.sqlbi.com/newsletter/"
+    radar: false
+    estado: activa
+    idioma: en
+    notas: "Aparecer aquí suma popularidad en el radar."
+  - id: sqlbi-youtube
+    nombre: "SQLBI en YouTube"
+    nivel: A
+    tipo: youtube
+    url: "https://www.youtube.com/@SQLBI"
+    youtube: {handle: "@SQLBI", channel_id: "UCcc21gBGNJwZM_eDEByeN-Q"}
+    radar: true
+    estado: activa
+    idioma: en
+  - id: dax-guide
+    nombre: "DAX Guide"
+    nivel: A
+    tipo: documentacion
+    url: "https://dax.guide/"
+    radar: false
+    estado: activa
+    idioma: en
+  - id: dax-patterns
+    nombre: "DAX Patterns"
+    nivel: A
+    tipo: documentacion
+    url: "https://www.daxpatterns.com/"
+    radar: false
+    estado: activa
+    idioma: en
+  - id: chris-webb
+    nombre: "Chris Webb's BI Blog"
+    nivel: A
+    tipo: blog
+    url: "https://blog.crossjoin.co.uk/"
+    feed: "https://blog.crossjoin.co.uk/feed/"
+    radar: true
+    estado: activa
+    idioma: en
+    notas: "Su feed responde 403 desde este PC; se prueba desde GitHub en la fase 4."
+  - id: tabular-editor
+    nombre: "Tabular Editor · documentación"
+    nivel: A
+    tipo: herramienta
+    url: "https://docs.tabulareditor.com/"
+    github: "TabularEditor/TabularEditor"
+    radar: true
+    estado: activa
+    idioma: en
+  - id: tabular-editor-blog
+    nombre: "Blog de Tabular Editor"
+    nivel: A
+    tipo: blog
+    url: "https://tabulareditor.com/blog"
+    feed: "https://tabulareditor.com/blog/rss.xml"
+    radar: true
+    estado: activa
+    idioma: en
+  - id: bpa-reglas
+    nombre: "Reglas de Best Practice Analyzer"
+    nivel: A
+    tipo: herramienta
+    url: "https://github.com/TabularEditor/BestPracticeRules"
+    radar: false
+    estado: activa
+    idioma: en
+  - id: dax-studio
+    nombre: "DAX Studio"
+    nivel: A
+    tipo: herramienta
+    url: "https://daxstudio.org/"
+    github: "DaxStudio/DaxStudio"
+    radar: true
+    estado: activa
+    idioma: en
+  - id: bravo
+    nombre: "Bravo for Power BI"
+    nivel: A
+    tipo: herramienta
+    url: "https://bravo.bi/"
+    github: "sql-bi/Bravo"
+    radar: true
+    estado: activa
+    idioma: en
+  - id: powerbi-mcp
+    nombre: "MCP de Power BI para crear modelos (Microsoft)"
+    nivel: A
+    tipo: herramienta
+    url: "https://learn.microsoft.com/en-us/power-bi/developer/mcp/power-bi-authoring-mcp"
+    github: "microsoft/powerbi-modeling-mcp"
+    radar: true
+    estado: activa
+    idioma: en
+    notas: "Servidor local disponible en general; la versión alojada sigue en vista previa."
+  - id: data-goblins
+    nombre: "Data Goblins · Kurt Buhler"
+    nivel: A
+    tipo: blog
+    url: "https://data-goblins.com/"
+    feed: "https://data-goblins.com/power-bi?format=rss"
+    radar: true
+    estado: activa
+    idioma: en
+  - id: ibcs
+    nombre: "IBCS · International Business Communication Standards"
+    nivel: A
+    tipo: documentacion
+    url: "https://www.ibcs.com/"
+    radar: false
+    estado: activa
+    idioma: en
+  # ---------- Nivel B ----------
+  - id: fabric-community
+    nombre: "Microsoft Fabric Community: foros, Data Stories Gallery, Quick Measures Gallery y concursos"
+    nivel: B
+    tipo: comunidad
+    url: "https://community.fabric.microsoft.com/"
+    radar: false
+    estado: bloqueada
+    idioma: en
+    notas: "Rechaza lectores automáticos: entra por la búsqueda web de la IA y la bandeja."
+  - id: reddit-powerbi
+    nombre: "r/PowerBI"
+    nivel: B
+    tipo: comunidad
+    url: "https://www.reddit.com/r/PowerBI/"
+    radar: false
+    estado: bloqueada
+    idioma: en
+    notas: "Desde nov-2025 su API pide aprobación y está cerrando el acceso público: solo por la bandeja o la búsqueda web."
+  - id: stackoverflow
+    nombre: "Stack Overflow · etiquetas powerbi, dax y powerquery"
+    nivel: B
+    tipo: comunidad
+    url: "https://stackoverflow.com/questions/tagged/powerbi"
+    feed: "https://stackoverflow.com/feeds/tag/powerbi"
+    radar: false
+    estado: candidata
+    idioma: en
+  - id: guy-in-a-cube
+    nombre: "Guy in a Cube"
+    nivel: B
+    tipo: youtube
+    url: "https://www.youtube.com/@GuyInACube"
+    youtube: {handle: "@GuyInACube", channel_id: "UCFp1vaKzpfvoGai0vE5VJ0w"}
+    radar: true
+    estado: activa
+    idioma: en
+  - id: curbal
+    nombre: "Curbal · Ruth Pozuelo"
+    nivel: B
+    tipo: youtube
+    url: "https://www.youtube.com/@CurbalEN"
+    youtube: {handle: "@CurbalEN", channel_id: "UCJ7UhloHSA4wAqPzyi6TOkw"}
+    radar: true
+    estado: activa
+    idioma: en
+  - id: powerbi-tips
+    nombre: "PowerBI.tips y su podcast Explicit Measures"
+    nivel: B
+    tipo: blog
+    url: "https://powerbi.tips/"
+    feed: "https://powerbi.tips/rss.xml"
+    radar: true
+    estado: activa
+    idioma: en
+  - id: deneb
+    nombre: "Deneb, visual con Vega y Vega-Lite"
+    nivel: B
+    tipo: herramienta
+    url: "https://deneb-viz.github.io/"
+    github: "deneb-viz/deneb"
+    radar: true
+    estado: activa
+    idioma: en
+  - id: kerry-kolosko
+    nombre: "Kerry Kolosko · plantillas de Deneb"
+    nivel: B
+    tipo: blog
+    url: "https://kerrykolosko.com/"
+    feed: "https://kerrykolosko.com/feed/"
+    radar: true
+    estado: activa
+    idioma: en
+  - id: swd
+    nombre: "Storytelling with Data · blog, podcast y comunidad"
+    nivel: B
+    tipo: blog
+    url: "https://www.storytellingwithdata.com/"
+    feed: "https://www.storytellingwithdata.com/blog?format=rss"
+    radar: true
+    estado: activa
+    idioma: en
+  - id: dvs
+    nombre: "Data Visualization Society"
+    nivel: B
+    tipo: comunidad
+    url: "https://www.datavisualizationsociety.org/"
+    radar: false
+    estado: activa
+    idioma: en
+  - id: nightingale
+    nombre: "Nightingale, revista de la Data Visualization Society"
+    nivel: B
+    tipo: blog
+    url: "https://nightingaledvs.com/"
+    feed: "https://nightingaledvs.com/feed/"
+    radar: true
+    estado: activa
+    idioma: en
+  - id: gus-bavia
+    nombre: "Gus Bavia · campeón del Mundial de Power BI 2026"
+    nivel: B
+    tipo: persona
+    url: "https://github.com/gusbavia"
+    radar: false
+    estado: activa
+    idioma: en
+    notas: "Referente de diseño de Diego: boceto antes de Desktop, y SVG y HTML en DAX."
+  # ---------- Nivel C · LinkedIn ----------
+  # Solo búsqueda web pública y lo que Diego comparte: nada de scraping ni login. La IA busca por nombre.
+  - {id: li-marco-russo, nombre: "Marco Russo", nivel: C, tipo: persona, url: null, radar: false, estado: activa, idioma: en, notas: "SQLBI."}
+  - {id: li-alberto-ferrari, nombre: "Alberto Ferrari", nivel: C, tipo: persona, url: null, radar: false, estado: activa, idioma: en, notas: "SQLBI."}
+  - {id: li-chris-webb, nombre: "Chris Webb", nivel: C, tipo: persona, url: null, radar: false, estado: activa, idioma: en}
+  - {id: li-kurt-buhler, nombre: "Kurt Buhler", nivel: C, tipo: persona, url: null, radar: false, estado: activa, idioma: en, notas: "Data Goblins y Tabular Editor."}
+  - {id: li-reza-rad, nombre: "Reza Rad", nivel: C, tipo: persona, url: null, radar: false, estado: activa, idioma: en}
+  - {id: li-kerry-kolosko, nombre: "Kerry Kolosko", nivel: C, tipo: persona, url: null, radar: false, estado: activa, idioma: en}
+  - {id: li-injae-park, nombre: "Injae Park", nivel: C, tipo: persona, url: null, radar: false, estado: activa, idioma: en, notas: "Ganó una semana del Mundial de Las Vegas 2025."}
+  - {id: li-ruth-pozuelo, nombre: "Ruth Pozuelo", nivel: C, tipo: persona, url: null, radar: false, estado: activa, idioma: varios, notas: "Curbal."}
+  - {id: li-miguel-myers, nombre: "Miguel Myers", nivel: C, tipo: persona, url: null, radar: false, estado: activa, idioma: en}
+  - {id: li-cole-knaflic, nombre: "Cole Nussbaumer Knaflic", nivel: C, tipo: persona, url: null, radar: false, estado: activa, idioma: en, notas: "Storytelling with Data."}
+  - {id: li-brent-dykes, nombre: "Brent Dykes", nivel: C, tipo: persona, url: null, radar: false, estado: activa, idioma: en}
+  - {id: li-alberto-cairo, nombre: "Alberto Cairo", nivel: C, tipo: persona, url: null, radar: false, estado: activa, idioma: varios}
+  - {id: li-marius-helle, nombre: "Marius Helle", nivel: C, tipo: persona, url: null, radar: false, estado: activa, idioma: en, notas: "Campeón del Mundial de Barcelona 2026 (perfil in/mariusjhelle)."}
+  - {id: li-pagina-powerbi, nombre: "Página Microsoft Power BI", nivel: C, tipo: pagina, url: null, radar: false, estado: activa, idioma: en}
+  - {id: li-pagina-fabric, nombre: "Página Microsoft Fabric", nivel: C, tipo: pagina, url: null, radar: false, estado: activa, idioma: en}
+  - {id: li-pagina-onyx, nombre: "Página Onyx Data", nivel: C, tipo: pagina, url: null, radar: false, estado: activa, idioma: en, notas: "Los ganadores mensuales de DataDNA se anuncian solo aquí."}
+  - {id: li-pagina-sqlbi, nombre: "Página SQLBI", nivel: C, tipo: pagina, url: null, radar: false, estado: activa, idioma: en}
+  - {id: li-hashtags, nombre: "#PowerBI #DAX #DataViz #DataStorytelling #DataDNA #MakeoverMonday #WOW2026", nivel: C, tipo: hashtag, url: null, radar: false, estado: activa, idioma: varios}
+  # ---------- Referentes hispanohablantes propuestos (esperan el OK de Diego) ----------
+  - {id: li-cecilia-esparza, nombre: "Cecilia Esparza", nivel: C, tipo: persona, url: "https://sessionize.com/cecilia-esparza", radar: false, estado: propuesta, idioma: es, notas: "Madrid. Microsoft MVP Data Platform; charlas sobre UDF de DAX y relaciones."}
+  - {id: li-ana-bisbe, nombre: "Ana María Bisbé York", nivel: C, tipo: persona, url: "https://sessionize.com/AnaBisbe", radar: false, estado: propuesta, idioma: es, notas: "Alcobendas. Microsoft MVP Data Platform y formadora de LinkedIn Learning; optimización de DAX con DAX Studio."}
+  - {id: li-ricardo-rincon, nombre: "Ricardo Rincón", nivel: C, tipo: persona, url: "https://sessionize.com/ricardo-rincon", radar: false, estado: propuesta, idioma: es, notas: "Barcelona. Microsoft MVP Data Platform; DAX Studio, Tabular Editor y RLS."}
+  - {id: li-miguel-escobar, nombre: "Miguel Escobar", nivel: C, tipo: persona, url: null, radar: false, estado: propuesta, idioma: es, notas: "Coautor de Master Your Data with Power Query; útil para el capítulo 6."}
+  - {id: li-walter-guerrero, nombre: "Walter Guerrero", nivel: C, tipo: persona, url: null, radar: false, estado: propuesta, idioma: es, notas: "El Salvador. 3.er lugar en Onyx DataDNA de octubre de 2026."}

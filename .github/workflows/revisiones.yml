@@ -1,0 +1,37 @@
+# Revisa cada cambio: corre las pruebas del contenido y del dataset. No usa IA ni claves.
+# Corre solo con un push a main, en cada PR, o cuando tú quieras: pestaña Actions, «Revisiones», «Run workflow».
+name: Revisiones
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: revisiones-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Instalar lo necesario
+        run: |
+          npm ci
+          pip install --quiet -r requirements.txt
+      - name: Pruebas
+        run: npm test

@@ -1,0 +1,69 @@
+# Calendario de retos de la comunidad. Las fechas son de Chile, salvo que la nota diga otra cosa.
+# El comando /reto lo usa para armar bloques de entrenamiento.
+version: 1
+verificado: "2026-11-14"
+retos:
+  - id: mundial-powerbi
+    nombre: "Power BI DataViz World Championships"
+    organiza: "Microsoft · Fabric Community"
+    frecuencia: anual
+    url: "https://aka.ms/NextWorldChamps"
+    hashtag: null
+    estado: activo
+    proximas:
+      - {nombre: "Ronda 1 · edición 2027", abre: "2026-11-04", cierra: "2026-11-18", resultados: null, nota: "Cada ronda clasifica a 2 finalistas."}
+      - {nombre: "Ronda 2 · edición 2027", abre: "2026-11-25", cierra: "2026-12-09", resultados: null}
+      - {nombre: "Final en FabCon Atlanta", abre: "2027-03-08", cierra: "2027-03-12", resultados: null}
+    verificado: "2026-11-02"
+    notas: "Fechas verificadas el 2-nov-2026 en la comunidad de Fabric, que rechaza lectores automáticos: confirmar a mano."
+  - id: onyx-datadna
+    nombre: "Onyx Data DataDNA"
+    organiza: "Onyx Data"
+    frecuencia: mensual
+    url: "https://datadna.onyxdata.co.uk/"
+    hashtag: "#DataDNA"
+    estado: activo
+    proximas:
+      - {nombre: "Noviembre 2026 · Health System Performance Analytics", abre: "2026-11-01", cierra: "2026-11-24", resultados: "2026-11-30", nota: "Cierra a las 23:59 del Reino Unido, 20:59 en Chile."}
+    verificado: "2026-11-14"
+    notas: "Solo el reto principal. Los mini-retos de patrocinadores excluidos no entran."
+  - id: workout-wednesday-pbi
+    nombre: "Workout Wednesday · Power BI"
+    organiza: "Workout Wednesday"
+    frecuencia: semanal
+    url: "https://www.workout-wednesday.com/power-bi-challenges/"
+    hashtag: "#WOW2026"
+    estado: activo
+    proximas: []
+    verificado: "2026-11-14"
+    notas: "Un reto nuevo cada miércoles; el último visto es del 11-nov-2026. El hashtag del año aparece en los retos de Tableau; los de Power BI se titulan «2026 Week NN | Power BI»."
+  - id: makeover-monday
+    nombre: "Makeover Monday"
+    organiza: "Makeover Monday"
+    frecuencia: semanal
+    url: "https://makeovermonday.co.uk/"
+    hashtag: "#MakeoverMonday"
+    estado: por-verificar
+    proximas: []
+    verificado: "2026-11-14"
+    notas: "La web lista hasta la semana 27 de 2026 (6-jul) y los datasets están en data.world. Confirmar si sigue activo."
+  - id: fabric-community-contests
+    nombre: "Concursos de la Fabric Community"
+    organiza: "Microsoft · Fabric Community"
+    frecuencia: eventual
+    url: "https://community.fabric.microsoft.com/"
+    hashtag: null
+    estado: activo
+    proximas: []
+    verificado: "2026-11-02"
+    notas: "Rechaza lectores automáticos: la IA los busca por web."
+  - id: swd-challenges
+    nombre: "Retos de Storytelling with Data"
+    organiza: "Storytelling with Data"
+    frecuencia: mensual
+    url: "https://community.storytellingwithdata.com/challenges"
+    hashtag: "#SWDchallenge"
+    estado: por-verificar
+    proximas: []
+    verificado: "2026-11-14"
+    notas: "La página se arma con JavaScript y no se pudo leer: confirmar si siguen activos."

@@ -1,0 +1,193 @@
+# Biblioteca de la escuela. Ediciones revisadas el 14-nov-2026 con sqlbi.com/books y Open Library.
+# Regla: no copiar texto ni usar copias no oficiales; citar capítulos solo después de verificar el índice real.
+# Open Library registra poco en español: una versión en español «por confirmar» se revisa con la editorial.
+version: 1
+libros:
+  - id: definitive-guide-dax
+    titulo: "The Definitive Guide to DAX"
+    autores: ["Marco Russo", "Alberto Ferrari"]
+    tema: dax-modelado
+    edicion_vigente: "3.ª edición"
+    anio: 2025
+    editorial: "Microsoft Press"
+    espanol: {existe: false, titulo: null, anio: null, editorial: null}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "sqlbi.com/books y Open Library"
+  - id: analyzing-data-pbi
+    titulo: "Analyzing Data with Power BI and Power Pivot for Excel"
+    autores: ["Alberto Ferrari", "Marco Russo"]
+    tema: dax-modelado
+    edicion_vigente: "1.ª edición"
+    anio: 2017
+    editorial: "Microsoft Press"
+    espanol: {existe: false, titulo: null, anio: null, editorial: null}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "sqlbi.com/books y Open Library"
+  - id: expert-data-modeling
+    titulo: "Expert Data Modeling with Power BI"
+    autores: ["Soheil Bakhshi"]
+    tema: dax-modelado
+    edicion_vigente: "2.ª edición"
+    anio: 2023
+    editorial: "Packt"
+    espanol: {existe: false, titulo: null, anio: null, editorial: null}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "Open Library"
+  - id: master-your-data
+    titulo: "Master Your Data with Power Query in Excel and Power BI"
+    autores: ["Ken Puls", "Miguel Escobar"]
+    tema: dax-modelado
+    edicion_vigente: "2.ª edición"
+    anio: 2021
+    editorial: "Holy Macro! Books"
+    espanol: {existe: false, titulo: null, anio: null, editorial: null}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "Open Library (registra una impresión de 2024)"
+    notas: "Solo para leer Power Query (capítulo 6); la escuela arregla los datos en la fuente."
+  - id: swd
+    titulo: "Storytelling with Data"
+    autores: ["Cole Nussbaumer Knaflic"]
+    tema: storytelling
+    edicion_vigente: "1.ª edición"
+    anio: 2015
+    editorial: "Wiley"
+    espanol: {existe: true, titulo: "Storytelling con datos", anio: 2017, editorial: "Anaya Multimedia"}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "Open Library (registra inglés y portugués); la edición en español, por confirmar con la editorial"
+  - id: swd-practice
+    titulo: "Storytelling with Data: Let's Practice!"
+    autores: ["Cole Nussbaumer Knaflic"]
+    tema: storytelling
+    edicion_vigente: "1.ª edición"
+    anio: 2019
+    editorial: "Wiley"
+    espanol: {existe: false, titulo: null, anio: null, editorial: null}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "sin registro en Open Library: por confirmar con la editorial"
+  - id: effective-data-storytelling
+    titulo: "Effective Data Storytelling"
+    autores: ["Brent Dykes"]
+    tema: storytelling
+    edicion_vigente: "1.ª edición"
+    anio: 2019
+    editorial: "Wiley"
+    espanol: {existe: false, titulo: null, anio: null, editorial: null}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "Open Library"
+  - id: datastory
+    titulo: "DataStory: Explain Data and Inspire Action Through Story"
+    autores: ["Nancy Duarte"]
+    tema: storytelling
+    edicion_vigente: "1.ª edición"
+    anio: 2019
+    editorial: "Ideapress Publishing"
+    espanol: {existe: false, titulo: null, anio: null, editorial: null}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "sin registro en Open Library: por confirmar con la editorial"
+  - id: pyramid-principle
+    titulo: "The Pyramid Principle"
+    autores: ["Barbara Minto"]
+    tema: storytelling
+    edicion_vigente: "3.ª edición"
+    anio: 2009
+    editorial: "Pearson"
+    espanol: {existe: false, titulo: null, anio: null, editorial: null}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "Open Library (registra impresiones de 2021 y 2026)"
+  - id: making-numbers-count
+    titulo: "Making Numbers Count"
+    autores: ["Chip Heath", "Karla Starr"]
+    tema: storytelling
+    edicion_vigente: "1.ª edición"
+    anio: 2022
+    editorial: "Avid Reader Press"
+    espanol: {existe: false, titulo: null, anio: null, editorial: null}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "Open Library"
+  - id: info-dashboard-design
+    titulo: "Information Dashboard Design"
+    autores: ["Stephen Few"]
+    tema: diseno
+    edicion_vigente: "2.ª edición"
+    anio: 2013
+    editorial: "Analytics Press"
+    espanol: {existe: false, titulo: null, anio: null, editorial: null}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "Open Library"
+  - id: show-me-the-numbers
+    titulo: "Show Me the Numbers"
+    autores: ["Stephen Few"]
+    tema: diseno
+    edicion_vigente: "2.ª edición"
+    anio: 2012
+    editorial: "Analytics Press"
+    espanol: {existe: false, titulo: null, anio: null, editorial: null}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "Open Library solo registra la 1.ª edición (2004); la 2.ª, por confirmar con la editorial"
+  - id: big-book-dashboards
+    titulo: "The Big Book of Dashboards"
+    autores: ["Steve Wexler", "Jeffrey Shaffer", "Andy Cotgreave"]
+    tema: diseno
+    edicion_vigente: "1.ª edición"
+    anio: 2017
+    editorial: "Wiley"
+    espanol: {existe: false, titulo: null, anio: null, editorial: null}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "Open Library"
+  - id: good-charts
+    titulo: "Good Charts"
+    autores: ["Scott Berinato"]
+    tema: diseno
+    edicion_vigente: "Edición actualizada y ampliada"
+    anio: 2023
+    editorial: "Harvard Business Review Press"
+    espanol: {existe: false, titulo: null, anio: null, editorial: null}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "Open Library"
+  - id: how-charts-lie
+    titulo: "How Charts Lie"
+    autores: ["Alberto Cairo"]
+    tema: diseno
+    edicion_vigente: "1.ª edición"
+    anio: 2019
+    editorial: "W. W. Norton"
+    espanol: {existe: true, titulo: "Cómo mienten los gráficos", anio: 2020, editorial: "Paidós"}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "Open Library (inglés); la edición en español, por confirmar con la editorial"
+  - id: fundamentals-dataviz
+    titulo: "Fundamentals of Data Visualization"
+    autores: ["Claus O. Wilke"]
+    tema: diseno
+    edicion_vigente: "1.ª edición"
+    anio: 2019
+    editorial: "O'Reilly"
+    espanol: {existe: false, titulo: null, anio: null, editorial: null}
+    gratis_en_linea: "https://clauswilke.com/dataviz/"
+    verificado: "2026-11-14"
+    fuente_verificacion: "Open Library y la versión gratuita del autor"
+  - id: visual-display
+    titulo: "The Visual Display of Quantitative Information"
+    autores: ["Edward Tufte"]
+    tema: diseno
+    edicion_vigente: "2.ª edición"
+    anio: 2001
+    editorial: "Graphics Press"
+    espanol: {existe: false, titulo: null, anio: null, editorial: null}
+    gratis_en_linea: null
+    verificado: "2026-11-14"
+    fuente_verificacion: "Open Library"

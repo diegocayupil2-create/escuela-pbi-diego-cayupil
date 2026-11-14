@@ -1,0 +1,578 @@
+# Currículo v1 · Escuela PBI Diego Cayupil
+# Cada capítulo trae nivel, área, requisitos, competencias y fuentes con fecha de consulta.
+# estado: ga = disponible en general · preview = vista previa · mixto · no-aplica.
+# Las páginas se revisan con: npm run verificar-fuentes
+version: 1
+actualizado: "2026-11-14"
+dominio:            # cuándo un capítulo queda dominado (ajustable)
+  practicas_min: 3  # prácticas con el puntaje mínimo; una puede ser el cierre
+  puntaje_min: 80
+  repasos_min: 2    # repasos espaciados exitosos
+niveles:
+  - {id: 0, nombre: {es: "Nivelación", en: "Placement"}}
+  - {id: 1, nombre: {es: "Fundamentos", en: "Foundations"}}
+  - {id: 2, nombre: {es: "Intermedio", en: "Intermediate"}}
+  - {id: 3, nombre: {es: "Avanzado", en: "Advanced"}}
+  - {id: 4, nombre: {es: "Vanguardia", en: "Cutting edge"}}
+
+capitulos:
+  - id: c00
+    nivel: 0
+    area: nivelacion
+    titulo: {es: "Nivelación", en: "Placement test"}
+    resumen:
+      es: "24 preguntas que se adaptan a tus respuestas y un ejercicio corto con dataset. Te ubica por área y arma tu ruta."
+      en: "24 adaptive questions and a short hands-on exercise. It places you by area and builds your path."
+    requiere: []
+    estado: no-aplica
+    competencias: []
+    fuentes: []
+
+  # ---------- Nivel 1 · Fundamentos ----------
+  - id: c01
+    nivel: 1
+    area: modelado
+    titulo: {es: "Modelo estrella: fact tables, dimensions y grain", en: "Star schema: fact tables, dimensions and grain"}
+    resumen:
+      es: "Por qué Power BI rinde mejor con un star schema y cómo partir una tabla plana en hechos y dimensiones."
+      en: "Why Power BI works best with a star schema and how to split a flat table into facts and dimensions."
+    requiere: []
+    estado: ga
+    competencias:
+      - {id: c01-k1, es: "Separa una tabla plana en fact table y dimensions", en: "Splits a flat table into a fact table and dimensions"}
+      - {id: c01-k2, es: "Declara el grain de cada fact table antes de modelar", en: "States the grain of each fact table before modeling"}
+    fuentes:
+      - {titulo: "Understand star schema and the importance for Power BI", url: "https://learn.microsoft.com/en-us/power-bi/guidance/star-schema", nivel: A, consultado: "2026-11-14"}
+
+  - id: c02
+    nivel: 1
+    area: modelado
+    titulo: {es: "Relaciones y dirección del filtro", en: "Relationships and filter direction"}
+    resumen:
+      es: "Relaciones 1:* con filtro en una dirección, y cuándo una relación bidireccional o muchos a muchos se justifica."
+      en: "One-to-many relationships with single-direction filters, and when a bidirectional or many-to-many relationship is justified."
+    requiere: [c01]
+    estado: ga
+    competencias:
+      - {id: c02-k1, es: "Crea relaciones 1:* con filtro simple y justifica cada excepción", en: "Creates one-to-many relationships with single filters and justifies every exception"}
+      - {id: c02-k2, es: "Detecta caminos ambiguos y relaciones muchos a muchos", en: "Spots ambiguous paths and many-to-many relationships"}
+    fuentes:
+      - {titulo: "Bi-directional relationship guidance", url: "https://learn.microsoft.com/en-us/power-bi/guidance/relationships-bidirectional-filtering", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Create and manage relationships in Power BI Desktop", url: "https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-create-and-manage-relationships", nivel: A, consultado: "2026-11-14"}
+
+  - id: c03
+    nivel: 1
+    area: modelado
+    titulo: {es: "Tabla calendario, sin Auto date/time", en: "Date table, without Auto date/time"}
+    resumen:
+      es: "Una tabla de fechas continua, marcada como tabla de fechas, y por qué apagar Auto date/time."
+      en: "A continuous date table, marked as a date table, and why to turn off Auto date/time."
+    requiere: [c02]
+    estado: ga
+    competencias:
+      - {id: c03-k1, es: "Crea y marca una tabla calendario continua", en: "Creates and marks a continuous date table"}
+      - {id: c03-k2, es: "Apaga Auto date/time y explica por qué", en: "Turns off Auto date/time and explains why"}
+    fuentes:
+      - {titulo: "Create date tables in Power BI Desktop", url: "https://learn.microsoft.com/en-us/power-bi/guidance/model-date-tables", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Auto date/time guidance in Power BI Desktop", url: "https://learn.microsoft.com/en-us/power-bi/guidance/auto-date-time", nivel: A, consultado: "2026-11-14"}
+
+  - id: c04
+    nivel: 1
+    area: dax
+    titulo: {es: "Medidas vs columnas calculadas", en: "Measures vs calculated columns"}
+    resumen:
+      es: "Cuándo calcular por fila al cargar y cuándo calcular al momento, según lo que mire el visual."
+      en: "When to compute row by row at refresh time and when to compute on the fly, depending on what the visual shows."
+    requiere: [c01]
+    estado: ga
+    competencias:
+      - {id: c04-k1, es: "Elige medida o columna según el grain y el uso", en: "Chooses a measure or a column based on grain and use"}
+      - {id: c04-k2, es: "Usa medidas explícitas con formato y display folders", en: "Uses explicit measures with format strings and display folders"}
+    fuentes:
+      - {titulo: "Create measures for data analysis in Power BI Desktop", url: "https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-measures", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Calculated columns and measures in DAX", url: "https://www.sqlbi.com/articles/calculated-columns-and-measures-in-dax/", nivel: A, consultado: "2026-11-14"}
+
+  - id: c05
+    nivel: 1
+    area: dax
+    titulo: {es: "CALCULATE básico", en: "CALCULATE basics"}
+    resumen:
+      es: "Cómo CALCULATE cambia el filter context con argumentos de filtro simples."
+      en: "How CALCULATE changes the filter context with simple filter arguments."
+    requiere: [c04]
+    estado: ga
+    competencias:
+      - {id: c05-k1, es: "Modifica el filter context con filtros simples en CALCULATE", en: "Modifies the filter context with simple filters in CALCULATE"}
+      - {id: c05-k2, es: "Predice el resultado cuando el filtro pisa una columna que ya filtra el visual", en: "Predicts the result when a filter overrides a column the visual already filters"}
+    fuentes:
+      - {titulo: "CALCULATE function (DAX)", url: "https://learn.microsoft.com/en-us/dax/calculate-function-dax", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "CALCULATE · DAX Guide", url: "https://dax.guide/calculate/", nivel: A, consultado: "2026-11-14"}
+
+  - id: c06
+    nivel: 1
+    area: datos
+    titulo: {es: "Preparar datos en la fuente: SQL primero; Power Query solo para leerlo", en: "Prepare data at the source: SQL first; Power Query only to read it"}
+    resumen:
+      es: "Transformar lo más arriba posible (la regla de Matthew Roche), con SQL o un script, y saber leer un query de Power Query y su query folding."
+      en: "Transform as far upstream as possible (Matthew Roche's maxim) with SQL or a script, and know how to read a Power Query query and its folding."
+    requiere: []
+    estado: ga
+    competencias:
+      - {id: c06-k1, es: "Decide dónde transformar: en la fuente, antes que en el modelo", en: "Decides where to transform: at the source, before the model"}
+      - {id: c06-k2, es: "Lee un query de Power Query y reconoce si hace query folding", en: "Reads a Power Query query and recognizes whether it folds"}
+    fuentes:
+      - {titulo: "Understanding query evaluation and query folding in Power Query", url: "https://learn.microsoft.com/en-us/power-query/query-folding-basics", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Best practices when working with Power Query", url: "https://learn.microsoft.com/en-us/power-query/best-practices", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Roche's Maxim of Data Transformation", url: "https://ssbipolar.com/2021/05/31/roches-maxim/", nivel: B, consultado: "2026-11-14"}
+
+  - id: c07
+    nivel: 1
+    area: diseno
+    titulo: {es: "Elegir el gráfico correcto", en: "Choosing the right chart"}
+    resumen:
+      es: "El gráfico sale de la pregunta: comparar, componer, distribuir, relacionar o seguir en el tiempo."
+      en: "The chart follows the question: compare, compose, distribute, relate, or track over time."
+    requiere: []
+    estado: ga
+    competencias:
+      - {id: c07-k1, es: "Elige el gráfico según la pregunta de negocio", en: "Picks the chart based on the business question"}
+      - {id: c07-k2, es: "Evita gráficos que distorsionan: 3D, barras con eje cortado y tortas con muchas partes", en: "Avoids distorting charts: 3D, truncated bar axes and many-slice pies"}
+    fuentes:
+      - {titulo: "Visualization types in Power BI", url: "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-types-for-reports-and-q-and-a", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Storytelling with Data", libro: swd, nivel: A, consultado: "2026-11-14"}
+
+  - id: c08
+    nivel: 1
+    area: storytelling
+    titulo: {es: "Títulos que concluyen y la gran idea", en: "Titles that conclude and the big idea"}
+    resumen:
+      es: "El título dice la conclusión, no el tema; y todo el informe cabe en una gran idea de una frase."
+      en: "The title states the conclusion, not the topic, and the whole report fits in a one-sentence big idea."
+    requiere: [c07]
+    estado: no-aplica
+    competencias:
+      - {id: c08-k1, es: "Escribe títulos que dicen la conclusión", en: "Writes titles that state the conclusion"}
+      - {id: c08-k2, es: "Resume el mensaje en una gran idea de una frase", en: "Sums up the message in a one-sentence big idea"}
+    fuentes:
+      - {titulo: "Storytelling with Data", libro: swd, nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Blog de Storytelling with Data", url: "https://www.storytellingwithdata.com/blog", nivel: B, consultado: "2026-11-14"}
+
+  # ---------- Nivel 2 · Intermedio ----------
+  - id: c09
+    nivel: 2
+    area: dax
+    titulo: {es: "Contexto de fila y de filtro", en: "Row context and filter context"}
+    resumen:
+      es: "Los dos contextos de DAX: cuál existe en cada fórmula y por qué una columna calculada no filtra otras tablas."
+      en: "DAX's two contexts: which one exists in each formula and why a calculated column does not filter other tables."
+    requiere: [c05]
+    estado: ga
+    competencias:
+      - {id: c09-k1, es: "Distingue row context de filter context en cualquier fórmula", en: "Tells row context from filter context in any formula"}
+      - {id: c09-k2, es: "Explica por qué el row context no filtra otras tablas", en: "Explains why row context does not filter other tables"}
+    fuentes:
+      - {titulo: "Row context and filter context in DAX", url: "https://www.sqlbi.com/articles/row-context-and-filter-context-in-dax/", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "DAX overview", url: "https://learn.microsoft.com/en-us/dax/dax-overview", nivel: A, consultado: "2026-11-14"}
+
+  - id: c10
+    nivel: 2
+    area: dax
+    titulo: {es: "Transición de contexto", en: "Context transition"}
+    resumen:
+      es: "Cuándo CALCULATE convierte la fila actual en filtros, por qué toda medida lo hace sola y cómo evitar que un total se infle."
+      en: "When CALCULATE turns the current row into filters, why every measure does it on its own, and how to keep a total from inflating."
+    requiere: [c09]
+    estado: ga
+    carpeta: c10-transicion-de-contexto
+    competencias:
+      - {id: c10-k1, es: "Predice cuándo ocurre la transición de contexto: CALCULATE explícito o una medida referenciada", en: "Predicts when context transition happens: explicit CALCULATE or a referenced measure"}
+      - {id: c10-k2, es: "Detecta totales inflados por filas duplicadas al iterar tablas sin clave", en: "Detects totals inflated by duplicate rows when iterating tables without a key"}
+      - {id: c10-k3, es: "Elige qué tabla iterar para que la transición sea correcta y barata", en: "Chooses which table to iterate so the transition is correct and cheap"}
+    fuentes:
+      - {titulo: "Understanding context transition in DAX", url: "https://www.sqlbi.com/articles/understanding-context-transition-in-dax/", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "CALCULATE · DAX Guide", url: "https://dax.guide/calculate/", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "CALCULATE function (DAX)", url: "https://learn.microsoft.com/en-us/dax/calculate-function-dax", nivel: A, consultado: "2026-11-14"}
+
+  - id: c11
+    nivel: 2
+    area: dax
+    titulo: {es: "Iteradores y variables", en: "Iterators and variables"}
+    resumen:
+      es: "SUMX, AVERAGEX y RANKX cuando el cálculo es por fila, y VAR para leer mejor y evaluar una sola vez."
+      en: "SUMX, AVERAGEX and RANKX when the calculation is row by row, and VAR to read better and evaluate once."
+    requiere: [c09]
+    estado: ga
+    competencias:
+      - {id: c11-k1, es: "Usa iteradores cuando el cálculo es por fila", en: "Uses iterators when the calculation is row by row"}
+      - {id: c11-k2, es: "Usa VAR para leer mejor y no repetir cálculos", en: "Uses VAR for readability and to avoid repeated work"}
+    fuentes:
+      - {titulo: "Use variables to improve your DAX formulas", url: "https://learn.microsoft.com/en-us/dax/best-practices/dax-variables", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "SUMX · DAX Guide", url: "https://dax.guide/sumx/", nivel: A, consultado: "2026-11-14"}
+
+  - id: c12
+    nivel: 2
+    area: dax
+    titulo: {es: "ALL, ALLSELECTED, REMOVEFILTERS y KEEPFILTERS", en: "ALL, ALLSELECTED, REMOVEFILTERS and KEEPFILTERS"}
+    resumen:
+      es: "Porcentajes del total y del total visible, y cómo intersecar filtros en vez de reemplazarlos."
+      en: "Percentages of the grand total and of the visible total, and how to intersect filters instead of replacing them."
+    requiere: [c10]
+    estado: ga
+    competencias:
+      - {id: c12-k1, es: "Calcula el porcentaje del total y del total visible", en: "Computes the percentage of the grand total and of the visible total"}
+      - {id: c12-k2, es: "Usa KEEPFILTERS para intersecar en vez de reemplazar", en: "Uses KEEPFILTERS to intersect instead of replace"}
+    fuentes:
+      - {titulo: "REMOVEFILTERS function (DAX)", url: "https://learn.microsoft.com/en-us/dax/removefilters-function-dax", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "KEEPFILTERS function (DAX)", url: "https://learn.microsoft.com/en-us/dax/keepfilters-function-dax", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Managing all functions in DAX", url: "https://www.sqlbi.com/articles/managing-all-functions-in-dax-all-allselected-allnoblankrow-allexcept/", nivel: A, consultado: "2026-11-14"}
+
+  - id: c13
+    nivel: 2
+    area: dax
+    titulo: {es: "Inteligencia de tiempo", en: "Time intelligence"}
+    resumen:
+      es: "Acumulado del año, año anterior y móvil de 12 meses; y los calendarios nuevos de DAX, que siguen en vista previa."
+      en: "Year to date, prior year and rolling 12 months; plus DAX's new calendars, still in preview."
+    requiere: [c03, c12]
+    estado: mixto
+    nota_estado:
+      es: "La inteligencia de tiempo clásica está disponible en general. La basada en calendarios está en vista previa: se activa en File → Options and settings → Options → Preview features → Enhanced DAX Time Intelligence."
+      en: "Classic time intelligence is generally available. Calendar-based time intelligence is in preview: turn it on in File → Options and settings → Options → Preview features → Enhanced DAX Time Intelligence."
+    competencias:
+      - {id: c13-k1, es: "Calcula acumulado del año, año anterior y móvil de 12 meses", en: "Computes year to date, prior year and rolling 12 months"}
+      - {id: c13-k2, es: "Sabe cuándo conviene la inteligencia de tiempo con calendarios", en: "Knows when calendar-based time intelligence pays off"}
+    fuentes:
+      - {titulo: "Implement time-based calculations in Power BI", url: "https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-time-intelligence", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Time intelligence functions (DAX)", url: "https://learn.microsoft.com/en-us/dax/time-intelligence-functions-dax", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Standard time-related calculations", url: "https://www.daxpatterns.com/standard-time-related-calculations/", nivel: A, consultado: "2026-11-14"}
+
+  - id: c14
+    nivel: 2
+    area: modelado
+    titulo: {es: "Relaciones inactivas y role-playing dimensions", en: "Inactive relationships and role-playing dimensions"}
+    resumen:
+      es: "Varias fechas en una fact table: activar una relación inactiva o duplicar la dimensión."
+      en: "Several dates in one fact table: activate an inactive relationship or duplicate the dimension."
+    requiere: [c02, c13]
+    estado: ga
+    competencias:
+      - {id: c14-k1, es: "Activa una relación inactiva con USERELATIONSHIP", en: "Activates an inactive relationship with USERELATIONSHIP"}
+      - {id: c14-k2, es: "Decide entre relaciones inactivas y una role-playing dimension", en: "Chooses between inactive relationships and a role-playing dimension"}
+    fuentes:
+      - {titulo: "Active vs inactive relationship guidance", url: "https://learn.microsoft.com/en-us/power-bi/guidance/relationships-active-inactive", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "USERELATIONSHIP function (DAX)", url: "https://learn.microsoft.com/en-us/dax/userelationship-function-dax", nivel: A, consultado: "2026-11-14"}
+
+  - id: c15
+    nivel: 2
+    area: reportes
+    titulo: {es: "Navegación, tooltips y drill-through", en: "Navigation, tooltips and drill-through"}
+    resumen:
+      es: "Un informe que responde la siguiente pregunta: botones de navegación, tooltips de página y drill-through."
+      en: "A report that answers the next question: navigation buttons, report page tooltips and drill-through."
+    requiere: [c08]
+    estado: ga
+    competencias:
+      - {id: c15-k1, es: "Diseña la navegación con botones y páginas", en: "Designs navigation with buttons and pages"}
+      - {id: c15-k2, es: "Agrega tooltips de página y drill-through que responden la siguiente pregunta", en: "Adds page tooltips and drill-through that answer the next question"}
+    fuentes:
+      - {titulo: "Set up drillthrough in Power BI reports", url: "https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-drillthrough", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Create tooltips based on report pages", url: "https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-tooltips", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Create buttons in Power BI reports", url: "https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-buttons", nivel: A, consultado: "2026-11-14"}
+
+  - id: c16
+    nivel: 2
+    area: reportes
+    titulo: {es: "Field parameters y temas JSON", en: "Field parameters and JSON themes"}
+    resumen:
+      es: "Que el lector cambie la medida o la dimensión, y un tema JSON con tu paleta y tipografía."
+      en: "Let readers switch the measure or dimension, and a JSON theme with your palette and fonts."
+    requiere: [c15]
+    estado: ga
+    competencias:
+      - {id: c16-k1, es: "Crea field parameters para cambiar medidas o dimensiones", en: "Creates field parameters to switch measures or dimensions"}
+      - {id: c16-k2, es: "Escribe un tema JSON con su paleta y tipografía", en: "Writes a JSON theme with a palette and fonts"}
+    fuentes:
+      - {titulo: "Use field parameters in Power BI reports", url: "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-field-parameters", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Use report themes in Power BI Desktop", url: "https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-report-themes", nivel: A, consultado: "2026-11-14"}
+
+  - id: c17
+    nivel: 2
+    area: reportes
+    titulo: {es: "Accesibilidad", en: "Accessibility"}
+    resumen:
+      es: "Contraste, texto alternativo, orden de tabulación y nunca depender solo del color."
+      en: "Contrast, alt text, tab order and never relying on color alone."
+    requiere: [c15]
+    estado: ga
+    competencias:
+      - {id: c17-k1, es: "Asegura contraste, texto alternativo y orden de tabulación", en: "Ensures contrast, alt text and tab order"}
+      - {id: c17-k2, es: "No depende solo del color para transmitir significado", en: "Does not rely on color alone to convey meaning"}
+    fuentes:
+      - {titulo: "Overview of accessibility in Power BI", url: "https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-accessibility-overview", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Design Power BI reports for accessibility", url: "https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-accessibility-creating-reports", nivel: A, consultado: "2026-11-14"}
+
+  - id: c18
+    nivel: 2
+    area: storytelling
+    titulo: {es: "SCQA y anotaciones", en: "SCQA and annotations"}
+    resumen:
+      es: "Situación, complicación, pregunta y respuesta para ordenar el informe, y anotar el dato clave en el gráfico."
+      en: "Situation, complication, question and answer to structure the report, and annotating the key data point."
+    requiere: [c08]
+    estado: no-aplica
+    competencias:
+      - {id: c18-k1, es: "Estructura un informe con SCQA", en: "Structures a report with SCQA"}
+      - {id: c18-k2, es: "Anota el dato clave directamente en el gráfico", en: "Annotates the key data point directly on the chart"}
+    fuentes:
+      - {titulo: "The Pyramid Principle", libro: pyramid-principle, nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Storytelling with Data", libro: swd, nivel: A, consultado: "2026-11-14"}
+
+  - id: c19
+    nivel: 2
+    area: storytelling
+    titulo: {es: "Color con intención y variaciones al estilo IBCS", en: "Intentional color and IBCS-style variances"}
+    resumen:
+      es: "Gris para el contexto y un solo color para el mensaje, y variaciones contra el plan y el año anterior con la notación IBCS."
+      en: "Gray for context and a single color for the message, and variances against plan and prior year with IBCS notation."
+    requiere: [c18]
+    estado: no-aplica
+    competencias:
+      - {id: c19-k1, es: "Usa gris para el contexto y un solo color para el mensaje", en: "Uses gray for context and a single color for the message"}
+      - {id: c19-k2, es: "Muestra variaciones contra plan y año anterior con la notación IBCS (AC, PL, PY)", en: "Shows variances against plan and prior year with IBCS notation (AC, PL, PY)"}
+    fuentes:
+      - {titulo: "IBCS Standards", url: "https://www.ibcs.com/", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Storytelling with Data", libro: swd, nivel: A, consultado: "2026-11-14"}
+
+  - id: c20
+    nivel: 2
+    area: negocio
+    titulo: {es: "KPIs por área de negocio", en: "KPIs by business area"}
+    resumen:
+      es: "KPIs con fórmula, dueño y meta para ventas, finanzas, marketing y operaciones; incluye tu dashboard de progreso con el CSV de la escuela."
+      en: "KPIs with formula, owner and target for sales, finance, marketing and operations; includes your progress dashboard built from the school's CSV."
+    requiere: [c13, c18]
+    estado: ga
+    competencias:
+      - {id: c20-k1, es: "Define KPIs con fórmula, dueño y meta", en: "Defines KPIs with formula, owner and target"}
+      - {id: c20-k2, es: "Arma su dashboard de progreso con el CSV de la escuela", en: "Builds a progress dashboard from the school's CSV"}
+    fuentes:
+      - {titulo: "Key performance indicator (KPI) visuals", url: "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-kpi", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "The Big Book of Dashboards", libro: big-book-dashboards, nivel: A, consultado: "2026-11-14"}
+
+  # ---------- Nivel 3 · Avanzado ----------
+  - id: c21
+    nivel: 3
+    area: dax
+    titulo: {es: "Calculation groups", en: "Calculation groups"}
+    resumen:
+      es: "Un calculation group de inteligencia de tiempo y format string expressions para controlar el formato."
+      en: "A time intelligence calculation group and format string expressions to control formatting."
+    requiere: [c13]
+    estado: ga
+    competencias:
+      - {id: c21-k1, es: "Crea un calculation group de inteligencia de tiempo", en: "Creates a time intelligence calculation group"}
+      - {id: c21-k2, es: "Controla el formato con format string expressions", en: "Controls formatting with format string expressions"}
+    fuentes:
+      - {titulo: "Create calculation groups", url: "https://learn.microsoft.com/en-us/power-bi/transform-model/calculation-groups", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Introducing calculation groups", url: "https://www.sqlbi.com/articles/introducing-calculation-groups/", nivel: A, consultado: "2026-11-14"}
+
+  - id: c22
+    nivel: 3
+    area: dax
+    titulo: {es: "Funciones de ventana y visual calculations", en: "Window functions and visual calculations"}
+    resumen:
+      es: "OFFSET, INDEX y WINDOW para comparar filas, y visual calculations para acumulados y promedios móviles sobre el visual."
+      en: "OFFSET, INDEX and WINDOW to compare rows, and visual calculations for running totals and moving averages on the visual."
+    requiere: [c12]
+    estado: ga
+    nota_estado:
+      es: "Visual calculations no muestra nota de vista previa en Microsoft Learn (13-oct-2026). No funciona con visuales personalizados ni con Publicar en la web."
+      en: "Microsoft Learn shows no preview note for visual calculations (Oct 13, 2026). They don't work with custom visuals or Publish to web."
+    competencias:
+      - {id: c22-k1, es: "Usa OFFSET, INDEX y WINDOW para comparar filas", en: "Uses OFFSET, INDEX and WINDOW to compare rows"}
+      - {id: c22-k2, es: "Resuelve acumulados y promedios móviles con visual calculations", en: "Solves running totals and moving averages with visual calculations"}
+    fuentes:
+      - {titulo: "OFFSET function (DAX)", url: "https://learn.microsoft.com/en-us/dax/offset-function-dax", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "WINDOW function (DAX)", url: "https://learn.microsoft.com/en-us/dax/window-function-dax", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Visual calculations overview", url: "https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-visual-calculations-overview", nivel: A, consultado: "2026-11-14"}
+
+  - id: c23
+    nivel: 3
+    area: dax
+    titulo: {es: "UDF de DAX, granularidad y totales correctos", en: "DAX UDFs, granularity and correct totals"}
+    resumen:
+      es: "Empaquetar lógica repetida en funciones propias de DAX y lograr que los totales sumen lo que el negocio espera."
+      en: "Package repeated logic in your own DAX functions and make totals add up the way the business expects."
+    requiere: [c11, c21]
+    estado: ga
+    nota_estado:
+      es: "Las UDF de DAX están disponibles en general desde la versión de junio de 2026 y requieren nivel de compatibilidad 1702 o superior."
+      en: "DAX UDFs are generally available since the June 2026 release and require compatibility level 1702 or higher."
+    competencias:
+      - {id: c23-k1, es: "Empaqueta lógica repetida en una UDF con parámetros tipados", en: "Packages repeated logic in a UDF with typed parameters"}
+      - {id: c23-k2, es: "Hace que los totales sumen lo que el negocio espera", en: "Makes totals add up the way the business expects"}
+    fuentes:
+      - {titulo: "Use DAX user-defined functions", url: "https://learn.microsoft.com/en-us/dax/best-practices/dax-user-defined-functions", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Obtaining accurate totals in DAX", url: "https://www.sqlbi.com/articles/obtaining-accurate-totals-in-dax/", nivel: A, consultado: "2026-11-14"}
+
+  - id: c24
+    nivel: 3
+    area: rendimiento
+    titulo: {es: "Rendimiento: DAX Studio, VertiPaq Analyzer, cardinalidad y modos de almacenamiento", en: "Performance: DAX Studio, VertiPaq Analyzer, cardinality and storage modes"}
+    resumen:
+      es: "Medir antes de optimizar: tiempos de consulta, tamaño del modelo y el modo de almacenamiento correcto."
+      en: "Measure before optimizing: query timings, model size and the right storage mode."
+    requiere: [c12]
+    estado: ga
+    competencias:
+      - {id: c24-k1, es: "Mide consultas con DAX Studio (Server Timings)", en: "Measures queries with DAX Studio (Server Timings)"}
+      - {id: c24-k2, es: "Reduce el modelo con VertiPaq Analyzer: cardinalidad, columnas y tipos", en: "Shrinks the model with VertiPaq Analyzer: cardinality, columns and data types"}
+      - {id: c24-k3, es: "Elige el modo de almacenamiento: Import, DirectQuery, Dual o Direct Lake", en: "Chooses the storage mode: Import, DirectQuery, Dual or Direct Lake"}
+    fuentes:
+      - {titulo: "Optimization guide for Power BI", url: "https://learn.microsoft.com/en-us/power-bi/guidance/power-bi-optimization", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "VertiPaq Analyzer", url: "https://www.sqlbi.com/tools/vertipaq-analyzer/", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "DAX Studio", url: "https://daxstudio.org/", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Manage storage mode in Power BI Desktop", url: "https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-storage-mode", nivel: A, consultado: "2026-11-14"}
+
+  - id: c25
+    nivel: 3
+    area: ingenieria
+    titulo: {es: "Ingeniería: PBIP + Git, TMDL y reglas BPA", en: "Engineering: PBIP + Git, TMDL and BPA rules"}
+    resumen:
+      es: "Guardar en PBIP, versionar con Git, leer un diff de TMDL y correr las reglas de Best Practice Analyzer."
+      en: "Save as PBIP, version with Git, read a TMDL diff and run the Best Practice Analyzer rules."
+    requiere: [c04]
+    estado: ga
+    nota_estado:
+      es: "PBIR es el formato de reporte por defecto desde la versión de septiembre de 2026; la vista TMDL está disponible en general en Desktop."
+      en: "PBIR is the default report format since the September 2026 release; TMDL view is generally available in Desktop."
+    competencias:
+      - {id: c25-k1, es: "Guarda en PBIP, versiona con Git y lee un diff de TMDL", en: "Saves as PBIP, versions with Git and reads a TMDL diff"}
+      - {id: c25-k2, es: "Corre las reglas BPA y corrige primero las de mayor severidad", en: "Runs BPA rules and fixes the most severe first"}
+    fuentes:
+      - {titulo: "Power BI Desktop projects (PBIP)", url: "https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-overview", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Tabular Model Definition Language (TMDL)", url: "https://learn.microsoft.com/en-us/analysis-services/tmdl/tmdl-overview", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Best Practice Rules for Tabular Editor", url: "https://github.com/TabularEditor/BestPracticeRules", nivel: A, consultado: "2026-11-14"}
+
+  - id: c26
+    nivel: 3
+    area: ingenieria
+    titulo: {es: "RLS (row-level security)", en: "RLS (row-level security)"}
+    resumen:
+      es: "Roles que filtran por usuario y cómo probarlos antes de publicar."
+      en: "Roles that filter by user and how to test them before publishing."
+    requiere: [c25]
+    estado: ga
+    competencias:
+      - {id: c26-k1, es: "Crea roles con RLS dinámica", en: "Creates roles with dynamic RLS"}
+      - {id: c26-k2, es: "Prueba los roles con View as", en: "Tests roles with View as"}
+    fuentes:
+      - {titulo: "Row-level security (RLS) with Power BI", url: "https://learn.microsoft.com/en-us/fabric/security/service-admin-row-level-security", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Row-level security (RLS) guidance in Power BI Desktop", url: "https://learn.microsoft.com/en-us/power-bi/guidance/rls-guidance", nivel: A, consultado: "2026-11-14"}
+
+  - id: c27
+    nivel: 3
+    area: diseno
+    titulo: {es: "Diseño: grilla y boceto, SVG en DAX, Deneb y el estilo de Gus Bavia", en: "Design: grid and sketch, SVG in DAX, Deneb and Gus Bavia's style"}
+    resumen:
+      es: "Bocetar en una grilla antes de abrir Desktop, dibujar indicadores con SVG desde una medida y crear visuales a medida con Deneb."
+      en: "Sketch on a grid before opening Desktop, draw indicators with SVG from a measure and build custom visuals with Deneb."
+    requiere: [c16, c19]
+    estado: ga
+    nota_estado:
+      es: "Deneb está certificado. HTML Content, que usa Gus Bavia, no lo está y falla al exportar a PDF: se enseña con esos límites."
+      en: "Deneb is certified. HTML Content, which Gus Bavia uses, is not, and it fails when exporting to PDF: it's taught with those limits."
+    competencias:
+      - {id: c27-k1, es: "Boceta la página en una grilla antes de abrir Desktop", en: "Sketches the page on a grid before opening Desktop"}
+      - {id: c27-k2, es: "Dibuja un indicador con SVG desde una medida", en: "Draws an indicator with SVG from a measure"}
+      - {id: c27-k3, es: "Crea un visual a medida con Deneb", en: "Builds a custom visual with Deneb"}
+    fuentes:
+      - {titulo: "Display images in a table, matrix, or slicer", url: "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-images-tables", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Deneb · documentación", url: "https://deneb-viz.github.io/", nivel: B, consultado: "2026-11-14"}
+      - {titulo: "Kerry Kolosko · plantillas de Deneb", url: "https://kerrykolosko.com/", nivel: B, consultado: "2026-11-14"}
+
+  - id: c28
+    nivel: 3
+    area: storytelling
+    titulo: {es: "Resumen ejecutivo y presentación a gerencia", en: "Executive summary and presenting to leadership"}
+    resumen:
+      es: "La conclusión primero, como en la pirámide de Minto, y una presentación de 5 minutos con una página y 3 puntos."
+      en: "Conclusion first, as in Minto's pyramid, and a 5-minute presentation with one page and 3 points."
+    requiere: [c19]
+    estado: no-aplica
+    competencias:
+      - {id: c28-k1, es: "Escribe un resumen ejecutivo con la conclusión primero", en: "Writes an executive summary with the conclusion first"}
+      - {id: c28-k2, es: "Presenta en 5 minutos con una página y 3 puntos", en: "Presents in 5 minutes with one page and 3 points"}
+    fuentes:
+      - {titulo: "The Pyramid Principle", libro: pyramid-principle, nivel: A, consultado: "2026-11-14"}
+      - {titulo: "DataStory", libro: datastory, nivel: A, consultado: "2026-11-14"}
+
+  # ---------- Nivel 4 · Vanguardia ----------
+  - id: c29
+    nivel: 4
+    area: vanguardia
+    titulo: {es: "Agentes y MCP en Power BI", en: "Agents and MCP in Power BI"}
+    resumen:
+      es: "Claude Code y el MCP de Power BI: consultar y modificar un modelo con un agente, revisando el diff antes de aceptar."
+      en: "Claude Code and the Power BI MCP: query and change a model with an agent, reviewing the diff before accepting."
+    requiere: [c25]
+    estado: mixto
+    nota_estado:
+      es: "El servidor MCP local de Power BI está disponible en general; la versión alojada sigue en vista previa."
+      en: "The local Power BI MCP server is generally available; the hosted version is still in preview."
+    competencias:
+      - {id: c29-k1, es: "Conecta Claude Code al MCP de Power BI y ejecuta consultas DAX", en: "Connects Claude Code to the Power BI MCP and runs DAX queries"}
+      - {id: c29-k2, es: "Modifica un PBIP con un agente y revisa el diff antes de aceptar", en: "Changes a PBIP with an agent and reviews the diff before accepting"}
+    fuentes:
+      - {titulo: "Power BI Authoring MCP server", url: "https://learn.microsoft.com/en-us/power-bi/developer/mcp/power-bi-authoring-mcp", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Overview of the MCP servers", url: "https://learn.microsoft.com/en-us/power-bi/developer/mcp/mcp-servers-overview", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Power BI Modeling MCP Server", url: "https://github.com/microsoft/powerbi-modeling-mcp", nivel: A, consultado: "2026-11-14"}
+
+  - id: c30
+    nivel: 4
+    area: vanguardia
+    titulo: {es: "Modelos semánticos listos para IA y Copilot", en: "AI-ready semantic models and Copilot"}
+    resumen:
+      es: "Descripciones y sinónimos que la IA entiende, y Prep data for AI: AI data schema, verified answers y AI instructions."
+      en: "Descriptions and synonyms AI understands, and Prep data for AI: AI data schema, verified answers and AI instructions."
+    requiere: [c25]
+    estado: preview
+    nota_estado:
+      es: "Prep data for AI está en vista previa. El visual Q&A se retira en febrero de 2027 y no se enseña."
+      en: "Prep data for AI is in preview. The Q&A visual retires in February 2027 and is not taught."
+    competencias:
+      - {id: c30-k1, es: "Escribe descripciones y sinónimos que la IA entiende", en: "Writes descriptions and synonyms AI understands"}
+      - {id: c30-k2, es: "Usa Prep data for AI: AI data schema, verified answers y AI instructions", en: "Uses Prep data for AI: AI data schema, verified answers and AI instructions"}
+    fuentes:
+      - {titulo: "Prepare your data for AI to improve Copilot results", url: "https://learn.microsoft.com/en-us/power-bi/create-reports/copilot-prepare-data-ai", nivel: A, consultado: "2026-11-14"}
+
+  - id: c31
+    nivel: 4
+    area: vanguardia
+    titulo: {es: "Novedades del mes", en: "This month's updates"}
+    resumen:
+      es: "Capítulo vivo: cada mes, la novedad estable más útil llevada a un ejercicio propio."
+      en: "A living chapter: each month, the most useful stable update turned into your own exercise."
+    requiere: []
+    estado: no-aplica
+    competencias:
+      - {id: c31-k1, es: "Lleva una novedad estable a un ejercicio propio cada mes", en: "Turns a stable update into your own exercise each month"}
+    fuentes:
+      - {titulo: "What's new in the latest Power BI update", url: "https://learn.microsoft.com/en-us/power-bi/fundamentals/desktop-latest-update", nivel: A, consultado: "2026-11-14"}
+      - {titulo: "Previous monthly updates to Power BI Desktop and the Power BI service", url: "https://learn.microsoft.com/en-us/power-bi/fundamentals/desktop-latest-update-archive", nivel: A, consultado: "2026-11-14"}
+
+  - id: c32
+    nivel: 4
+    area: vanguardia
+    titulo: {es: "Competir: Mundial, Onyx DataDNA, Workout Wednesday y Makeover Monday", en: "Competing: World Championships, Onyx DataDNA, Workout Wednesday and Makeover Monday"}
+    resumen:
+      es: "Entregar un reto internacional a tiempo y con historia, y compararse con las ganadoras."
+      en: "Submit an international challenge on time and with a story, and compare yourself with the winners."
+    requiere: [c27, c28]
+    estado: no-aplica
+    competencias:
+      - {id: c32-k1, es: "Entrega un reto internacional a tiempo y con su historia", en: "Submits an international challenge on time and with its story"}
+      - {id: c32-k2, es: "Compara su entrega con las ganadoras y anota 3 diferencias", en: "Compares the submission with the winners and notes 3 differences"}
+    fuentes:
+      - {titulo: "Onyx Data DataDNA", url: "https://datadna.onyxdata.co.uk/", nivel: B, consultado: "2026-11-14"}
+      - {titulo: "Workout Wednesday · Power BI", url: "https://www.workout-wednesday.com/power-bi-challenges/", nivel: B, consultado: "2026-11-14"}

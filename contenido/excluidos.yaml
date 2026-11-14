@@ -1,0 +1,12 @@
+# Lo que nunca entra a la escuela ni al radar.
+# Las pruebas fallan si alguno de estos dominios o palabras aparece en contenido/ o en datos/.
+version: 1
+dominios:
+  - zoomcharts.com
+palabras:
+  - zoomcharts
+  - fp20
+notas:
+  zoomcharts: "Ni sus visuales, ni su blog, ni sus retos o mini-retos, incluidos FP20 y los mini-retos de ZoomCharts dentro de DataDNA. Decisión de Diego del 2-nov-2026, por la baja calidad de los ganadores."
+  granjas: "Granjas de contenido, listicles SEO y contenido generado por IA sin autor: sin autor identificable, queda fuera."
+  pago: "Visuales de pago presentados como buena práctica: fuera. Se priorizan visuales nativos, visual calculations, SVG en DAX y Deneb."

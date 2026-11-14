@@ -1,0 +1,95 @@
+# Práctica 2 del capítulo 10 (es la práctica final del cierre). Los {{valores}} salen de respuestas.json.
+id: c10-p02
+capitulo: c10
+minutos: 35
+tipo_pregunta: calidad
+dataset: datos/datasets/distribuidora-andes
+respuestas: c10-p02
+titulo:
+  es: "El total que no cuadra con el ERP"
+  en: "The total that doesn't match the ERP"
+objetivo:
+  es: "Encontrar por qué las ventas de marzo de 2025 no cuadran con el ERP, explicar por qué una medida que itera la fact table infla todavía más el error y corregirlo en la fuente."
+  en: "Find why March 2025 sales don't match the ERP, explain why a measure that iterates the fact table inflates the error even more, and fix it at the source."
+por_que_importa:
+  es: "Si el informe no cuadra con el sistema contable, nadie confía en él. Encontrar la causa, en vez de maquillar el número, es lo que hace confiable a un analista."
+  en: "If the report doesn't match the accounting system, nobody trusts it. Finding the cause instead of patching the number is what makes an analyst trustworthy."
+contexto:
+  es: "La jefa de finanzas de Distribuidora Andes compara tu informe con el ERP. Para marzo de 2025, el ERP dice {{ventas_marzo_erp}} pesos. Tu medida [Ventas] da más, y la tabla «Ventas por línea», que usa SUMX ( fact_ventas, [Ventas] ), da todavía más. Te pide explicarlo antes del cierre de mes."
+  en: "Distribuidora Andes' head of finance compares your report with the ERP. For March 2025 the ERP says CLP {{ventas_marzo_erp}}. Your [Ventas] measure returns more, and the «Ventas por línea» table, which uses SUMX ( fact_ventas, [Ventas] ), returns even more. She wants an explanation before month-end close."
+pasos:
+  es:
+    - "Compara [Ventas] de marzo de 2025 con el número del ERP."
+    - "Crea la medida Ventas por línea = SUMX ( fact_ventas, [Ventas] ) y compárala también."
+    - "Busca filas idénticas en fact_ventas: mejor en la fuente, con SQL; si no, con una consulta en DAX query view."
+    - "Explica con tus palabras por qué la segunda medida infla más que la primera."
+    - "Corrige en la fuente, vuelve a cargar y comprueba que marzo cuadra con el ERP."
+    - "Cierra con un titular de una frase y 3 puntos para la jefa de finanzas."
+  en:
+    - "Compare March 2025 [Ventas] with the ERP figure."
+    - "Create the measure Ventas por línea = SUMX ( fact_ventas, [Ventas] ) and compare it too."
+    - "Look for identical rows in fact_ventas: ideally at the source, with SQL; otherwise with a query in DAX query view."
+    - "Explain in your own words why the second measure inflates more than the first."
+    - "Fix it at the source, reload and check that March matches the ERP."
+    - "Close with a one-sentence headline and 3 points for the head of finance."
+criterios_exito:
+  - es: "Encuentras las {{lineas_duplicadas}} líneas duplicadas: son del {{fecha_lote}}, de la sucursal {{sucursal_lote}}, y suman {{monto_duplicado}} pesos."
+    en: "You find the {{lineas_duplicadas}} duplicated lines: they're from {{fecha_lote}}, branch {{sucursal_lote}}, and add up to CLP {{monto_duplicado}}."
+  - es: "Explicas por qué cada línea duplicada aparece dos veces en [Ventas] y cuatro veces en Ventas por línea."
+    en: "You explain why each duplicated line shows up twice in [Ventas] and four times in Ventas por línea."
+  - es: "Después de corregir en la fuente, [Ventas] de marzo de 2025 da {{ventas_marzo_erp}} pesos, igual que el ERP."
+    en: "After fixing the source, March 2025 [Ventas] returns CLP {{ventas_marzo_erp}}, matching the ERP."
+  - es: "Propones cómo evitarlo: un id de línea en la extracción del ERP."
+    en: "You propose how to prevent it: a line id in the ERP extract."
+pistas:
+  - es: "Piensa qué filas «ve» cada fila duplicada cuando [Ventas] se evalúa con transición de contexto."
+    en: "Think about which rows each duplicated row «sees» when [Ventas] is evaluated with context transition."
+  - es: "En SQL: agrupa por todas las columnas de fact_ventas y quédate con los grupos con COUNT(*) > 1."
+    en: "In SQL: group by every column of fact_ventas and keep the groups with COUNT(*) > 1."
+  - es: "En DAX query view: ADDCOLUMNS sobre un SUMMARIZE de todas las columnas, con CALCULATE ( COUNTROWS ( fact_ventas ) ) como columna «copias», y un FILTER donde copias > 1."
+    en: "In DAX query view: ADDCOLUMNS over a SUMMARIZE of every column, with CALCULATE ( COUNTROWS ( fact_ventas ) ) as a «copias» column, and a FILTER where copias > 1."
+solucion:
+  es: |
+    Hay {{lineas_duplicadas}} líneas que llegaron dos veces: la sucursal {{sucursal_lote}} reenvió el lote del {{fecha_lote}}. Suman {{monto_duplicado}} pesos.
+
+    - [Ventas] = SUM ( fact_ventas[monto_neto] ) cuenta cada copia una vez: marzo da {{ventas_marzo_sum}} pesos, o sea {{exceso_sum}} de más.
+    - Ventas por línea = SUMX ( fact_ventas, [Ventas] ) es peor. En cada copia, la transición de contexto filtra todas las filas iguales a ella, encuentra las dos y devuelve el doble; SUMX suma eso en las dos copias. Cada línea duplicada cuenta cuatro veces: marzo da {{ventas_marzo_por_linea}} pesos, o sea {{exceso_por_linea}} de más.
+
+    Para encontrarlas en la fuente:
+
+    ```sql
+    SELECT fecha, cliente_id, producto_id, sucursal, cantidad, precio_unitario, descuento_pct, monto_neto,
+           COUNT(*) AS copias
+    FROM fact_ventas
+    GROUP BY fecha, cliente_id, producto_id, sucursal, cantidad, precio_unitario, descuento_pct, monto_neto
+    HAVING COUNT(*) > 1;
+    ```
+
+    Para corregir, deja una sola copia de cada línea antes de cargar, por ejemplo con SELECT DISTINCT. Solo es seguro porque comprobaste que todas las copias vienen del lote reenviado. El arreglo de fondo es pedirle al ERP un id de línea, para que dos ventas iguales y legítimas nunca se confundan con un error.
+
+    Si hoy no puedes tocar la fuente, al menos no llames medidas dentro de un iterador sobre la fact table.
+  en: |
+    There are {{lineas_duplicadas}} lines that arrived twice: branch {{sucursal_lote}} re-sent the batch of {{fecha_lote}}. They add up to CLP {{monto_duplicado}}.
+
+    - [Ventas] = SUM ( fact_ventas[monto_neto] ) counts each copy once: March returns CLP {{ventas_marzo_sum}}, that is, {{exceso_sum}} too much.
+    - Ventas por línea = SUMX ( fact_ventas, [Ventas] ) is worse. On each copy, context transition filters every row equal to it, finds both and returns double; SUMX adds that on both copies. Each duplicated line counts four times: March returns CLP {{ventas_marzo_por_linea}}, that is, {{exceso_por_linea}} too much.
+
+    To find them at the source:
+
+    ```sql
+    SELECT fecha, cliente_id, producto_id, sucursal, cantidad, precio_unitario, descuento_pct, monto_neto,
+           COUNT(*) AS copias
+    FROM fact_ventas
+    GROUP BY fecha, cliente_id, producto_id, sucursal, cantidad, precio_unitario, descuento_pct, monto_neto
+    HAVING COUNT(*) > 1;
+    ```
+
+    To fix it, keep a single copy of each line before loading, for example with SELECT DISTINCT. That's only safe because you checked that every copy comes from the re-sent batch. The root fix is asking the ERP for a line id, so two identical, legitimate sales are never mistaken for an error.
+
+    If you can't touch the source today, at least don't call measures inside an iterator over the fact table.
+storytelling:
+  es: "Titular de ejemplo: «Marzo no cuadraba por un lote reenviado desde {{sucursal_lote}}: {{monto_duplicado}} pesos de más, ya corregido en la fuente». Tres puntos: qué pasó, cuánto afectó a cada medida y cómo se evita con un id de línea."
+  en: "Sample headline: «March was off because {{sucursal_lote}} re-sent a batch: CLP {{monto_duplicado}} too much, now fixed at the source». Three points: what happened, how much it affected each measure, and how a line id prevents it."
+fuentes:
+  - {titulo: "Understanding context transition in DAX", url: "https://www.sqlbi.com/articles/understanding-context-transition-in-dax/", nivel: A, consultado: "2026-11-14"}
+  - {titulo: "DAX query view", url: "https://learn.microsoft.com/en-us/power-bi/transform-model/dax-query-view", nivel: A, consultado: "2026-11-14"}

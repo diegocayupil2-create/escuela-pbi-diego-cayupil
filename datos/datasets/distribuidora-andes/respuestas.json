@@ -1,0 +1,55 @@
+{
+  "dataset": "distribuidora-andes",
+  "semilla": 20261114,
+  "c10-p01": {
+    "umbral": 20000000,
+    "grandes_2024": 68,
+    "pct_ventas_grandes_2024": 74.4,
+    "pct_ventas_grandes_2024_sin_lote": 74.4,
+    "grandes_2025": 69,
+    "pct_ventas_grandes_2025": 75.4,
+    "pct_ventas_grandes_2025_sin_lote": 75.4,
+    "region_mayor_caida": "Biobío",
+    "region_grandes_2024": 16,
+    "region_grandes_2025": 10,
+    "clientes_que_dejaron_de_comprar": 5,
+    "mes_fuga": "2025-03",
+    "por_region": {
+      "Metropolitana": {
+        "2024": 17,
+        "2025": 22
+      },
+      "Valparaíso": {
+        "2024": 11,
+        "2025": 11
+      },
+      "Biobío": {
+        "2024": 16,
+        "2025": 10
+      },
+      "La Araucanía": {
+        "2024": 7,
+        "2025": 7
+      },
+      "Antofagasta": {
+        "2024": 12,
+        "2025": 14
+      },
+      "Los Lagos": {
+        "2024": 5,
+        "2025": 5
+      }
+    }
+  },
+  "c10-p02": {
+    "fecha_lote": "2025-03-14",
+    "sucursal_lote": "Temuco",
+    "lineas_duplicadas": 40,
+    "monto_duplicado": 6451943,
+    "ventas_marzo_erp": 721575442,
+    "ventas_marzo_sum": 728027385,
+    "ventas_marzo_por_linea": 740931271,
+    "exceso_sum": 6451943,
+    "exceso_por_linea": 19355829
+  }
+}

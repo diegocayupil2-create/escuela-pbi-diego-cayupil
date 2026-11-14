@@ -1,0 +1,301 @@
+cliente_id,cliente,segmento,region,ciudad,dias_credito,fecha_alta
+C0001,Hostal Puerto Claro,Horeca,Valparaíso,Valparaíso,45,2020-08-11
+C0002,Restaurante La Fuente,Horeca,Metropolitana,Santiago,15,2020-01-04
+C0003,Hotel Los Olivos,Horeca,Metropolitana,Santiago,15,2021-11-09
+C0004,Hotel El Parrón,Horeca,Antofagasta,Antofagasta,30,2019-12-20
+C0005,Botillería El Mirador,Minorista,Biobío,Concepción,0,2022-09-07
+C0006,Kiosco El Mirador,Minorista,Metropolitana,Santiago,0,2016-04-06
+C0007,Hostal Las Rosas,Horeca,Biobío,Concepción,15,2023-03-06
+C0008,Negocio El Parrón,Minorista,Metropolitana,Santiago,0,2018-09-20
+C0009,Hostal El Sol,Horeca,Biobío,Concepción,15,2015-07-25
+C0010,Kiosco Los Pinos,Minorista,Metropolitana,Santiago,0,2016-03-25
+C0011,Negocio El Sol,Minorista,Metropolitana,Santiago,0,2022-03-15
+C0012,Botillería La Pérgola,Minorista,Biobío,Concepción,0,2021-02-12
+C0013,Casino El Parrón,Horeca,Biobío,Concepción,15,2019-04-25
+C0014,Casino El Faro,Horeca,Metropolitana,Santiago,30,2016-02-19
+C0015,Kiosco Las Vertientes,Minorista,Los Lagos,Puerto Montt,0,2023-01-16
+C0016,Comercial Los Andes,Mayorista,Los Lagos,Puerto Montt,60,2023-10-19
+C0017,Restaurante Los Pinos,Horeca,Los Lagos,Puerto Montt,45,2022-09-08
+C0018,Botillería El Parrón,Minorista,Los Lagos,Puerto Montt,0,2021-09-23
+C0019,Supermercado El Molino,Mayorista,Metropolitana,Santiago,60,2015-05-04
+C0020,Almacén Las Rosas,Minorista,La Araucanía,Temuco,0,2018-07-02
+C0021,Casino Villa Alegre,Horeca,Metropolitana,Santiago,30,2016-07-31
+C0022,Negocio La Fuente,Minorista,Metropolitana,Santiago,0,2018-03-20
+C0023,Minimarket El Copihue,Minorista,Metropolitana,Santiago,0,2020-09-17
+C0024,Hotel Don Tito,Horeca,Metropolitana,Santiago,45,2019-12-08
+C0025,Hostal La Fuente,Horeca,Metropolitana,Santiago,45,2023-08-10
+C0026,Negocio Bellavista,Minorista,Metropolitana,Santiago,0,2019-09-22
+C0027,Supermercado Las Rosas,Mayorista,Metropolitana,Santiago,60,2020-10-18
+C0028,Almacén El Faro,Minorista,Valparaíso,Valparaíso,0,2019-06-02
+C0029,Kiosco El Sol,Minorista,Metropolitana,Santiago,0,2016-02-19
+C0030,Cafetería El Faro,Horeca,Valparaíso,Valparaíso,30,2022-06-20
+C0031,Mayorista Santa Rosa,Mayorista,Biobío,Concepción,45,2017-01-10
+C0032,Almacén Las Vertientes,Minorista,Valparaíso,Valparaíso,0,2018-09-03
+C0033,Distribuidora Santa Elena,Mayorista,Biobío,Concepción,60,2015-07-31
+C0034,Negocio Santa Elena,Minorista,La Araucanía,Temuco,0,2021-06-09
+C0035,Casino Puerto Claro,Horeca,Antofagasta,Antofagasta,15,2015-03-14
+C0036,Kiosco La Fuente,Minorista,Los Lagos,Puerto Montt,0,2020-04-07
+C0037,Comercial La Pérgola,Mayorista,Metropolitana,Santiago,45,2019-05-20
+C0038,Restaurante Puerto Claro,Horeca,Valparaíso,Valparaíso,45,2019-04-15
+C0039,Hotel El Faro,Horeca,Antofagasta,Antofagasta,45,2022-03-18
+C0040,Hostal El Parrón,Horeca,Valparaíso,Valparaíso,30,2023-01-14
+C0041,Comercial Santa Elena,Mayorista,Valparaíso,Valparaíso,60,2021-11-18
+C0042,Negocio El Copihue,Minorista,La Araucanía,Temuco,0,2021-02-21
+C0043,Hotel La Esquina,Horeca,Metropolitana,Santiago,45,2017-12-04
+C0044,Distribuidora Don Pepe,Mayorista,Biobío,Concepción,45,2023-04-17
+C0045,Restaurante Los Boldos,Horeca,Los Lagos,Puerto Montt,15,2022-09-12
+C0046,Casino La Estrella,Horeca,Los Lagos,Puerto Montt,15,2017-06-17
+C0047,Supermercado Las Palmas,Mayorista,Antofagasta,Antofagasta,75,2015-02-17
+C0048,Hostal Los Olivos,Horeca,Valparaíso,Valparaíso,45,2022-07-19
+C0049,Minimarket El Molino,Minorista,Metropolitana,Santiago,0,2017-03-22
+C0050,Hotel Los Olivos Valparaíso,Horeca,Valparaíso,Valparaíso,30,2021-12-19
+C0051,Mayorista El Molino,Mayorista,Metropolitana,Santiago,60,2018-04-22
+C0052,Mayorista La Colina,Mayorista,Biobío,Concepción,75,2018-04-23
+C0053,Almacén El Quillay,Minorista,Biobío,Concepción,0,2023-10-11
+C0054,Cafetería La Pérgola,Horeca,Metropolitana,Santiago,45,2021-08-28
+C0055,Almacén Las Acacias,Minorista,Antofagasta,Antofagasta,0,2018-10-16
+C0056,Kiosco El Mirador Santiago,Minorista,Metropolitana,Santiago,0,2016-01-09
+C0057,Negocio Las Camelias,Minorista,Valparaíso,Valparaíso,0,2016-07-21
+C0058,Negocio Los Aromos,Minorista,La Araucanía,Temuco,0,2022-01-10
+C0059,Cafetería Don Lucho,Horeca,Metropolitana,Santiago,15,2020-03-15
+C0060,Negocio Los Aromos Temuco,Minorista,La Araucanía,Temuco,0,2016-12-26
+C0061,Negocio Doña Inés,Minorista,Metropolitana,Santiago,0,2019-08-28
+C0062,Distribuidora Villa Alegre,Mayorista,Metropolitana,Santiago,45,2019-08-15
+C0063,Negocio La Pérgola,Minorista,Valparaíso,Valparaíso,0,2015-05-08
+C0064,Comercial Doña Inés,Mayorista,Antofagasta,Antofagasta,75,2022-11-04
+C0065,Almacén El Molino,Minorista,Valparaíso,Valparaíso,0,2022-01-19
+C0066,Botillería Las Rosas,Minorista,Valparaíso,Valparaíso,0,2020-10-03
+C0067,Negocio Las Vertientes,Minorista,Valparaíso,Valparaíso,0,2022-01-15
+C0068,Restaurante Don Tito,Horeca,Metropolitana,Santiago,45,2022-11-16
+C0069,Botillería La Colina,Minorista,Metropolitana,Santiago,0,2015-10-18
+C0070,Restaurante Las Vertientes,Horeca,Valparaíso,Valparaíso,15,2023-11-15
+C0071,Kiosco El Parrón,Minorista,Metropolitana,Santiago,0,2020-12-09
+C0072,Hotel Los Boldos,Horeca,Metropolitana,Santiago,45,2020-03-08
+C0073,Negocio Doña Inés Temuco,Minorista,La Araucanía,Temuco,0,2016-06-27
+C0074,Kiosco La Colina,Minorista,Biobío,Concepción,0,2022-01-10
+C0075,Minimarket Los Olivos,Minorista,Valparaíso,Valparaíso,0,2020-12-23
+C0076,Botillería Puerto Claro,Minorista,La Araucanía,Temuco,0,2017-10-12
+C0077,Negocio El Sol Santiago,Minorista,Metropolitana,Santiago,0,2023-12-19
+C0078,Restaurante El Quillay,Horeca,Metropolitana,Santiago,15,2018-10-29
+C0079,Minimarket Villa Alegre,Minorista,La Araucanía,Temuco,0,2018-08-27
+C0080,Botillería La Estrella,Minorista,La Araucanía,Temuco,0,2017-02-09
+C0081,Almacén Las Rosas Santiago,Minorista,Metropolitana,Santiago,0,2023-08-17
+C0082,Botillería Bellavista,Minorista,Metropolitana,Santiago,0,2020-01-26
+C0083,Comercial El Molino,Mayorista,La Araucanía,Temuco,75,2016-02-22
+C0084,Hotel Las Vertientes,Horeca,Antofagasta,Antofagasta,15,2019-12-05
+C0085,Botillería Lago Azul,Minorista,Metropolitana,Santiago,0,2018-04-03
+C0086,Distribuidora Las Camelias,Mayorista,Metropolitana,Santiago,75,2019-09-24
+C0087,Botillería Los Pinos,Minorista,Biobío,Concepción,0,2020-07-29
+C0088,Kiosco Las Palmas,Minorista,Metropolitana,Santiago,0,2019-07-17
+C0089,Negocio Los Boldos,Minorista,Metropolitana,Santiago,0,2015-11-01
+C0090,Botillería Las Palmas,Minorista,Valparaíso,Valparaíso,0,2022-08-15
+C0091,Hostal El Copihue,Horeca,La Araucanía,Temuco,30,2023-05-09
+C0092,Distribuidora El Faro,Mayorista,Valparaíso,Valparaíso,75,2017-04-07
+C0093,Negocio Don Tito,Minorista,Biobío,Concepción,0,2020-09-23
+C0094,Negocio Puerto Claro,Minorista,Biobío,Concepción,0,2022-05-20
+C0095,Kiosco El Quillay,Minorista,Valparaíso,Valparaíso,0,2015-06-10
+C0096,Casino Las Acacias,Horeca,Los Lagos,Puerto Montt,15,2023-10-25
+C0097,Restaurante Don Pepe,Horeca,Valparaíso,Valparaíso,15,2023-05-14
+C0098,Cafetería Las Rosas,Horeca,Biobío,Concepción,30,2018-01-15
+C0099,Almacén El Roble,Minorista,Los Lagos,Puerto Montt,0,2020-03-15
+C0100,Botillería Los Pinos Santiago,Minorista,Metropolitana,Santiago,0,2020-11-16
+C0101,Kiosco San Pedro,Minorista,Metropolitana,Santiago,0,2021-12-27
+C0102,Restaurante El Mirador,Horeca,Biobío,Concepción,45,2017-12-10
+C0103,Botillería Santa Rosa,Minorista,Valparaíso,Valparaíso,0,2023-04-16
+C0104,Negocio La Estrella,Minorista,Biobío,Concepción,0,2019-04-27
+C0105,Mayorista Los Boldos,Mayorista,Biobío,Concepción,45,2016-08-04
+C0106,Almacén El Quillay Puerto Montt,Minorista,Los Lagos,Puerto Montt,0,2019-04-12
+C0107,Cafetería Las Acacias,Horeca,Los Lagos,Puerto Montt,30,2021-09-22
+C0108,Kiosco El Canelo,Minorista,La Araucanía,Temuco,0,2016-08-14
+C0109,Hotel El Sol,Horeca,Biobío,Concepción,15,2020-10-30
+C0110,Supermercado Las Camelias,Mayorista,Valparaíso,Valparaíso,75,2019-04-03
+C0111,Almacén El Quillay 3,Minorista,Los Lagos,Puerto Montt,0,2022-03-08
+C0112,Almacén Las Rosas Valparaíso,Minorista,Valparaíso,Valparaíso,0,2017-04-15
+C0113,Hotel El Mirador,Horeca,Valparaíso,Valparaíso,45,2021-08-26
+C0114,Negocio El Mirador,Minorista,Valparaíso,Valparaíso,0,2019-06-24
+C0115,Botillería El Molino,Minorista,Biobío,Concepción,0,2022-05-11
+C0116,Kiosco Don Tito,Minorista,Antofagasta,Antofagasta,0,2016-07-24
+C0117,Cafetería Las Rosas Temuco,Horeca,La Araucanía,Temuco,45,2018-03-24
+C0118,Negocio Don Pepe,Minorista,Metropolitana,Santiago,0,2020-02-16
+C0119,Kiosco El Roble,Minorista,Biobío,Concepción,0,2023-10-05
+C0120,Botillería La Pérgola Santiago,Minorista,Metropolitana,Santiago,0,2016-06-16
+C0121,Cafetería El Roble,Horeca,Metropolitana,Santiago,30,2021-08-30
+C0122,Supermercado Santa Rosa,Mayorista,Valparaíso,Valparaíso,45,2023-05-16
+C0123,Kiosco La Colina Valparaíso,Minorista,Valparaíso,Valparaíso,0,2019-02-03
+C0124,Hotel Doña Inés,Horeca,Metropolitana,Santiago,30,2017-02-23
+C0125,Almacén La Esquina,Minorista,Metropolitana,Santiago,0,2022-07-14
+C0126,Almacén Doña Inés,Minorista,Valparaíso,Valparaíso,0,2017-09-29
+C0127,Hotel El Sol Santiago,Horeca,Metropolitana,Santiago,30,2018-12-02
+C0128,Distribuidora El Quillay,Mayorista,Valparaíso,Valparaíso,45,2020-01-10
+C0129,Negocio La Esquina,Minorista,Metropolitana,Santiago,0,2022-12-28
+C0130,Botillería Los Pinos 3,Minorista,Metropolitana,Santiago,0,2022-08-13
+C0131,Cafetería Don Lucho Concepción,Horeca,Biobío,Concepción,15,2020-12-08
+C0132,Restaurante El Quillay Temuco,Horeca,La Araucanía,Temuco,15,2023-08-01
+C0133,Distribuidora El Molino,Mayorista,Valparaíso,Valparaíso,75,2022-06-20
+C0134,Minimarket El Mirador,Minorista,Valparaíso,Valparaíso,0,2020-08-17
+C0135,Minimarket El Alerce,Minorista,Biobío,Concepción,0,2020-12-31
+C0136,Kiosco Los Aromos,Minorista,Antofagasta,Antofagasta,0,2016-11-04
+C0137,Minimarket Los Aromos,Minorista,Antofagasta,Antofagasta,0,2021-11-09
+C0138,Cafetería La Pérgola Antofagasta,Horeca,Antofagasta,Antofagasta,45,2022-07-21
+C0139,Restaurante El Canelo,Horeca,Metropolitana,Santiago,15,2015-03-19
+C0140,Comercial El Molino Santiago,Mayorista,Metropolitana,Santiago,45,2021-11-11
+C0141,Kiosco La Colina Santiago,Minorista,Metropolitana,Santiago,0,2021-08-17
+C0142,Botillería El Faro,Minorista,La Araucanía,Temuco,0,2016-08-01
+C0143,Mayorista El Mirador,Mayorista,Biobío,Concepción,60,2020-06-27
+C0144,Minimarket El Quillay,Minorista,Valparaíso,Valparaíso,0,2018-01-24
+C0145,Mayorista El Alerce,Mayorista,Valparaíso,Valparaíso,75,2018-10-25
+C0146,Supermercado La Colina,Mayorista,Valparaíso,Valparaíso,45,2016-01-15
+C0147,Hotel Bellavista,Horeca,Metropolitana,Santiago,30,2019-10-05
+C0148,Botillería Las Palmas Santiago,Minorista,Metropolitana,Santiago,0,2021-01-11
+C0149,Cafetería El Molino,Horeca,Antofagasta,Antofagasta,15,2020-11-23
+C0150,Botillería La Fuente,Minorista,Antofagasta,Antofagasta,0,2017-03-10
+C0151,Minimarket Los Boldos,Minorista,Biobío,Concepción,0,2016-08-23
+C0152,Hostal Don Tito,Horeca,Metropolitana,Santiago,45,2016-01-04
+C0153,Comercial Villa Alegre,Mayorista,Antofagasta,Antofagasta,75,2020-01-27
+C0154,Restaurante Los Pinos Puerto Montt,Horeca,Los Lagos,Puerto Montt,15,2019-03-11
+C0155,Botillería Puerto Claro Valparaíso,Minorista,Valparaíso,Valparaíso,0,2017-07-08
+C0156,Distribuidora Santa Elena Antofagasta,Mayorista,Antofagasta,Antofagasta,45,2020-09-06
+C0157,Almacén Los Olivos,Minorista,Metropolitana,Santiago,0,2015-10-18
+C0158,Mayorista El Canelo,Mayorista,Valparaíso,Valparaíso,45,2021-10-28
+C0159,Hostal El Roble,Horeca,La Araucanía,Temuco,15,2016-08-15
+C0160,Botillería Las Acacias,Minorista,Metropolitana,Santiago,0,2023-09-10
+C0161,Negocio Los Andes,Minorista,La Araucanía,Temuco,0,2020-01-20
+C0162,Almacén Bellavista,Minorista,Metropolitana,Santiago,0,2017-10-24
+C0163,Hostal Las Camelias,Horeca,Metropolitana,Santiago,15,2016-11-24
+C0164,Hostal Las Vertientes,Horeca,Biobío,Concepción,45,2022-12-21
+C0165,Minimarket Don Tito,Minorista,Valparaíso,Valparaíso,0,2020-03-19
+C0166,Casino El Faro Temuco,Horeca,La Araucanía,Temuco,30,2023-06-14
+C0167,Botillería El Faro Temuco,Minorista,La Araucanía,Temuco,0,2015-02-26
+C0168,Kiosco Los Andes,Minorista,Metropolitana,Santiago,0,2020-09-05
+C0169,Distribuidora La Esquina,Mayorista,Biobío,Concepción,45,2019-09-11
+C0170,Almacén Bellavista Santiago,Minorista,Metropolitana,Santiago,0,2022-06-15
+C0171,Minimarket Bellavista,Minorista,Valparaíso,Valparaíso,0,2023-04-08
+C0172,Kiosco El Quillay Valparaíso,Minorista,Valparaíso,Valparaíso,0,2016-07-22
+C0173,Hostal San Pedro,Horeca,Metropolitana,Santiago,15,2017-10-21
+C0174,Botillería San Pedro,Minorista,Valparaíso,Valparaíso,0,2017-07-11
+C0175,Negocio Don Lucho,Minorista,La Araucanía,Temuco,0,2018-03-06
+C0176,Negocio Los Boldos Concepción,Minorista,Biobío,Concepción,0,2022-11-19
+C0177,Almacén El Roble Temuco,Minorista,La Araucanía,Temuco,0,2016-02-18
+C0178,Comercial Las Palmas,Mayorista,Biobío,Concepción,45,2015-06-08
+C0179,Kiosco Los Boldos,Minorista,Biobío,Concepción,0,2017-02-15
+C0180,Distribuidora El Roble,Mayorista,Metropolitana,Santiago,45,2017-01-24
+C0181,Kiosco El Sol Santiago,Minorista,Metropolitana,Santiago,0,2019-03-30
+C0182,Casino Puerto Claro Temuco,Horeca,La Araucanía,Temuco,45,2016-06-20
+C0183,Minimarket Don Lucho,Minorista,La Araucanía,Temuco,0,2017-09-01
+C0184,Casino Bellavista,Horeca,Metropolitana,Santiago,15,2019-04-05
+C0185,Mayorista Doña Inés,Mayorista,Antofagasta,Antofagasta,45,2015-09-04
+C0186,Almacén Las Palmas,Minorista,Biobío,Concepción,0,2020-06-28
+C0187,Hotel El Canelo,Horeca,Antofagasta,Antofagasta,15,2017-06-17
+C0188,Negocio Don Lucho Temuco,Minorista,La Araucanía,Temuco,0,2019-12-25
+C0189,Negocio Santa Rosa,Minorista,Metropolitana,Santiago,0,2022-11-22
+C0190,Almacén Puerto Claro,Minorista,Metropolitana,Santiago,0,2019-04-17
+C0191,Supermercado El Molino Concepción,Mayorista,Biobío,Concepción,75,2021-04-13
+C0192,Negocio Los Aromos Concepción,Minorista,Biobío,Concepción,0,2019-10-25
+C0193,Minimarket El Faro,Minorista,Los Lagos,Puerto Montt,0,2020-05-28
+C0194,Kiosco Santa Elena,Minorista,Metropolitana,Santiago,0,2015-06-24
+C0195,Mayorista El Quillay,Mayorista,Los Lagos,Puerto Montt,75,2020-11-03
+C0196,Casino Santa Elena,Horeca,La Araucanía,Temuco,30,2021-06-04
+C0197,Minimarket El Quillay Valparaíso,Minorista,Valparaíso,Valparaíso,0,2022-10-22
+C0198,Kiosco Don Lucho,Minorista,Valparaíso,Valparaíso,0,2018-01-21
+C0199,Botillería La Estrella Temuco,Minorista,La Araucanía,Temuco,0,2022-08-08
+C0200,Botillería El Faro Concepción,Minorista,Biobío,Concepción,0,2022-10-31
+C0201,Hostal El Alerce,Horeca,Metropolitana,Santiago,15,2016-04-03
+C0202,Hotel La Colina,Horeca,Metropolitana,Santiago,30,2021-01-14
+C0203,Almacén Doña Inés Valparaíso,Minorista,Valparaíso,Valparaíso,0,2021-10-07
+C0204,Minimarket Puerto Claro,Minorista,La Araucanía,Temuco,0,2018-06-01
+C0205,Casino Don Tito,Horeca,La Araucanía,Temuco,15,2020-05-05
+C0206,Hotel Las Rosas,Horeca,Valparaíso,Valparaíso,30,2015-12-10
+C0207,Kiosco Los Boldos Puerto Montt,Minorista,Los Lagos,Puerto Montt,0,2021-10-20
+C0208,Negocio Puerto Claro Santiago,Minorista,Metropolitana,Santiago,0,2021-07-13
+C0209,Kiosco Bellavista,Minorista,Valparaíso,Valparaíso,0,2023-12-24
+C0210,Kiosco San Pedro Concepción,Minorista,Biobío,Concepción,0,2019-08-09
+C0211,Hostal Don Tito Santiago,Horeca,Metropolitana,Santiago,15,2023-03-22
+C0212,Kiosco El Roble Valparaíso,Minorista,Valparaíso,Valparaíso,0,2022-08-15
+C0213,Kiosco La Colina 3,Minorista,Valparaíso,Valparaíso,0,2023-09-19
+C0214,Kiosco El Quillay 3,Minorista,Valparaíso,Valparaíso,0,2019-05-21
+C0215,Hotel Don Lucho,Horeca,La Araucanía,Temuco,15,2020-11-01
+C0216,Almacén El Copihue,Minorista,Valparaíso,Valparaíso,0,2018-07-01
+C0217,Kiosco Las Acacias,Minorista,Metropolitana,Santiago,0,2018-09-27
+C0218,Botillería El Parrón Santiago,Minorista,Metropolitana,Santiago,0,2016-02-19
+C0219,Almacén La Pérgola,Minorista,Los Lagos,Puerto Montt,0,2018-10-08
+C0220,Negocio Santa Elena Antofagasta,Minorista,Antofagasta,Antofagasta,0,2020-02-29
+C0221,Negocio Don Pepe Antofagasta,Minorista,Antofagasta,Antofagasta,0,2016-08-05
+C0222,Botillería Los Andes,Minorista,La Araucanía,Temuco,0,2019-10-29
+C0223,Casino Don Lucho,Horeca,Metropolitana,Santiago,45,2018-08-27
+C0224,Negocio Las Palmas,Minorista,Metropolitana,Santiago,0,2020-01-27
+C0225,Minimarket Las Rosas,Minorista,Los Lagos,Puerto Montt,0,2019-01-24
+C0226,Negocio El Faro,Minorista,Metropolitana,Santiago,0,2015-03-01
+C0227,Kiosco Santa Elena Antofagasta,Minorista,Antofagasta,Antofagasta,0,2019-08-08
+C0228,Minimarket El Quillay Puerto Montt,Minorista,Los Lagos,Puerto Montt,0,2017-12-26
+C0229,Negocio Las Rosas,Minorista,Biobío,Concepción,0,2015-09-19
+C0230,Minimarket El Molino Valparaíso,Minorista,Valparaíso,Valparaíso,0,2022-01-04
+C0231,Hotel Los Aromos,Horeca,Los Lagos,Puerto Montt,45,2023-10-04
+C0232,Comercial La Esquina,Mayorista,Biobío,Concepción,75,2023-08-22
+C0233,Almacén El Sol,Minorista,Metropolitana,Santiago,0,2016-04-28
+C0234,Cafetería Los Andes,Horeca,Metropolitana,Santiago,15,2015-10-29
+C0235,Hostal Puerto Claro Santiago,Horeca,Metropolitana,Santiago,15,2020-12-17
+C0236,Botillería Las Camelias,Minorista,Biobío,Concepción,0,2021-03-26
+C0237,Restaurante Los Boldos Concepción,Horeca,Biobío,Concepción,30,2018-02-27
+C0238,Almacén El Alerce,Minorista,La Araucanía,Temuco,0,2019-09-17
+C0239,Kiosco El Faro,Minorista,Metropolitana,Santiago,0,2022-07-02
+C0240,Cafetería El Faro Puerto Montt,Horeca,Los Lagos,Puerto Montt,30,2018-07-04
+C0241,Minimarket El Quillay 3,Minorista,Los Lagos,Puerto Montt,0,2017-02-03
+C0242,Negocio El Roble,Minorista,Metropolitana,Santiago,0,2015-01-31
+C0243,Kiosco Los Aromos Valparaíso,Minorista,Valparaíso,Valparaíso,0,2021-01-27
+C0244,Kiosco El Sol Temuco,Minorista,La Araucanía,Temuco,0,2022-03-27
+C0245,Botillería Las Acacias Puerto Montt,Minorista,Los Lagos,Puerto Montt,0,2017-07-04
+C0246,Mayorista Las Acacias,Mayorista,Metropolitana,Santiago,45,2023-10-12
+C0247,Botillería Las Palmas 3,Minorista,Metropolitana,Santiago,0,2021-03-11
+C0248,Almacén El Parrón,Minorista,Los Lagos,Puerto Montt,0,2017-01-03
+C0249,Negocio Don Pepe Santiago,Minorista,Metropolitana,Santiago,0,2023-03-11
+C0250,Hostal Las Acacias,Horeca,Metropolitana,Santiago,15,2022-06-05
+C0251,Negocio La Estrella Concepción,Minorista,Biobío,Concepción,0,2023-07-31
+C0252,Almacén Villa Alegre,Minorista,Valparaíso,Valparaíso,0,2020-05-13
+C0253,Minimarket Los Olivos Santiago,Minorista,Metropolitana,Santiago,0,2023-04-19
+C0254,Kiosco El Roble Santiago,Minorista,Metropolitana,Santiago,0,2016-04-19
+C0255,Negocio La Esquina Concepción,Minorista,Biobío,Concepción,0,2020-07-18
+C0256,Almacén La Pérgola Antofagasta,Minorista,Antofagasta,Antofagasta,0,2023-05-20
+C0257,Mayorista Los Olivos,Mayorista,Los Lagos,Puerto Montt,60,2021-08-14
+C0258,Hostal El Molino,Horeca,Los Lagos,Puerto Montt,30,2021-09-15
+C0259,Distribuidora La Pérgola,Mayorista,Metropolitana,Santiago,60,2020-04-07
+C0260,Botillería El Quillay,Minorista,Metropolitana,Santiago,0,2022-01-14
+C0261,Restaurante Lago Azul,Horeca,Metropolitana,Santiago,15,2022-08-09
+C0262,Botillería El Faro 3,Minorista,La Araucanía,Temuco,0,2022-10-16
+C0263,Negocio Don Pepe 3,Minorista,Metropolitana,Santiago,0,2022-04-03
+C0264,Minimarket San Pedro,Minorista,Metropolitana,Santiago,0,2015-10-10
+C0265,Negocio Las Acacias,Minorista,Metropolitana,Santiago,0,2023-04-27
+C0266,Hotel La Esquina Antofagasta,Horeca,Antofagasta,Antofagasta,45,2019-02-02
+C0267,Casino El Canelo,Horeca,Antofagasta,Antofagasta,30,2021-10-26
+C0268,Kiosco Puerto Claro,Minorista,Los Lagos,Puerto Montt,0,2016-03-07
+C0269,Negocio San Pedro,Minorista,Los Lagos,Puerto Montt,0,2017-12-10
+C0270,Botillería Don Pepe,Minorista,Valparaíso,Valparaíso,0,2020-08-06
+C0271,Minimarket Santa Elena,Minorista,Valparaíso,Valparaíso,0,2022-10-04
+C0272,Botillería Don Pepe Santiago,Minorista,Metropolitana,Santiago,0,2016-09-09
+C0273,Minimarket La Pérgola,Minorista,Metropolitana,Santiago,0,2016-12-11
+C0274,Hotel Don Pepe,Horeca,La Araucanía,Temuco,15,2023-09-21
+C0275,Almacén Las Palmas Santiago,Minorista,Metropolitana,Santiago,0,2018-02-16
+C0276,Kiosco El Parrón Santiago,Minorista,Metropolitana,Santiago,0,2022-10-18
+C0277,Cafetería La Pérgola Valparaíso,Horeca,Valparaíso,Valparaíso,30,2017-08-04
+C0278,Almacén El Mirador,Minorista,Metropolitana,Santiago,0,2023-08-18
+C0279,Minimarket Puerto Claro Valparaíso,Minorista,Valparaíso,Valparaíso,0,2021-10-23
+C0280,Distribuidora La Estrella,Mayorista,Valparaíso,Valparaíso,60,2016-04-14
+C0281,Kiosco Lago Azul,Minorista,Metropolitana,Santiago,0,2019-09-25
+C0282,Comercial Los Olivos,Mayorista,Antofagasta,Antofagasta,75,2021-02-25
+C0283,Kiosco San Pedro 3,Minorista,Biobío,Concepción,0,2023-03-12
+C0284,Minimarket El Parrón,Minorista,Metropolitana,Santiago,0,2021-04-22
+C0285,Restaurante El Sol,Horeca,Biobío,Concepción,45,2017-01-31
+C0286,Negocio Doña Inés Santiago,Minorista,Metropolitana,Santiago,0,2021-09-06
+C0287,Almacén Las Vertientes Puerto Montt,Minorista,Los Lagos,Puerto Montt,0,2018-08-19
+C0288,Almacén La Fuente,Minorista,Metropolitana,Santiago,0,2017-08-29
+C0289,Negocio El Roble Valparaíso,Minorista,Valparaíso,Valparaíso,0,2020-08-07
+C0290,Comercial El Sol,Mayorista,Antofagasta,Antofagasta,45,2020-06-09
+C0291,Restaurante Los Andes,Horeca,Metropolitana,Santiago,30,2023-04-23
+C0292,Restaurante Bellavista,Horeca,Antofagasta,Antofagasta,45,2017-07-29
+C0293,Almacén Puerto Claro Concepción,Minorista,Biobío,Concepción,0,2019-11-11
+C0294,Kiosco El Roble Antofagasta,Minorista,Antofagasta,Antofagasta,0,2016-10-29
+C0295,Almacén El Quillay Santiago,Minorista,Metropolitana,Santiago,0,2019-12-27
+C0296,Restaurante El Quillay Antofagasta,Horeca,Antofagasta,Antofagasta,15,2021-10-15
+C0297,Minimarket Don Pepe,Minorista,Metropolitana,Santiago,0,2021-10-17
+C0298,Almacén El Copihue Valparaíso,Minorista,Valparaíso,Valparaíso,0,2021-07-08
+C0299,Kiosco Las Vertientes Santiago,Minorista,Metropolitana,Santiago,0,2021-06-04
+C0300,Casino Doña Inés,Horeca,Metropolitana,Santiago,30,2020-08-04

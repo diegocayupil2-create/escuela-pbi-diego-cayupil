@@ -1,0 +1,61 @@
+producto_id,producto,categoria,marca,precio_lista,costo_unitario
+P001,Arroz grado 1 5 kg,Abarrotes,Valle Sur,11110,8330
+P002,Azúcar 1 kg x10,Abarrotes,Austral,34230,27970
+P003,Aceite maravilla 1 L x12,Abarrotes,Del Puerto,16800,13470
+P004,Fideos spaghetti 400 g x20,Abarrotes,Del Puerto,36470,26530
+P005,Harina sin polvos 1 kg x10,Abarrotes,Cordillera,31970,25300
+P006,Lentejas 1 kg x10,Abarrotes,Valle Sur,39940,31740
+P007,Atún lomitos 160 g x24,Abarrotes,Cordillera,38090,29430
+P008,Café molido 500 g x6,Abarrotes,Del Puerto,34610,27860
+P009,Té 100 bolsitas x12,Abarrotes,Pacífico,27600,19910
+P010,Sal fina 1 kg x25,Abarrotes,Del Puerto,38590,27530
+P011,Salsa de tomate 200 g x24,Abarrotes,Cordillera,11450,9140
+P012,Avena 500 g x12,Abarrotes,Del Puerto,14890,11610
+P013,"Agua mineral 1,5 L x6",Bebidas,Austral,9360,6960
+P014,Bebida cola 3 L x6,Bebidas,Cordillera,23630,17740
+P015,"Bebida naranja 1,5 L x6",Bebidas,Valle Sur,16140,11700
+P016,Néctar durazno 1 L x12,Bebidas,Cordillera,28980,21350
+P017,Jugo en polvo x100,Bebidas,Valle Sur,24310,15940
+P018,Agua con gas 500 ml x24,Bebidas,Cordillera,17840,13170
+P019,Bebida isotónica 500 ml x12,Bebidas,Valle Sur,25260,17620
+P020,"Té helado 1,5 L x6",Bebidas,Austral,17050,12150
+P021,Cerveza lata 470 ml x24,Bebidas,Austral,20580,14840
+P022,Vino tinto 750 ml x12,Bebidas,Andina,10690,7190
+P023,Energética 250 ml x24,Bebidas,Pacífico,23040,17400
+P024,"Agua saborizada 1,6 L x6",Bebidas,Austral,25550,19420
+P025,Leche entera 1 L x12,Lácteos,Pacífico,14460,11750
+P026,Leche descremada 1 L x12,Lácteos,Austral,7340,5530
+P027,Yogur batido 120 g x24,Lácteos,Andina,19730,16520
+P028,Mantequilla 250 g x20,Lácteos,Valle Sur,32160,26670
+P029,Queso gauda 1 kg,Lácteos,Del Puerto,24800,18900
+P030,Queso laminado 500 g x6,Lácteos,Pacífico,35330,28440
+P031,Crema de leche 1 L x12,Lácteos,Andina,25600,21690
+P032,Leche condensada 397 g x24,Lácteos,Cordillera,19870,16780
+P033,Manjar 1 kg x6,Lácteos,Pacífico,32010,27080
+P034,Postre de leche 120 g x24,Lácteos,Austral,29200,23930
+P035,Leche cultivada 1 L x12,Lácteos,Valle Sur,15480,13020
+P036,Queso fresco 500 g x6,Lácteos,Pacífico,15570,12140
+P037,Detergente líquido 3 L x4,Limpieza,Del Puerto,32630,21240
+P038,Lavalozas 750 ml x12,Limpieza,Pacífico,26910,19520
+P039,Cloro 2 L x6,Limpieza,Valle Sur,21950,15610
+P040,Limpiador multiuso 1 L x12,Limpieza,Andina,37150,24320
+P041,Papel higiénico 48 rollos,Limpieza,Andina,15570,11090
+P042,Toalla de papel 12 rollos,Limpieza,Andina,37890,24150
+P043,Bolsas de basura 50 un. x10,Limpieza,Pacífico,21800,15010
+P044,Jabón líquido 1 L x6,Limpieza,Valle Sur,23020,15110
+P045,Desinfectante aerosol 360 ml x12,Limpieza,Pacífico,42070,28510
+P046,Esponjas x24,Limpieza,Del Puerto,26590,18080
+P047,Suavizante 3 L x4,Limpieza,Austral,40980,25740
+P048,Limpiavidrios 500 ml x12,Limpieza,Del Puerto,40510,26580
+P049,"Papas prefritas 2,5 kg x4",Congelados,Del Puerto,28450,22740
+P050,Hamburguesas 100 g x36,Congelados,Cordillera,13080,9730
+P051,Nuggets de pollo 1 kg x6,Congelados,Pacífico,24260,19330
+P052,Pizza congelada x10,Congelados,Cordillera,30250,22270
+P053,Helado 1 L x6,Congelados,Pacífico,36500,28490
+P054,Verduras mixtas 1 kg x10,Congelados,Austral,12820,9550
+P055,Empanadas de pino x24,Congelados,Pacífico,47550,36240
+P056,Filetes de merluza 1 kg x6,Congelados,Del Puerto,28460,21440
+P057,Camarones 500 g x10,Congelados,Valle Sur,22480,16700
+P058,Arvejas 1 kg x10,Congelados,Pacífico,15710,12540
+P059,Choclo 1 kg x10,Congelados,Andina,13360,10270
+P060,Masa de hojaldre 1 kg x6,Congelados,Cordillera,42080,29200
