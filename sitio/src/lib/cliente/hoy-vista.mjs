@@ -1,10 +1,11 @@
-// Arma «Hoy» en el navegador: la fecha de Chile, el plan de la semana o la ruta, y el estado de la automatización.
+// Arma «Hoy» en el navegador: la fecha de Chile, el plan de la semana o la ruta, lo que ya marcaste como hecho
+// y el estado de la automatización.
 import { bloquesDeHoy, fechaChile, estadoAutomatizacion, ZONA } from '../hoy.mjs';
-import { modoValido } from '../ruta.mjs';
 import { REPO } from '../enlaces.mjs';
 import { t, plural } from '../textos.mjs';
 import { svgIcono } from '../iconos.mjs';
-import { leer, esc } from './preferencias.mjs';
+import { esc } from './preferencias.mjs';
+import { preferencias, leerDatos } from './estado.mjs';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -22,47 +23,20 @@ function pintarAutomatizacion(el, registro, ahora, T) {
   }
 }
 
-function pintarItem(bloque, item, cap, textos) {
-  const [sinItem, accion, accionCapitulo, min] = textos;
-  const titulo = bloque.querySelector('[data-titulo]');
-  const texto = bloque.querySelector('[data-texto]');
+/** Llena un bloque: título, minutos y botón; o un texto y un botón de respaldo si no hay qué mostrar. */
+function pintarBloque(bloque, { titulo = '', minutos = null, texto = null, accion = null, url = null }) {
+  bloque.querySelector('[data-titulo]').textContent = titulo;
+  if (minutos != null) bloque.querySelector('[data-min]').textContent = minutos;
+  const p = bloque.querySelector('[data-texto]');
+  p.textContent = texto ?? '';
+  p.hidden = !texto;
   const boton = bloque.querySelector('[data-accion]');
-  if (item) {
-    titulo.textContent = item.titulo;
-    bloque.querySelector('[data-min]').textContent = `${item.minutos} ${min}`;
-    boton.href = BASE + item.url;
+  boton.hidden = !url;
+  if (url) {
+    boton.href = BASE + url;
     boton.querySelector('[data-accion-texto]').textContent = accion;
-    boton.hidden = false;
-    texto.hidden = true;
-  } else {
-    bloque.classList.add('bloque-vacio');
-    titulo.textContent = cap ? `${cap.num} · ${cap.titulo}` : '';
-    texto.textContent = sinItem;
-    texto.hidden = false;
-    if (cap) {
-      boton.href = BASE + cap.url;
-      boton.querySelector('[data-accion-texto]').textContent = accionCapitulo;
-      boton.hidden = false;
-    }
   }
-}
-
-function pintarRepaso(bloque, tarjetas, T) {
-  const lista = bloque.querySelector('[data-tarjetas]');
-  if (!tarjetas.length) {
-    bloque.classList.add('bloque-vacio');
-    const texto = bloque.querySelector('[data-texto]');
-    texto.textContent = T.hoy.sinTarjetas;
-    texto.hidden = false;
-    return;
-  }
-  bloque.querySelector('[data-min]').textContent = plural(tarjetas.length, T.hoy.tarjetas);
-  lista.innerHTML = tarjetas
-    .map(
-      (x) =>
-        `<details class="repaso"><summary><span class="repaso-tipo">${esc(T.tipoTarjeta[x.tipo])}</span><span class="repaso-frente">${esc(x.frente)}</span><span class="repaso-ver">${esc(T.hoy.verRespuesta)}</span></summary><p>${esc(x.reverso)}</p></details>`,
-    )
-    .join('');
+  bloque.classList.toggle('bloque-vacio', Boolean(texto) && !minutos);
 }
 
 // Deja guardadas para usar sin conexión las páginas de hoy (si el modo sin conexión ya está activo).
@@ -72,12 +46,12 @@ function guardarParaSinConexion(urls) {
 }
 
 export function iniciarHoy() {
-  const datos = JSON.parse(document.getElementById('datos-hoy').textContent);
+  const datos = leerDatos('datos-hoy');
   const T = datos.textos;
   const ahora = new Date();
   const fecha = fechaChile(ahora);
-  const modo = modoValido(leer('modo'));
-  const b = bloquesDeHoy({ capitulos: datos.capitulos, semanas: datos.semanas, fecha, modo, elegido: leer('capitulo') });
+  const { modo, elegido, hechos } = preferencias();
+  const b = bloquesDeHoy({ capitulos: datos.capitulos, semanas: datos.semanas, fecha, modo, elegido, hechos });
   const raiz = document.querySelector('[data-hoy]');
   const $ = (s) => raiz.querySelector(s);
 
@@ -105,18 +79,27 @@ export function iniciarHoy() {
   } else if (cap && !cap.lecciones.length) {
     const conContenido = datos.capitulos.filter((c) => c.lecciones.length);
     if (conContenido.length) {
-      nota.innerHTML = `${esc(T.hoy.conContenido)} ${conContenido
-        .map((c) => `<a href="${BASE}${c.url}">${c.num} · ${esc(c.titulo)}</a>`)
-        .join(', ')}`;
+      nota.innerHTML = `${esc(T.hoy.conContenido)} ${conContenido.map((c) => `<a href="${BASE}${c.url}">${c.num} · ${esc(c.titulo)}</a>`).join(', ')}`;
       nota.hidden = false;
     }
   }
 
+  const capTitulo = cap ? `${cap.num} · ${cap.titulo}` : '';
   const leccion = b.leccion ? datos.lecciones[b.leccion] : null;
+  if (leccion) pintarBloque($('[data-bloque="leccion"]'), { titulo: leccion.titulo, minutos: `${leccion.minutos} ${T.min}`, accion: T.hoy.leer, url: leccion.url });
+  else if (b.todoLeido) pintarBloque($('[data-bloque="leccion"]'), { titulo: capTitulo, texto: T.hoy.todoLeido, accion: T.hoy.verFicha, url: cap.ficha });
+  else pintarBloque($('[data-bloque="leccion"]'), { titulo: capTitulo, texto: T.hoy.sinLeccion, accion: T.hoy.verCapitulo, url: cap?.url });
+
   const practica = b.practica ? datos.practicas[b.practica] : null;
-  pintarItem($('[data-bloque="leccion"]'), leccion, cap, [T.hoy.sinLeccion, T.hoy.leer, T.hoy.verCapitulo, T.min]);
-  pintarItem($('[data-bloque="practica"]'), practica, cap, [T.hoy.sinPractica, T.hoy.abrir, T.hoy.verCapitulo, T.min]);
-  pintarRepaso($('[data-bloque="repaso"]'), b.repaso.map((id) => datos.tarjetas[id]).filter(Boolean), T);
+  if (practica) pintarBloque($('[data-bloque="practica"]'), { titulo: practica.titulo, minutos: `${practica.minutos} ${T.min}`, accion: T.hoy.abrir, url: practica.url });
+  else pintarBloque($('[data-bloque="practica"]'), { titulo: capTitulo, texto: b.todoPracticado ? T.hoy.todoPracticado : T.hoy.sinPractica, accion: T.hoy.verCapitulo, url: cap?.url });
+
+  const tarjetas = b.repaso.map((id) => datos.tarjetas[id]).filter(Boolean);
+  if (tarjetas.length) {
+    pintarBloque($('[data-bloque="repaso"]'), { titulo: tarjetas[0].frente, minutos: plural(tarjetas.length, T.hoy.tarjetas), accion: T.hoy.repasar, url: datos.urls.repaso });
+  } else {
+    pintarBloque($('[data-bloque="repaso"]'), { titulo: '', texto: T.hoy.sinTarjetas, accion: T.hoy.repasar, url: datos.urls.repaso });
+  }
 
   raiz.dataset.listo = '';
   guardarParaSinConexion([leccion?.url, practica?.url, cap?.url]);

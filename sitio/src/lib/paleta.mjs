@@ -73,5 +73,7 @@ export function cssPaleta() {
     `:root{color-scheme:light;${variables('claro')}}`,
     `:root[data-tema="oscuro"]{color-scheme:dark;${variables('oscuro')}}`,
     `@media (prefers-color-scheme:dark){:root:not([data-tema]){color-scheme:dark;${variables('oscuro')}}}`,
+    // Al imprimir (la ficha del capítulo), siempre en claro.
+    `@media print{:root,:root[data-tema="oscuro"]{color-scheme:light;${variables('claro')}}}`,
   ].join('\n');
 }

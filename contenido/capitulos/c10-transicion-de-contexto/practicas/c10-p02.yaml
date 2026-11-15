@@ -90,6 +90,7 @@ solucion:
 storytelling:
   es: "Titular de ejemplo: «Marzo no cuadraba por un lote reenviado desde {{sucursal_lote}}: {{monto_duplicado}} pesos de más, ya corregido en la fuente». Tres puntos: qué pasó, cuánto afectó a cada medida y cómo se evita con un id de línea."
   en: "Sample headline: «March was off because {{sucursal_lote}} re-sent a batch: CLP {{monto_duplicado}} too much, now fixed at the source». Three points: what happened, how much it affected each measure, and how a line id prevents it."
+boceto: c10-d06   # diagramas/c10-d06.es.svg y .en.svg: así debería verse el visual final
 fuentes:
   - {titulo: "Understanding context transition in DAX", url: "https://www.sqlbi.com/articles/understanding-context-transition-in-dax/", nivel: A, consultado: "2026-11-14"}
   - {titulo: "DAX query view", url: "https://learn.microsoft.com/en-us/power-bi/transform-model/dax-query-view", nivel: A, consultado: "2026-11-14"}

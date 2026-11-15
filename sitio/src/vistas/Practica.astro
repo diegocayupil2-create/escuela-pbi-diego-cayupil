@@ -1,12 +1,15 @@
 ---
-// Práctica en Power BI: el caso, los pasos, cómo saber si está bien, pistas y la solución oculta hasta que la pidas.
+// Práctica en Power BI: el caso, un boceto de cómo debería verse, los pasos, cómo saber si está bien, pistas
+// y la solución oculta hasta que la pidas. El índice del capítulo queda a mano.
 import Base from '../layouts/Base.astro';
 import Icono from '../components/Icono.astro';
 import Fuentes from '../components/Fuentes.astro';
 import SiNo from '../components/SiNo.astro';
+import IndiceCapitulo from '../components/IndiceCapitulo.astro';
+import AnteriorSiguiente from '../components/AnteriorSiguiente.astro';
 import { TEXTOS, t } from '../lib/textos.mjs';
 import { REPO, rutaRelativa } from '../lib/enlaces.mjs';
-import { cargarContenido, practicaVista } from '../lib/contenido.mjs';
+import { cargarContenido, practicaVista, figuraDiagrama, vecinos } from '../lib/contenido.mjs';
 
 const { lang, actual, alterno, cap: idCap, id } = Astro.props;
 const T = TEXTOS[lang];
@@ -17,9 +20,13 @@ const p = cap.practicas.find((x) => x.id === id);
 const v = await practicaVista(p, lang, contenido.respuestas);
 const datasetNombre = p.dataset.split('/').at(-1);
 const rutaPc = p.dataset.replaceAll('/', '\\');
+const { anterior, siguiente } = vecinos(contenido, 'practica', idCap, id, lang);
 ---
-<Base lang={lang} titulo={v.titulo} actual={actual} alterno={alterno} seccion="mapa">
+<Base lang={lang} titulo={v.titulo} actual={actual} alterno={alterno} seccion="temario">
+  <IndiceCapitulo slot="lateral" cap={cap} lang={lang} contenido={contenido} actualId={id} variante="lateral" />
   <a class="volver" href={`${BASE}${rutaRelativa(lang, 'capitulo', { cap: idCap })}`}><Icono nombre="atras" />{cap.num} · {cap.titulo[lang]}</a>
+  <IndiceCapitulo cap={cap} lang={lang} contenido={contenido} actualId={id} variante="plegable" resumen={T.hoy.practica} />
+
   <article class="lectura">
     <header>
       <p class="sobretitulo">{T.hoy.practica} · {T.practica.tipos[p.tipo_pregunta]}</p>
@@ -27,10 +34,7 @@ const rutaPc = p.dataset.replaceAll('/', '\\');
       <p class="meta"><span class="chip"><Icono nombre="reloj" />{p.minutos} {T.min}</span></p>
     </header>
 
-    <section aria-labelledby="obj">
-      <h2 id="obj" class="h-chica">{T.practica.objetivo}</h2>
-      <div class="prosa" set:html={v.objetivo} />
-    </section>
+    <div class="objetivo"><Icono nombre="objetivo" /><div><strong>{T.practica.objetivo}:</strong> <Fragment set:html={v.objetivo} /></div></div>
     <section aria-labelledby="pq">
       <h2 id="pq" class="h-chica">{T.practica.porQue}</h2>
       <div class="prosa" set:html={v.porQue} />
@@ -38,6 +42,12 @@ const rutaPc = p.dataset.replaceAll('/', '\\');
     <section aria-labelledby="ctx">
       <h2 id="ctx" class="h-chica">{T.practica.contexto}</h2>
       <div class="prosa" set:html={v.contexto} />
+    </section>
+
+    <section aria-labelledby="bos">
+      <h2 id="bos" class="h-chica">{T.practica.boceto}</h2>
+      <Fragment set:html={figuraDiagrama(p.boceto, lang, 'diagrama diagrama-boceto')} />
+      <p class="nota">{T.practica.bocetoNota}</p>
     </section>
 
     <aside class="dataset tarjeta" aria-label={T.practica.dataset}>
@@ -84,6 +94,16 @@ const rutaPc = p.dataset.replaceAll('/', '\\');
     </details>
 
     <p class="nota entregar" set:html={t(T.practica.entregar, { ruta: `<code>trabajos\\${p.id}\\</code>`, comando: `<code>/entregar ${p.id}</code>` })} />
+    <p>
+      <button type="button" class="boton boton-marcar" data-marcar={id} aria-pressed="false" data-texto-marcar={T.practica.marcar} data-texto-hecho={T.practica.marcada}>
+        <Icono nombre="si" clase="icono sino-icono" /><span data-marcar-texto>{T.practica.marcar}</span>
+      </button>
+    </p>
   </article>
   <Fuentes fuentes={p.fuentes} lang={lang} />
+  <AnteriorSiguiente anterior={anterior} siguiente={siguiente} lang={lang} />
+  <script>
+    import { iniciarIndices } from '../lib/cliente/indice-vista.mjs';
+    iniciarIndices();
+  </script>
 </Base>

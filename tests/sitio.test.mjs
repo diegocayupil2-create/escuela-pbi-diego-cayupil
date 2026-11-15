@@ -6,13 +6,13 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import YAML from 'yaml';
 import { rutaRelativa, otroIdioma } from '../sitio/src/lib/enlaces.mjs';
-import { ordenRecomendado, estadosCapitulos, siguienteCapitulo, modoValido } from '../sitio/src/lib/ruta.mjs';
+import { ordenRecomendado, estadosCapitulos, siguienteCapitulo, modoValido, itemsCapitulo, dondeVoy, ordenLectura } from '../sitio/src/lib/ruta.mjs';
 import {
-  fechaChile, diaSemana, lunesDe, temaDelDia, diaDelPlan, tarjetasDelDia, bloquesDeHoy, estadoAutomatizacion,
+  fechaChile, diaSemana, lunesDe, temaDelDia, diaDelPlan, tarjetasDelDia, bloquesDeHoy, estadoAutomatizacion, armarMazo,
 } from '../sitio/src/lib/hoy.mjs';
 import { formatoNumero, reemplazarClaves } from '../sitio/src/lib/formato.mjs';
 import { PALETA, PARES, contraste, cssPaleta } from '../sitio/src/lib/paleta.mjs';
-import { TEXTOS } from '../sitio/src/lib/textos.mjs';
+import { TEXTOS, duracion, plural } from '../sitio/src/lib/textos.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 const curriculo = YAML.parse(readFileSync(join(RAIZ, 'contenido', 'curriculo.yaml'), 'utf8'));
@@ -20,6 +20,11 @@ const CAPS = curriculo.capitulos.map((c) => ({ id: c.id, nivel: c.nivel, requier
 
 test('rutas por idioma: mismas páginas con nombres en español o inglés', () => {
   assert.equal(rutaRelativa('es', 'hoy'), 'es/');
+  assert.equal(rutaRelativa('es', 'temario'), 'es/temario/');
+  assert.equal(rutaRelativa('en', 'temario'), 'en/syllabus/');
+  assert.equal(rutaRelativa('en', 'repaso'), 'en/review/');
+  assert.equal(rutaRelativa('en', 'mas'), 'en/more/');
+  assert.equal(rutaRelativa('es', 'ficha', { cap: 'c10' }), 'es/capitulos/c10/ficha/');
   assert.equal(rutaRelativa('en', 'mapa'), 'en/map/');
   assert.equal(rutaRelativa('es', 'leccion', { cap: 'c10', id: 'c10-l01' }), 'es/capitulos/c10/lecciones/c10-l01/');
   assert.equal(rutaRelativa('en', 'practica', { cap: 'c10', id: 'c10-p01' }), 'en/chapters/c10/practice/c10-p01/');
@@ -177,4 +182,47 @@ test('los textos de la interfaz existen en español y en inglés', () => {
   const claves = (o, prefijo = '') =>
     Object.entries(o).flatMap(([k, v]) => (v && typeof v === 'object' ? claves(v, `${prefijo}${k}.`) : [`${prefijo}${k}`]));
   assert.deepEqual(claves(TEXTOS.en).sort(), claves(TEXTOS.es).sort());
+});
+
+test('«dónde voy»: lo primero sin hacer del capítulo, y el orden de lectura de todo el temario', () => {
+  const cap = { lecciones: ['c10-l01', 'c10-l02'], practicas: ['c10-p01'] };
+  const items = itemsCapitulo(cap);
+  assert.deepEqual(items.map((x) => x.tipo), ['leccion', 'leccion', 'practica']);
+  assert.equal(dondeVoy(items, []).id, 'c10-l01');
+  assert.equal(dondeVoy(items, ['c10-l01']).id, 'c10-l02');
+  assert.equal(dondeVoy(items, ['c10-l01', 'c10-l02', 'c10-p01']), null);
+
+  const lectura = ordenLectura(CAPS_HOY);
+  assert.deepEqual(lectura.slice(0, 3).map((p) => p.cap), ['c00', 'c01', 'c10']);
+  const c10 = lectura.filter((p) => p.cap === 'c10').map((p) => p.tipo + ':' + p.id);
+  assert.deepEqual(c10, ['capitulo:c10', 'leccion:c10-l01', 'leccion:c10-l02', 'practica:c10-p01']);
+});
+
+test('«Hoy» sigue con la lección sin leer y avisa cuando ya está todo leído', () => {
+  const base = { capitulos: CAPS_HOY, fecha: '2026-11-18', modo: 'libre', elegido: 'c10' };
+  assert.equal(bloquesDeHoy({ ...base, hechos: ['c10-l01'] }).leccion, 'c10-l02');
+  const todo = bloquesDeHoy({ ...base, hechos: ['c10-l01', 'c10-l02', 'c10-p01'] });
+  assert.equal(todo.leccion, null);
+  assert.equal(todo.todoLeido, true);
+  assert.equal(todo.todoPracticado, true);
+});
+
+test('mazos de repaso: hoy, mi capítulo o todas; si el capítulo no tiene tarjetas, usa las que hay', () => {
+  const hoy = armarMazo({ capitulos: CAPS_HOY, capitulo: 'c10', fecha: '2026-11-14', tipo: 'hoy' });
+  assert.equal(hoy.ids.length, 3);
+  assert.equal(hoy.respaldo, false);
+  assert.equal(armarMazo({ capitulos: CAPS_HOY, capitulo: 'c10', fecha: '2026-11-14', tipo: 'capitulo' }).ids.length, 4);
+  const sinTarjetas = armarMazo({ capitulos: CAPS_HOY, capitulo: 'c01', fecha: '2026-11-14', tipo: 'capitulo' });
+  assert.equal(sinTarjetas.respaldo, true);
+  assert.equal(sinTarjetas.ids.length, 4);
+  assert.equal(armarMazo({ capitulos: CAPS_HOY.slice(0, 2), capitulo: 'c01', fecha: '2026-11-14' }).ids.length, 0);
+});
+
+test('tiempos y plurales en los dos idiomas', () => {
+  assert.equal(duracion(45, 'es'), '45 min');
+  assert.equal(duracion(85, 'es'), '1 h 25 min');
+  assert.equal(duracion(120, 'en'), '2 h');
+  assert.equal(duracion(80, 'es', true), '≈ 1 h 20 min');
+  assert.equal(plural(1, TEXTOS.es.temario.capitulos), '1 capítulo');
+  assert.equal(plural(8, TEXTOS.en.temario.capitulos), '8 chapters');
 });

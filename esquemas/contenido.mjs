@@ -9,6 +9,8 @@ const urlHttps = z
   .url()
   .refine((u) => u.startsWith('https://'), 'el link debe usar https');
 const idCapitulo = z.string().regex(/^c\d{2}$/);
+// Diagramas: contenido/capitulos/<carpeta>/diagramas/<id>.es.svg y .en.svg. En las lecciones van con la línea [[diagrama <id>]].
+export const idDiagrama = z.string().regex(/^c\d{2}-d\d{2}$/);
 
 export const bilingue = z.object({ es: texto, en: texto }).strict();
 export const nivelFuente = z.enum(['A', 'B', 'C']);
@@ -60,7 +62,8 @@ export const curriculo = z
         repasos_min: z.number().int().min(0),
       })
       .strict(),
-    niveles: z.array(z.object({ id: z.number().int().min(0).max(4), nombre: bilingue }).strict()).length(5),
+    // meta: «Al terminar vas a poder…», en una frase.
+    niveles: z.array(z.object({ id: z.number().int().min(0).max(4), nombre: bilingue, meta: bilingue }).strict()).length(5),
     capitulos: z.array(capitulo).min(1),
   })
   .strict();
@@ -71,11 +74,15 @@ export const leccion = z
     capitulo: idCapitulo,
     idioma: z.enum(['es', 'en']),
     titulo: texto,
+    // «Al terminar vas a poder…», en una frase. Va arriba de la lección.
+    objetivo: texto,
     minutos: z.number().int().min(1).max(5),
     estado: estadoFuncion,
     desde: z.string().nullable(),
     fuentes: z.array(citaFuente).min(1),
     tarjetas: z.array(z.string().regex(/^c\d{2}-t\d{2}$/)),
+    // «Para recordar»: 2 o 3 frases cortas al final de la lección.
+    recordar: z.array(texto).min(2).max(3),
   })
   .strict();
 
@@ -103,7 +110,29 @@ export const practica = z
     pistas: z.array(bilingue).min(2),
     solucion: bilingue,
     storytelling: bilingue,
+    // Boceto del visual final con la identidad A: un diagrama sin los números de la respuesta.
+    boceto: idDiagrama,
     fuentes: z.array(citaFuente).min(1),
+  })
+  .strict();
+
+// Glosario del capítulo: términos como aparecen en el producto, con su nombre en español si la interfaz lo cambia.
+export const glosario = z
+  .object({
+    capitulo: idCapitulo,
+    terminos: z
+      .array(
+        z
+          .object({
+            id: z.string().regex(/^c\d{2}-g\d{2}$/),
+            termino: texto,
+            traduccion: texto.optional(),
+            definicion: bilingue,
+            lecciones: z.array(z.string().regex(/^c\d{2}-l\d{2}$/)).optional(),
+          })
+          .strict(),
+      )
+      .min(1),
   })
   .strict();
 

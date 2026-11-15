@@ -1,0 +1,68 @@
+# Glosario del capítulo 10. El término va como aparece en el producto; «traduccion» es el nombre en la interfaz en español.
+capitulo: c10
+terminos:
+  - id: c10-g01
+    termino: "row context"
+    traduccion: "contexto de fila"
+    definicion: {es: "Lo que DAX sabe cuando recorre una tabla fila por fila: en qué fila está. No filtra otras tablas.", en: "What DAX knows while walking a table row by row: which row it is on. It doesn't filter other tables."}
+    lecciones: [c10-l01]
+  - id: c10-g02
+    termino: "filter context"
+    traduccion: "contexto de filtro"
+    definicion: {es: "Los filtros activos cuando se evalúa una medida: los del visual, los de los segmentadores y los de CALCULATE.", en: "The filters active when a measure is evaluated: those from the visual, slicers and CALCULATE."}
+    lecciones: [c10-l01]
+  - id: c10-g03
+    termino: "context transition"
+    traduccion: "transición de contexto"
+    definicion: {es: "Convertir el row context actual en un filter context equivalente. La hace CALCULATE.", en: "Turning the current row context into an equivalent filter context. CALCULATE does it."}
+    lecciones: [c10-l01, c10-l02]
+  - id: c10-g04
+    termino: "CALCULATE"
+    definicion: {es: "Evalúa una expresión con un filter context modificado. Si hay row context, primero hace la transición.", en: "Evaluates an expression in a modified filter context. If there is a row context, it performs context transition first."}
+    lecciones: [c10-l01]
+  - id: c10-g05
+    termino: "measure"
+    traduccion: "medida"
+    definicion: {es: "Cálculo que se evalúa en el filter context del visual. Dentro de un iterador lleva un CALCULATE implícito.", en: "A calculation evaluated in the visual's filter context. Inside an iterator it carries an implicit CALCULATE."}
+    lecciones: [c10-l02]
+  - id: c10-g06
+    termino: "calculated column"
+    traduccion: "columna calculada"
+    definicion: {es: "Columna que se calcula fila por fila al actualizar el modelo, con row context.", en: "A column computed row by row when the model refreshes, with row context."}
+    lecciones: [c10-l01]
+  - id: c10-g07
+    termino: "iterator"
+    traduccion: "iterador"
+    definicion: {es: "Función que recorre una tabla fila por fila, como SUMX, AVERAGEX o FILTER.", en: "A function that walks a table row by row, like SUMX, AVERAGEX or FILTER."}
+    lecciones: [c10-l02]
+  - id: c10-g08
+    termino: "fact table"
+    traduccion: "tabla de hechos"
+    definicion: {es: "Tabla con un evento por fila, como cada línea de venta. Tiene muchas filas y se filtra desde las dimensiones.", en: "A table with one event per row, like each sales line. It has many rows and is filtered from the dimensions."}
+    lecciones: [c10-l03, c10-l04]
+  - id: c10-g09
+    termino: "dimension"
+    traduccion: "dimensión"
+    definicion: {es: "Tabla con una fila por cliente, producto o fecha. Es la que conviene iterar.", en: "A table with one row per customer, product or date. It's the one you should iterate."}
+    lecciones: [c10-l04]
+  - id: c10-g10
+    termino: "relationship"
+    traduccion: "relación"
+    definicion: {es: "Une una dimensión (lado 1) con una fact table (lado muchos). El filtro viaja de la dimensión a los hechos.", en: "Links a dimension (one side) with a fact table (many side). The filter travels from the dimension to the facts."}
+    lecciones: [c10-l01]
+  - id: c10-g11
+    termino: "SUMX"
+    definicion: {es: "Iterador que evalúa una expresión en cada fila y suma los resultados.", en: "An iterator that evaluates an expression on each row and adds up the results."}
+    lecciones: [c10-l03, c10-l04]
+  - id: c10-g12
+    termino: "FILTER"
+    definicion: {es: "Iterador que devuelve las filas de una tabla que cumplen una condición.", en: "An iterator that returns the rows of a table that meet a condition."}
+    lecciones: [c10-l02]
+  - id: c10-g13
+    termino: "RELATED"
+    definicion: {es: "Trae un valor del lado 1 de una relación, desde el row context del lado muchos.", en: "Brings a value from the one side of a relationship, from the row context on the many side."}
+    lecciones: [c10-l04]
+  - id: c10-g14
+    termino: "VALUES"
+    definicion: {es: "Devuelve los valores únicos de una columna en el filter context actual. Sirve para iterar claves.", en: "Returns the unique values of a column in the current filter context. Useful to iterate keys."}
+    lecciones: [c10-l04]

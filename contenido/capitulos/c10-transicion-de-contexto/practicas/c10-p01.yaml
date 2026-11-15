@@ -88,6 +88,7 @@ solucion:
 storytelling:
   es: "Titular de ejemplo: «{{region_mayor_caida}} perdió {{clientes_que_dejaron_de_comprar}} clientes grandes desde marzo de 2025». Tres puntos: cuánto pesan los clientes grandes en la venta, desde cuándo dejaron de comprar y qué propones revisar con el equipo de esa sucursal."
   en: "Sample headline: «{{region_mayor_caida}} lost {{clientes_que_dejaron_de_comprar}} large customers since March 2025». Three points: how much large customers weigh in sales, since when they stopped buying, and what you propose to review with that branch's team."
+boceto: c10-d05   # diagramas/c10-d05.es.svg y .en.svg: así debería verse el visual final
 fuentes:
   - {titulo: "Understanding context transition in DAX", url: "https://www.sqlbi.com/articles/understanding-context-transition-in-dax/", nivel: A, consultado: "2026-11-14"}
   - {titulo: "FILTER function (DAX)", url: "https://learn.microsoft.com/en-us/dax/filter-function-dax", nivel: A, consultado: "2026-11-14"}

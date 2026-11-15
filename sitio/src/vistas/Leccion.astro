@@ -1,13 +1,14 @@
 ---
-// Micro-lección: el texto, sus tarjetas, sus fuentes y el paso siguiente.
-import { render } from 'astro:content';
+// Micro-lección: objetivo arriba, el texto con sus diagramas, «Para recordar» al final y el índice del capítulo a mano.
 import Base from '../layouts/Base.astro';
 import Icono from '../components/Icono.astro';
 import Fuentes from '../components/Fuentes.astro';
 import Tarjetas from '../components/Tarjetas.astro';
+import IndiceCapitulo from '../components/IndiceCapitulo.astro';
+import AnteriorSiguiente from '../components/AnteriorSiguiente.astro';
 import { TEXTOS, t } from '../lib/textos.mjs';
 import { rutaRelativa } from '../lib/enlaces.mjs';
-import { cargarContenido } from '../lib/contenido.mjs';
+import { cargarContenido, htmlLeccion, vecinos } from '../lib/contenido.mjs';
 
 const { lang, actual, alterno, cap: idCap, id } = Astro.props;
 const T = TEXTOS[lang];
@@ -18,28 +19,35 @@ const lista = cap.lecciones[lang];
 const i = lista.findIndex((l) => l.data.id === id);
 const leccion = lista[i];
 if (!leccion) throw new Error(`falta la lección ${id} en ${lang}`);
-const { Content } = await render(leccion);
 const tarjetas = cap.tarjetas.filter((x) => leccion.data.tarjetas.includes(x.id));
-const anterior = lista[i - 1];
-const siguiente = lista[i + 1];
-const practica = cap.practicas[0];
-const url = (tipo, extra = {}) => `${BASE}${rutaRelativa(lang, tipo, { cap: idCap, ...extra })}`;
 const estado = T.estadoFuncion[leccion.data.estado];
+const { anterior, siguiente } = vecinos(contenido, 'leccion', idCap, id, lang);
+const deCuantas = t(T.leccion.de, { i: i + 1, n: lista.length });
 ---
-<Base lang={lang} titulo={leccion.data.titulo} actual={actual} alterno={alterno} seccion="mapa">
-  <a class="volver" href={url('capitulo')}><Icono nombre="atras" />{cap.num} · {cap.titulo[lang]}</a>
+<Base lang={lang} titulo={leccion.data.titulo} actual={actual} alterno={alterno} seccion="temario">
+  <IndiceCapitulo slot="lateral" cap={cap} lang={lang} contenido={contenido} actualId={id} variante="lateral" />
+  <a class="volver" href={`${BASE}${rutaRelativa(lang, 'capitulo', { cap: idCap })}`}><Icono nombre="atras" />{cap.num} · {cap.titulo[lang]}</a>
+  <IndiceCapitulo cap={cap} lang={lang} contenido={contenido} actualId={id} variante="plegable" resumen={deCuantas} />
+
   <article class="lectura">
     <header>
-      <p class="sobretitulo">{t(T.leccion.de, { i: i + 1, n: lista.length })}</p>
+      <p class="sobretitulo">{deCuantas}</p>
       <h1>{leccion.data.titulo}</h1>
       <p class="meta">
         <span class="chip"><Icono nombre="reloj" />{leccion.data.minutos} {T.min}</span>
         {estado && <span class="chip">{estado}{leccion.data.desde && ` · ${t(T.desde, { v: leccion.data.desde })}`}</span>}
       </p>
     </header>
-    <div class="prosa">
-      <Content />
-    </div>
+    <p class="objetivo"><Icono nombre="objetivo" /><span><strong>{T.leccion.objetivo}:</strong> {leccion.data.objetivo}</span></p>
+    <div class="prosa" set:html={htmlLeccion(leccion)} />
+
+    <aside class="recordar" aria-labelledby="recordar">
+      <h2 id="recordar" class="recordar-titulo"><Icono nombre="recordar" />{T.leccion.recordar}</h2>
+      <ul>{leccion.data.recordar.map((r) => <li>{r}</li>)}</ul>
+      <button type="button" class="boton boton-marcar" data-marcar={id} aria-pressed="false" data-texto-marcar={T.leccion.marcar} data-texto-hecho={T.leccion.marcada}>
+        <Icono nombre="si" clase="icono sino-icono" /><span data-marcar-texto>{T.leccion.marcar}</span>
+      </button>
+    </aside>
   </article>
 
   {tarjetas.length > 0 && (
@@ -50,11 +58,9 @@ const estado = T.estadoFuncion[leccion.data.estado];
   )}
 
   <Fuentes fuentes={leccion.data.fuentes} lang={lang} />
-
-  <nav class="anterior-siguiente" aria-label={cap.titulo[lang]}>
-    {anterior ? <a class="boton boton-secundario" href={url('leccion', { id: anterior.data.id })}><Icono nombre="atras" />{T.leccion.anterior}</a> : <span></span>}
-    {siguiente
-      ? <a class="boton" href={url('leccion', { id: siguiente.data.id })}>{T.leccion.siguiente}<Icono nombre="flecha" /></a>
-      : practica && <a class="boton" href={url('practica', { id: practica.id })}>{T.leccion.irPractica}<Icono nombre="flecha" /></a>}
-  </nav>
+  <AnteriorSiguiente anterior={anterior} siguiente={siguiente} lang={lang} />
+  <script>
+    import { iniciarIndices } from '../lib/cliente/indice-vista.mjs';
+    iniciarIndices();
+  </script>
 </Base>

@@ -1,0 +1,65 @@
+---
+// Índice de un capítulo: lecciones, prácticas, cierre, ficha y glosario, con ✓ en lo hecho y «vas aquí».
+// variante: principal (en la página del capítulo), lateral (a la derecha en el PC) o plegable (arriba en el celular).
+import Icono from './Icono.astro';
+import { TEXTOS, t, plural } from '../lib/textos.mjs';
+import { rutaRelativa } from '../lib/enlaces.mjs';
+import { tituloPractica } from '../lib/contenido.mjs';
+
+const { cap, lang, contenido, actualId = null, variante = 'principal', resumen = '' } = Astro.props;
+const T = TEXTOS[lang];
+const BASE = import.meta.env.BASE_URL;
+const url = (tipo, id) => `${BASE}${rutaRelativa(lang, tipo, { cap: cap.id, id })}`;
+const items = [
+  ...cap.lecciones[lang].map((l, i) => ({ id: l.data.id, tipo: 'leccion', num: String(i + 1), titulo: l.data.titulo, min: l.data.minutos })),
+  ...cap.practicas.map((p) => ({ id: p.id, tipo: 'practica', num: '', titulo: tituloPractica(p, lang, contenido.respuestas), min: p.minutos })),
+];
+const hayContenido = items.length > 0;
+---
+{hayContenido && (
+  <details class:list={['indice', `indice-${variante}`]} data-indice open={variante !== 'plegable'}>
+    <summary class="indice-cabeza">
+      <span class="indice-titulo-cap">
+        {variante === 'principal' ? T.capituloPagina.indice : `${cap.num} · ${cap.titulo[lang]}`}
+      </span>
+      {resumen && <span class="indice-resumen">{resumen}</span>}
+      <span class="indice-avance"><span data-avance></span><span class="barra-avance" data-barra-avance></span></span>
+    </summary>
+    <ol class="indice-items">
+      {items.map((x) => (
+        <li data-item={x.id} class:list={[`indice-${x.tipo}`, { actual: x.id === actualId }]}>
+          <a href={url(x.tipo, x.id)} aria-current={x.id === actualId ? 'page' : undefined}>
+            <span class="indice-num">{x.tipo === 'practica' ? <Icono nombre="practica" /> : x.num}</span>
+            <span class="indice-texto" data-titulo>{x.titulo}</span>
+            <span class="indice-min">{x.min} {T.min}</span>
+          </a>
+          <span class="indice-marca" data-marca></span>
+        </li>
+      ))}
+    </ol>
+    <ul class="indice-extras">
+      {cap.cierre && (
+        <li class="indice-cierre">
+          <span class="indice-num"><Icono nombre="objetivo" /></span>
+          <span class="indice-texto">{t(T.capituloPagina.cierre, { n: cap.cierre.preguntas.length })}</span>
+          <span class="chip">{T.capituloPagina.cierreFase}</span>
+        </li>
+      )}
+      <li>
+        <a href={url('ficha')} aria-current={actualId === 'ficha' ? 'page' : undefined}>
+          <span class="indice-num"><Icono nombre="ficha" /></span><span class="indice-texto">{T.capituloPagina.ficha}</span>
+        </a>
+      </li>
+      {cap.glosario.length > 0 && (
+        <li>
+          <a href={`${BASE}${rutaRelativa(lang, 'glosario')}#${cap.id}`}>
+            <span class="indice-num"><Icono nombre="glosario" /></span><span class="indice-texto">{plural(cap.glosario.length, T.capituloPagina.glosario)}</span>
+          </a>
+        </li>
+      )}
+    </ul>
+    {variante === 'principal' && (
+      <a class="boton boton-seguir" data-seguir hidden><span data-seguir-texto></span><Icono nombre="flecha" /></a>
+    )}
+  </details>
+)}

@@ -9,11 +9,16 @@ dominio:            # cuándo un capítulo queda dominado (ajustable)
   puntaje_min: 80
   repasos_min: 2    # repasos espaciados exitosos
 niveles:
-  - {id: 0, nombre: {es: "Nivelación", en: "Placement"}}
-  - {id: 1, nombre: {es: "Fundamentos", en: "Foundations"}}
-  - {id: 2, nombre: {es: "Intermedio", en: "Intermediate"}}
-  - {id: 3, nombre: {es: "Avanzado", en: "Advanced"}}
-  - {id: 4, nombre: {es: "Vanguardia", en: "Cutting edge"}}
+  - {id: 0, nombre: {es: "Nivelación", en: "Placement"},
+     meta: {es: "Saber dónde partir: lo que ya dominas queda convalidado y la ruta empieza donde te falta.", en: "Know where to start: what you already master is credited and your path starts where you need it."}}
+  - {id: 1, nombre: {es: "Fundamentos", en: "Foundations"},
+     meta: {es: "Armar un star schema limpio, escribir medidas con CALCULATE y elegir el gráfico y el título que responden la pregunta del negocio.", en: "Build a clean star schema, write measures with CALCULATE, and choose the chart and title that answer the business question."}}
+  - {id: 2, nombre: {es: "Intermedio", en: "Intermediate"},
+     meta: {es: "Dominar los contextos de DAX y la inteligencia de tiempo, y armar informes navegables que cuentan una historia con SCQA y color con intención.", en: "Master DAX contexts and time intelligence, and build navigable reports that tell a story with SCQA and purposeful color."}}
+  - {id: 3, nombre: {es: "Avanzado", en: "Advanced"},
+     meta: {es: "Construir modelos rápidos y versionados (calculation groups, visual calculations, PBIP + Git, RLS) y presentar a gerencia con diseño de nivel experto.", en: "Build fast, version-controlled models (calculation groups, visual calculations, PBIP + Git, RLS) and present to leadership with expert-level design."}}
+  - {id: 4, nombre: {es: "Vanguardia", en: "Cutting edge"},
+     meta: {es: "Trabajar con agentes y MCP sobre tus PBIP, preparar modelos para Copilot y competir en retos de la comunidad.", en: "Work with agents and MCP on your PBIP files, get models ready for Copilot, and compete in community challenges."}}
 
 capitulos:
   - id: c00

@@ -1,0 +1,26 @@
+---
+// Botón ES/EN y botón de tema. Va en el encabezado del celular y abajo del riel en el PC.
+import Icono from './Icono.astro';
+import { TEXTOS } from '../lib/textos.mjs';
+const { lang, enlaceIdioma, clase = 'ajustes' } = Astro.props;
+const T = TEXTOS[lang];
+const BASE = import.meta.env.BASE_URL;
+---
+<div class={clase}>
+  <div class="idiomas" role="group" aria-label={T.idioma.boton}>
+    <a href={`${BASE}${enlaceIdioma.es}`} hreflang="es" lang="es" aria-label={T.idioma.es} aria-current={lang === 'es' ? 'true' : undefined}>ES</a>
+    <a href={`${BASE}${enlaceIdioma.en}`} hreflang="en" lang="en" aria-label={T.idioma.en} aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+  </div>
+  <button
+    type="button"
+    class="boton-icono"
+    data-boton-tema
+    aria-label={T.tema.boton}
+    title={T.tema.boton}
+    data-texto-sistema={T.tema.sistema}
+    data-texto-claro={T.tema.claro}
+    data-texto-oscuro={T.tema.oscuro}
+  >
+    <Icono nombre="tema" />
+  </button>
+</div>

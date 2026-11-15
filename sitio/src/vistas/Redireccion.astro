@@ -1,0 +1,19 @@
+---
+// Página vieja que ahora vive en otra dirección (el «Mapa» pasó a ser el «Temario»): lleva a la nueva.
+import { TEXTOS } from '../lib/textos.mjs';
+const { lang, destino } = Astro.props;
+const url = `${import.meta.env.BASE_URL}${destino}`;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={`0; url=${url}`} />
+    <link rel="canonical" href={url} />
+    <title>{TEXTOS[lang].temario.titulo}</title>
+  </head>
+  <body>
+    <p><a href={url}>{TEXTOS[lang].redireccion}</a></p>
+  </body>
+</html>

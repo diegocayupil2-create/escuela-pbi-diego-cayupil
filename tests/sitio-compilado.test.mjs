@@ -28,8 +28,10 @@ before(() => {
   paginas = listar(DIST).map(rel).filter((r) => r.endsWith('.html'));
 });
 
-test('están Hoy y el Mapa en los dos idiomas, el inicio, el 404 y lo que hace instalable la app', () => {
-  for (const r of ['index.html', 'es/index.html', 'en/index.html', 'es/mapa/index.html', 'en/map/index.html', '404.html',
+test('están las cinco secciones y el glosario en los dos idiomas, el inicio, el 404 y lo que hace instalable la app', () => {
+  for (const r of ['index.html', 'es/index.html', 'en/index.html', 'es/temario/index.html', 'en/syllabus/index.html',
+    'es/repaso/index.html', 'en/review/index.html', 'es/radar/index.html', 'en/radar/index.html', 'es/mas/index.html',
+    'en/more/index.html', 'es/glosario/index.html', 'en/glossary/index.html', '404.html',
     'manifest.webmanifest', 'sw.js', 'favicon.svg']) {
     assert.ok(existsSync(join(DIST, r)), `falta ${r}`);
   }
@@ -42,6 +44,7 @@ test('cada capítulo, lección y práctica del contenido tiene su página en esp
     esperadas.push(`es/capitulos/${c.id}/index.html`, `en/chapters/${c.id}/index.html`);
     if (!c.carpeta) continue;
     const base = join(RAIZ, 'contenido', 'capitulos', c.carpeta);
+    esperadas.push(`es/capitulos/${c.id}/ficha/index.html`, `en/chapters/${c.id}/summary/index.html`);
     for (const f of readdirSync(join(base, 'lecciones')).filter((x) => x.endsWith('.es.md'))) {
       const id = f.replace('.es.md', '');
       esperadas.push(`es/capitulos/${c.id}/lecciones/${id}/index.html`, `en/chapters/${c.id}/lessons/${id}/index.html`);
@@ -108,9 +111,36 @@ test('instalable: manifest con íconos que existen y sw.js con lo esencial para 
   const sw = leer('sw.js');
   assert.match(sw, /const VERSION = '[0-9a-f]{12}'/);
   const esenciales = JSON.parse(sw.match(/const ESENCIALES = (\[.*?\]);/)[1]);
-  for (const r of ['./', 'es/', 'en/', 'es/mapa/', 'en/map/', 'manifest.webmanifest']) assert.ok(esenciales.includes(r), `sw.js no guarda ${r}`);
+  for (const r of ['./', 'es/', 'en/', 'es/temario/', 'en/syllabus/', 'es/repaso/', 'manifest.webmanifest']) assert.ok(esenciales.includes(r), `sw.js no guarda ${r}`);
   for (const r of esenciales) {
     const archivo = r === './' ? 'index.html' : r.endsWith('/') ? `${r}index.html` : r;
     assert.ok(existsSync(join(DIST, archivo)), `sw.js guarda ${r}, que no existe`);
   }
+});
+
+test('cada lección trae objetivo, sus diagramas en línea y «Para recordar»; cada práctica, su boceto', () => {
+  const leccion = leer('es/capitulos/c10/lecciones/c10-l01/index.html');
+  assert.match(leccion, /<p class="objetivo">/);
+  assert.match(leccion, /<figure class="diagrama"><svg[^>]*role="img"/, 'el diagrama va en línea, como SVG');
+  assert.ok(!leccion.includes('[[diagrama'), 'quedó un marcador de diagrama sin reemplazar');
+  assert.match(leccion, /<aside class="recordar"[\s\S]*CALCULATE convierte la fila en filter context/);
+  assert.match(leccion, /data-marcar="c10-l01"/);
+  for (const r of paginas.filter((p) => /\/(lecciones|lessons)\//.test(p))) {
+    assert.match(leer(r), /<figure class="diagrama">/, `${r} no muestra su diagrama`);
+  }
+  assert.match(leer('en/chapters/c10/practice/c10-p01/index.html'), /<figure class="diagrama diagrama-boceto"><svg/);
+});
+
+test('la navegación fija tiene las cinco secciones y el índice del capítulo queda a mano', () => {
+  const html = leer('es/capitulos/c10/lecciones/c10-l02/index.html');
+  const nav = html.match(/<nav class="nav-principal"[\s\S]*?<\/nav>/)[0];
+  for (const s of ['es/', 'es/temario/', 'es/repaso/', 'es/radar/', 'es/mas/']) assert.ok(nav.includes(`href="${BASE}${s}"`), `falta ${s} en la navegación`);
+  assert.equal((html.match(/data-indice/g) ?? []).length, 2, 'el índice va al lado (PC) y plegable (celular)');
+  assert.match(html, /data-item="c10-p02"/);
+  assert.match(html, /rel="prev"[\s\S]*rel="next"/, 'faltan anterior y siguiente');
+});
+
+test('la dirección vieja del mapa lleva al temario', () => {
+  assert.match(leer('es/mapa/index.html'), /http-equiv="refresh" content="0; url=\/escuela-pbi-diego-cayupil\/es\/temario\/"/);
+  assert.match(leer('en/map/index.html'), /url=\/escuela-pbi-diego-cayupil\/en\/syllabus\//);
 });

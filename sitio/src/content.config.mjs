@@ -47,6 +47,10 @@ export const collections = {
     loader: glob({ pattern: '*/tarjetas.yaml', base: CAPITULOS, generateId: ({ data }) => String(data.capitulo) }),
     schema: E.tarjetas,
   }),
+  glosarios: defineCollection({
+    loader: glob({ pattern: '*/glosario.yaml', base: CAPITULOS, generateId: ({ data }) => String(data.capitulo) }),
+    schema: E.glosario,
+  }),
   cierres: defineCollection({
     loader: glob({ pattern: '*/cierre.yaml', base: CAPITULOS, generateId: ({ data }) => String(data.capitulo) }),
     schema: E.cierre,

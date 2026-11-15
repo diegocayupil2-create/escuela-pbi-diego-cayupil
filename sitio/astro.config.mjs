@@ -9,7 +9,7 @@ import { SHIKI } from './src/lib/shiki.mjs';
 
 // Lo mínimo para abrir la app sin internet. El resto se guarda a medida que lo visitas.
 const ESENCIAL =
-  /^(index\.html|(es|en)\/index\.html|es\/mapa\/index\.html|en\/map\/index\.html|_astro\/.+|iconos\/.+|favicon\.svg|manifest\.webmanifest)$/;
+  /^(index\.html|(es|en)\/index\.html|(es\/(temario|repaso|mas)|en\/(syllabus|review|more))\/index\.html|_astro\/.+|iconos\/.+|favicon\.svg|manifest\.webmanifest)$/;
 
 async function listar(dir) {
   const salida = [];

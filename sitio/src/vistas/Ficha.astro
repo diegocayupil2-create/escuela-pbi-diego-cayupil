@@ -1,0 +1,81 @@
+---
+// Ficha resumen del capítulo: lo que vas a poder hacer, «Para recordar» de cada lección, los diagramas,
+// el glosario y las preguntas de repaso. Pensada para imprimir o guardar en PDF.
+import Base from '../layouts/Base.astro';
+import Icono from '../components/Icono.astro';
+import IndiceCapitulo from '../components/IndiceCapitulo.astro';
+import { TEXTOS, t } from '../lib/textos.mjs';
+import { rutaRelativa } from '../lib/enlaces.mjs';
+import { cargarContenido, figuraDiagrama, diagramasDe } from '../lib/contenido.mjs';
+
+const { lang, actual, alterno, cap: idCap } = Astro.props;
+const T = TEXTOS[lang];
+const BASE = import.meta.env.BASE_URL;
+const contenido = await cargarContenido();
+const cap = contenido.porId.get(idCap);
+const lecciones = cap.lecciones[lang];
+const diagramas = lecciones.flatMap((l) => diagramasDe(l));
+---
+<Base lang={lang} titulo={t(T.ficha.titulo, { n: cap.num })} actual={actual} alterno={alterno} seccion="temario">
+  <IndiceCapitulo slot="lateral" cap={cap} lang={lang} contenido={contenido} actualId="ficha" variante="lateral" />
+  <a class="volver no-imprimir" href={`${BASE}${rutaRelativa(lang, 'capitulo', { cap: idCap })}`}><Icono nombre="atras" />{cap.num} · {cap.titulo[lang]}</a>
+  <article class="ficha">
+    <header class="ficha-cabeza">
+      <span class="num-cap num-grande">{cap.num}</span>
+      <div>
+        <p class="sobretitulo">{t(T.ficha.titulo, { n: cap.num })}</p>
+        <h1>{cap.titulo[lang]}</h1>
+      </div>
+    </header>
+    <p class="intro no-imprimir">{T.ficha.intro}</p>
+    <p class="no-imprimir"><button type="button" class="boton" data-imprimir><Icono nombre="imprimir" />{T.ficha.imprimir}</button></p>
+
+    <section aria-labelledby="f-logros">
+      <h2 id="f-logros" class="h-chica">{T.capituloPagina.competencias}</h2>
+      <ul class="lista-logros">{cap.competencias.map((k) => <li><Icono nombre="objetivo" /><span>{k[lang]}</span></li>)}</ul>
+    </section>
+
+    <section aria-labelledby="f-rec">
+      <h2 id="f-rec" class="h-chica">{T.ficha.recordar}</h2>
+      <div class="ficha-recordar">
+        {lecciones.map((l, i) => (
+          <div class="recordar recordar-chico">
+            <h3 class="recordar-titulo"><span class="indice-num">{i + 1}</span>{l.data.titulo}</h3>
+            <ul>{l.data.recordar.map((r) => <li>{r}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section aria-labelledby="f-dia">
+      <h2 id="f-dia" class="h-chica">{T.ficha.diagramas}</h2>
+      <div class="ficha-diagramas">{diagramas.map((d) => <Fragment set:html={figuraDiagrama(d, lang)} />)}</div>
+    </section>
+
+    {cap.glosario.length > 0 && (
+      <section aria-labelledby="f-glo">
+        <h2 id="f-glo" class="h-chica">{T.ficha.glosario}</h2>
+        <dl class="glosario glosario-compacto">
+          {[...cap.glosario].sort((a, b) => a.termino.localeCompare(b.termino, lang)).map((g) => (
+            <div class="glosario-item">
+              <dt><span class="glosario-termino">{g.termino}</span>{g.traduccion && lang === 'es' && <span class="glosario-traduccion">{g.traduccion}</span>}</dt>
+              <dd>{g.definicion[lang]}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    )}
+
+    {cap.tarjetas.length > 0 && (
+      <section aria-labelledby="f-tar">
+        <h2 id="f-tar" class="h-chica">{T.ficha.tarjetas}</h2>
+        <ol class="ficha-tarjetas">
+          {cap.tarjetas.map((x) => <li><strong>{x.frente[lang]}</strong><span>{x.reverso[lang]}</span></li>)}
+        </ol>
+      </section>
+    )}
+  </article>
+  <script>
+    document.querySelector('[data-imprimir]')?.addEventListener('click', () => print());
+  </script>
+</Base>

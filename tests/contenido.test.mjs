@@ -189,3 +189,66 @@ for (const cap of curriculo.capitulos.filter((c) => c.carpeta)) {
     }
   });
 }
+
+// Diagramas (SVG propios), «Para recordar» y glosario: lo que ayuda a ver y a acordarse.
+const DIAGRAMA_EN_TEXTO = /^\[\[diagrama (c\d{2}-d\d{2})\]\]$/gm;
+
+function revisarSvg(id, texto, archivo) {
+  assert.ok(texto.trimStart().startsWith('<svg'), `${archivo}: debe empezar con <svg`);
+  assert.match(texto, /viewBox="0 0 \d+ \d+"/, `${archivo}: falta viewBox`);
+  assert.match(texto, /role="img"/, `${archivo}: falta role="img"`);
+  assert.match(texto, /<title id="[^"]+">[^<]+<\/title>/, `${archivo}: falta <title> con texto`);
+  assert.ok(!/<script|<foreignObject|<image|\son[a-z]+=|(xlink:)?href=/i.test(texto), `${archivo}: un diagrama no lleva código, imágenes ni links`);
+  assert.ok(!/(?<!url\()#[0-9a-f]{3,8}\b|rgba?\(|hsla?\(/i.test(texto), `${archivo}: los colores van con clases dg-*, nunca fijos`);
+  for (const [, v] of texto.matchAll(/\s(?:fill|stroke)="([^"]+)"/g)) assert.ok(['none', 'currentColor'].includes(v), `${archivo}: color fijo «${v}»`);
+  for (const [, clases] of texto.matchAll(/class="([^"]+)"/g)) for (const c of clases.split(/\s+/)) assert.ok(c.startsWith('dg-'), `${archivo}: clase «${c}» no es dg-*`);
+  for (const [, x] of texto.matchAll(/\sid="([^"]+)"/g)) assert.ok(x.startsWith(`${id}-`), `${archivo}: el id «${x}» debe partir con ${id}-`);
+  assert.ok(Buffer.byteLength(texto) < 20_000, `${archivo}: pesa más de 20 KB`);
+}
+
+for (const cap of curriculo.capitulos.filter((c) => c.carpeta)) {
+  test(`${cap.id}: diagramas en los dos idiomas, «Para recordar», bocetos y glosario`, () => {
+    const base = ruta('contenido', 'capitulos', cap.carpeta);
+    const dirDiagramas = join(base, 'diagramas');
+    const archivos = existsSync(dirDiagramas) ? readdirSync(dirDiagramas) : [];
+    const diagramas = new Set();
+    for (const f of archivos) {
+      const m = f.match(/^(c\d{2}-d\d{2})\.(es|en)\.svg$/);
+      assert.ok(m, `diagramas/${f}: el nombre debe ser <id>.<es|en>.svg`);
+      assert.ok(m[1].startsWith(`${cap.id}-`), `diagramas/${f} no es de ${cap.id}`);
+      revisarSvg(m[1], readFileSync(join(dirDiagramas, f), 'utf8'), `diagramas/${f}`);
+      diagramas.add(m[1]);
+    }
+    for (const d of diagramas) {
+      for (const lang of ['es', 'en']) assert.ok(archivos.includes(`${d}.${lang}.svg`), `falta diagramas/${d}.${lang}.svg`);
+    }
+
+    const usados = new Set();
+    for (const archivo of readdirSync(join(base, 'lecciones')).filter((f) => f.endsWith('.md'))) {
+      const { cuerpo } = leerLeccion(join(base, 'lecciones', archivo));
+      const refs = [...cuerpo.matchAll(DIAGRAMA_EN_TEXTO)].map((m) => m[1]);
+      assert.ok(refs.length >= 1, `${archivo}: cada lección necesita al menos un diagrama ([[diagrama ${cap.id}-dNN]])`);
+      for (const d of refs) {
+        assert.ok(diagramas.has(d), `${archivo}: el diagrama ${d} no existe`);
+        usados.add(d);
+      }
+    }
+    for (const f of readdirSync(join(base, 'practicas')).filter((x) => x.endsWith('.yaml'))) {
+      const p = YAML.parse(readFileSync(join(base, 'practicas', f), 'utf8'));
+      assert.ok(diagramas.has(p.boceto), `${f}: el boceto ${p.boceto} no existe`);
+      usados.add(p.boceto);
+    }
+    const sobran = [...diagramas].filter((d) => !usados.has(d));
+    assert.deepEqual(sobran, [], `diagramas que ninguna lección ni práctica usa: ${sobran.join(', ')}`);
+
+    const glosario = validar(E.glosario, YAML.parse(readFileSync(join(base, 'glosario.yaml'), 'utf8')), `${cap.carpeta}/glosario.yaml`);
+    assert.equal(glosario.capitulo, cap.id);
+    const ids = glosario.terminos.map((g) => g.id);
+    assert.equal(new Set(ids).size, ids.length, 'hay términos repetidos en el glosario');
+    const lecciones = new Set(readdirSync(join(base, 'lecciones')).map((f) => f.split('.')[0]));
+    for (const g of glosario.terminos) {
+      assert.ok(g.id.startsWith(`${cap.id}-`), `${g.id} no pertenece a ${cap.id}`);
+      for (const l of g.lecciones ?? []) assert.ok(lecciones.has(l), `${g.id}: la lección ${l} no existe`);
+    }
+  });
+}

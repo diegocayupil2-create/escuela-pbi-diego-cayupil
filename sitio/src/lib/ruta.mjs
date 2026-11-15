@@ -46,6 +46,24 @@ export function estadosCapitulos(capitulos, { modo = MODO_POR_DEFECTO, progreso 
   return estados;
 }
 
+/** Lecciones y prácticas de un capítulo, en el orden en que se hacen. cap = { lecciones: [id], practicas: [id] } */
+export const itemsCapitulo = (cap) => [
+  ...cap.lecciones.map((id) => ({ tipo: 'leccion', id })),
+  ...cap.practicas.map((id) => ({ tipo: 'practica', id })),
+];
+
+/** «Dónde voy»: el primer ítem sin hacer, o null si no hay o ya está todo hecho. */
+export const dondeVoy = (items, hechos = []) => items.find((x) => !hechos.includes(x.id)) ?? null;
+
+/** Orden de lectura de todo el temario: cada capítulo, sus lecciones y sus prácticas, en el orden recomendado. */
+export function ordenLectura(capitulos) {
+  const porId = new Map(capitulos.map((c) => [c.id, c]));
+  return ordenRecomendado(capitulos).flatMap((id) => [
+    { tipo: 'capitulo', cap: id, id },
+    ...itemsCapitulo(porId.get(id)).map((x) => ({ ...x, cap: id })),
+  ]);
+}
+
 /** Siguiente capítulo: el elegido si está disponible; si no, el primero disponible de la ruta. */
 export function siguienteCapitulo(capitulos, { modo = MODO_POR_DEFECTO, progreso = {}, elegido = null } = {}) {
   const estados = estadosCapitulos(capitulos, { modo, progreso });

@@ -1,10 +1,13 @@
 ---
-// Marco de todas las páginas: encabezado con Hoy y Mapa, botón ES/EN, tema claro u oscuro y modo sin conexión.
+// Marco de todas las páginas. Navegación fija con las cinco secciones: barra abajo en el celular y riel
+// a la izquierda en el PC. Las páginas de un capítulo suman su índice a la derecha (slot «lateral»).
 import Icono from '../components/Icono.astro';
+import Ajustes from '../components/Ajustes.astro';
 import { TEXTOS, fechaCorta } from '../lib/textos.mjs';
 import { cssPaleta, PALETA } from '../lib/paleta.mjs';
-import { REPO, rutaRelativa } from '../lib/enlaces.mjs';
+import { REPO, SECCIONES, rutaRelativa } from '../lib/enlaces.mjs';
 import { fechaChile } from '../lib/hoy.mjs';
+import { jsonEnHtml } from '../lib/contenido.mjs';
 import '../estilos/global.css';
 
 const { lang, titulo, descripcion, actual, alterno, seccion = null } = Astro.props;
@@ -12,6 +15,8 @@ const T = TEXTOS[lang];
 const BASE = import.meta.env.BASE_URL;
 const enlaceIdioma = { es: lang === 'es' ? actual : alterno, en: lang === 'en' ? actual : alterno };
 const compilado = fechaChile();
+const ICONO = { hoy: 'hoy', temario: 'temario', repaso: 'repaso', radar: 'radar', mas: 'mas' };
+const conLateral = Astro.slots.has('lateral');
 ---
 <!doctype html>
 <html lang={lang}>
@@ -45,36 +50,32 @@ const compilado = fechaChile();
       <a class="marca" href={`${BASE}${rutaRelativa(lang, 'hoy')}`}>
         <Icono nombre="marca" clase="icono marca-icono" /><span>{T.marca}</span>
       </a>
-      <nav class="pestanas" aria-label={T.marca}>
-        <a href={`${BASE}${rutaRelativa(lang, 'hoy')}`} aria-current={seccion === 'hoy' ? 'page' : undefined}>
-          <Icono nombre="hoy" /><span>{T.nav.hoy}</span>
-        </a>
-        <a href={`${BASE}${rutaRelativa(lang, 'mapa')}`} aria-current={seccion === 'mapa' ? 'page' : undefined}>
-          <Icono nombre="mapa" /><span>{T.nav.mapa}</span>
-        </a>
-      </nav>
-      <div class="ajustes">
-        <div class="idiomas" role="group" aria-label={T.idioma.boton}>
-          <a href={`${BASE}${enlaceIdioma.es}`} hreflang="es" lang="es" aria-label={T.idioma.es} aria-current={lang === 'es' ? 'true' : undefined}>ES</a>
-          <a href={`${BASE}${enlaceIdioma.en}`} hreflang="en" lang="en" aria-label={T.idioma.en} aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
-        </div>
-        <button
-          type="button"
-          class="boton-icono"
-          data-boton-tema
-          aria-label={T.tema.boton}
-          title={T.tema.boton}
-          data-texto-sistema={T.tema.sistema}
-          data-texto-claro={T.tema.claro}
-          data-texto-oscuro={T.tema.oscuro}
-        >
-          <Icono nombre="tema" />
-        </button>
-      </div>
+      <Ajustes lang={lang} enlaceIdioma={enlaceIdioma} />
     </header>
-    <main id="contenido" class="contenido">
-      <slot />
-    </main>
+
+    <nav class="nav-principal" aria-label={T.nav.titulo}>
+      <a class="marca marca-riel" href={`${BASE}${rutaRelativa(lang, 'hoy')}`}>
+        <Icono nombre="marca" clase="icono marca-icono" /><span>{T.marca}</span>
+      </a>
+      <ul>
+        {SECCIONES.map((s) => (
+          <li>
+            <a href={`${BASE}${rutaRelativa(lang, s)}`} aria-current={seccion === s ? 'page' : undefined}>
+              <Icono nombre={ICONO[s]} /><span>{T.nav[s]}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <Ajustes lang={lang} enlaceIdioma={enlaceIdioma} clase="ajustes ajustes-riel" />
+    </nav>
+
+    <div class:list={['pagina', { 'con-lateral': conLateral }]}>
+      <main id="contenido" class="contenido">
+        <slot />
+      </main>
+      {conLateral && <aside class="lateral"><slot name="lateral" /></aside>}
+    </div>
+
     <footer class="pie">
       <span>{T.marcaLarga}</span>
       <span aria-hidden="true">·</span>
@@ -82,6 +83,7 @@ const compilado = fechaChile();
       <span aria-hidden="true">·</span>
       <span>{fechaCorta(compilado, lang)}</span>
     </footer>
+    <script type="application/json" id="textos" set:html={jsonEnHtml(T)}></script>
     <script>
       import '../lib/cliente/base.mjs';
     </script>

@@ -1,0 +1,78 @@
+---
+// «Más»: cómo avanzar, idioma, tema, instalar en el celular, glosario y estado. Una tarjeta por cosa.
+import Base from '../layouts/Base.astro';
+import Icono from '../components/Icono.astro';
+import { TEXTOS, plural, fechaCorta, t } from '../lib/textos.mjs';
+import { rutaRelativa } from '../lib/enlaces.mjs';
+import { MODOS } from '../lib/ruta.mjs';
+import { fechaChile } from '../lib/hoy.mjs';
+import { cargarContenido } from '../lib/contenido.mjs';
+
+const { lang, actual, alterno } = Astro.props;
+const T = TEXTOS[lang];
+const BASE = import.meta.env.BASE_URL;
+const { capitulos } = await cargarContenido();
+const terminos = capitulos.reduce((s, c) => s + c.glosario.length, 0);
+const ICONO_MODO = { nivelacion: 'objetivo', cero: 'escalera', libre: 'brujula' };
+---
+<Base lang={lang} titulo={T.mas.titulo} actual={actual} alterno={alterno} seccion="mas">
+  <h1>{T.mas.titulo}</h1>
+
+  <section class="ajuste" aria-labelledby="modos-titulo">
+    <h2 id="modos-titulo" class="h-chica">{T.mas.modo}</h2>
+    <div class="modos-opciones" role="radiogroup" aria-labelledby="modos-titulo">
+      {MODOS.map((m) => (
+        <label class="modo">
+          <input type="radio" name="modo" value={m} />
+          <span class="modo-icono"><Icono nombre={ICONO_MODO[m]} /></span>
+          <span class="modo-texto">
+            <span class="modo-nombre">
+              {T.modos[m].nombre}
+              {T.modos[m].etiqueta && <span class="chip chip-acento">{T.modos[m].etiqueta}</span>}
+            </span>
+            <span class="modo-detalle">{T.modos[m].detalle}</span>
+          </span>
+        </label>
+      ))}
+    </div>
+    <p class="nota">{T.mas.modoGuardado}</p>
+  </section>
+
+  <div class="ajustes-fila">
+    <section class="ajuste tarjeta" aria-labelledby="idioma-titulo">
+      <h2 id="idioma-titulo" class="h-chica">{T.mas.idioma}</h2>
+      <div class="segmentado">
+        <a href={`${BASE}${lang === 'es' ? actual : alterno}`} lang="es" aria-current={lang === 'es' ? 'true' : undefined}>Español</a>
+        <a href={`${BASE}${lang === 'en' ? actual : alterno}`} lang="en" aria-current={lang === 'en' ? 'true' : undefined}>English</a>
+      </div>
+    </section>
+    <section class="ajuste tarjeta" aria-labelledby="tema-titulo">
+      <h2 id="tema-titulo" class="h-chica">{T.mas.tema}</h2>
+      <div class="segmentado" role="radiogroup" aria-labelledby="tema-titulo">
+        {Object.entries(T.mas.temas).map(([valor, nombre]) => (
+          <label><input type="radio" name="tema" value={valor} /><span>{nombre}</span></label>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <section class="ajuste tarjeta" aria-labelledby="instalar-titulo">
+    <h2 id="instalar-titulo" class="h-chica">{T.mas.instalar}</h2>
+    <div class="instalar">
+      <div><p class="instalar-so">Android · Chrome</p><ol>{T.mas.android.map((p) => <li>{p}</li>)}</ol></div>
+      <div><p class="instalar-so">iPhone · Safari</p><ol>{T.mas.iphone.map((p) => <li>{p}</li>)}</ol></div>
+    </div>
+  </section>
+
+  <a class="ajuste tarjeta ajuste-enlace" href={`${BASE}${rutaRelativa(lang, 'glosario')}`}>
+    <span class="bloque-icono"><Icono nombre="glosario" /></span>
+    <span><strong>{T.mas.glosario}</strong><span class="nota">{plural(terminos, T.mas.glosarioDetalle)}</span></span>
+    <Icono nombre="flecha" />
+  </a>
+
+  <p class="nota">{t(T.mas.compilado, { f: fechaCorta(fechaChile(), lang) })}</p>
+  <script>
+    import { iniciarMas } from '../lib/cliente/mas-vista.mjs';
+    iniciarMas();
+  </script>
+</Base>

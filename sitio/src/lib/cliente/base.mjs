@@ -5,28 +5,30 @@ const raiz = document.documentElement;
 const sistemaOscuro = matchMedia('(prefers-color-scheme: dark)');
 const CICLO = ['sistema', 'claro', 'oscuro'];
 
-function aplicarTema() {
+export function aplicarTema() {
   const preferido = leer('tema', 'sistema');
   const oscuro = preferido === 'oscuro' || (preferido === 'sistema' && sistemaOscuro.matches);
   raiz.dataset.tema = oscuro ? 'oscuro' : 'claro';
-  raiz.dataset.temaPreferido = preferido;
   const fondo = getComputedStyle(raiz).getPropertyValue('--fondo').trim();
   for (const meta of document.querySelectorAll('meta[name="theme-color"]')) meta.setAttribute('content', fondo);
-  const boton = document.querySelector('[data-boton-tema]');
-  if (boton) {
+  for (const boton of document.querySelectorAll('[data-boton-tema]')) {
     const texto = boton.dataset[`texto${preferido[0].toUpperCase()}${preferido.slice(1)}`];
     boton.setAttribute('aria-label', texto);
     boton.title = texto;
   }
+  for (const r of document.querySelectorAll('input[name="tema"]')) r.checked = r.value === preferido;
+}
+
+export function elegirTema(valor) {
+  guardar('tema', valor);
+  aplicarTema();
 }
 
 aplicarTema();
 sistemaOscuro.addEventListener('change', aplicarTema);
-document.querySelector('[data-boton-tema]')?.addEventListener('click', () => {
-  const actual = leer('tema', 'sistema');
-  guardar('tema', CICLO[(CICLO.indexOf(actual) + 1) % CICLO.length]);
-  aplicarTema();
-});
+for (const boton of document.querySelectorAll('[data-boton-tema]')) {
+  boton.addEventListener('click', () => elegirTema(CICLO[(CICLO.indexOf(leer('tema', 'sistema')) + 1) % CICLO.length]));
+}
 
 // El idioma de la página que miras queda como el de inicio de la app.
 guardar('idioma', raiz.lang);

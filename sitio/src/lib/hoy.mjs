@@ -45,7 +45,7 @@ export function tarjetasDelDia(ids, fecha, cuantas = 3) {
  * Los 4 bloques de hoy. capitulos: [{ id, nivel, requiere, lecciones: [id], practicas: [id], tarjetas: [id] }].
  * Devuelve { origen: 'plan' | 'ruta', tema, capitulo, leccion, practica, repaso, nota }.
  */
-export function bloquesDeHoy({ capitulos, semanas = [], fecha, modo, progreso = {}, elegido = null }) {
+export function bloquesDeHoy({ capitulos, semanas = [], fecha, modo, progreso = {}, elegido = null, hechos = [] }) {
   const plan = diaDelPlan(semanas, fecha);
   if (plan) {
     const primero = plan.leccion ?? plan.practica ?? plan.repaso[0] ?? null;
@@ -61,15 +61,32 @@ export function bloquesDeHoy({ capitulos, semanas = [], fecha, modo, progreso = 
   }
   const paso = siguienteCapitulo(capitulos, { modo, progreso, elegido });
   const cap = capitulos.find((c) => c.id === paso?.id);
+  // Dentro del capítulo, lo primero que falta: la lección sin leer y la práctica sin hacer.
+  const pendiente = (lista) => lista.find((id) => !hechos.includes(id)) ?? null;
   return {
     origen: 'ruta',
     tema: temaDelDia(fecha),
     capitulo: cap?.id ?? null,
-    leccion: cap?.lecciones[0] ?? null,
-    practica: cap?.practicas[0] ?? null,
+    leccion: cap ? pendiente(cap.lecciones) : null,
+    practica: cap ? pendiente(cap.practicas) : null,
+    todoLeido: Boolean(cap?.lecciones.length) && !pendiente(cap.lecciones),
+    todoPracticado: Boolean(cap?.practicas.length) && !pendiente(cap.practicas),
     repaso: cap ? tarjetasDelDia(cap.tarjetas, fecha) : [],
     nota: null,
   };
+}
+
+/**
+ * Mazo de repaso: 'hoy' (las del día, rotando), 'capitulo' (todas las del capítulo) o 'todo'.
+ * Si el capítulo aún no tiene tarjetas, usa todas las que hay y lo avisa con respaldo = true.
+ */
+export function armarMazo({ capitulos, capitulo, fecha, tipo = 'hoy' }) {
+  const todas = capitulos.flatMap((c) => c.tarjetas);
+  if (tipo === 'todo') return { ids: todas, respaldo: false };
+  const delCapitulo = capitulos.find((c) => c.id === capitulo)?.tarjetas ?? [];
+  const base = delCapitulo.length ? delCapitulo : todas;
+  const respaldo = !delCapitulo.length && todas.length > 0;
+  return { ids: tipo === 'capitulo' ? base : tarjetasDelDia(base, fecha), respaldo };
 }
 
 /** ¿La automatización está al día? Avisa si la corrida más reciente tiene más de 2 días. */

@@ -9,7 +9,12 @@ import { cargarContenido, datosNavegador, jsonEnHtml } from '../lib/contenido.mj
 const { lang, actual, alterno } = Astro.props;
 const T = TEXTOS[lang];
 const BASE = import.meta.env.BASE_URL;
-const datos = datosNavegador(await cargarContenido(), lang);
+const datos = { ...datosNavegador(await cargarContenido(), lang), urls: { repaso: rutaRelativa(lang, 'repaso') } };
+const BLOQUES = [
+  { id: 'leccion', icono: 'leccion', nombre: T.hoy.leccion, min: `5 ${T.min}` },
+  { id: 'practica', icono: 'practica', nombre: T.hoy.practica, min: `20–40 ${T.min}` },
+  { id: 'repaso', icono: 'repaso', nombre: T.hoy.repaso, min: `5 ${T.min}` },
+];
 ---
 <Base lang={lang} titulo={T.hoy.titulo} actual={actual} alterno={alterno} seccion="hoy">
   <div class="hoy" data-hoy>
@@ -25,50 +30,30 @@ const datos = datosNavegador(await cargarContenido(), lang);
     <section class="paso tarjeta" aria-labelledby="paso-titulo">
       <p class="sobretitulo" data-origen>{T.hoy.siguiente}</p>
       <h2 id="paso-titulo" class="paso-titulo">
-        <a data-paso-enlace href={`${BASE}${rutaRelativa(lang, 'mapa')}`}>
+        <a data-paso-enlace href={`${BASE}${rutaRelativa(lang, 'temario')}`}>
           <span class="num-cap" data-paso-num></span><span data-paso-titulo></span>
         </a>
       </h2>
       <p class="paso-meta">
         <span data-modo></span>
-        <a href={`${BASE}${rutaRelativa(lang, 'mapa')}`}>{T.hoy.cambiar}</a>
+        <a href={`${BASE}${rutaRelativa(lang, 'mas')}`}>{T.hoy.cambiar}</a>
       </p>
       <p class="paso-nota" data-paso-nota hidden></p>
     </section>
 
     <div class="bloques">
-      <article class="bloque tarjeta" data-bloque="leccion">
-        <header class="bloque-cabeza">
-          <span class="bloque-icono"><Icono nombre="leccion" /></span>
-          <span class="bloque-tipo">{T.hoy.leccion}</span>
-          <span class="bloque-min" data-min>5 {T.min}</span>
-        </header>
-        <h3 class="bloque-titulo" data-titulo></h3>
-        <p class="bloque-texto" data-texto hidden></p>
-        <a class="boton" data-accion hidden><span data-accion-texto></span><Icono nombre="flecha" /></a>
-      </article>
-
-      <article class="bloque tarjeta" data-bloque="practica">
-        <header class="bloque-cabeza">
-          <span class="bloque-icono"><Icono nombre="practica" /></span>
-          <span class="bloque-tipo">{T.hoy.practica}</span>
-          <span class="bloque-min" data-min>20–40 {T.min}</span>
-        </header>
-        <h3 class="bloque-titulo" data-titulo></h3>
-        <p class="bloque-texto" data-texto hidden></p>
-        <a class="boton" data-accion hidden><span data-accion-texto></span><Icono nombre="flecha" /></a>
-      </article>
-
-      <article class="bloque tarjeta" data-bloque="repaso">
-        <header class="bloque-cabeza">
-          <span class="bloque-icono"><Icono nombre="repaso" /></span>
-          <span class="bloque-tipo">{T.hoy.repaso}</span>
-          <span class="bloque-min" data-min>5 {T.min}</span>
-        </header>
-        <div class="repasos" data-tarjetas></div>
-        <p class="bloque-texto" data-texto hidden></p>
-      </article>
-
+      {BLOQUES.map((b) => (
+        <article class="bloque tarjeta" data-bloque={b.id}>
+          <header class="bloque-cabeza">
+            <span class="bloque-icono"><Icono nombre={b.icono} /></span>
+            <span class="bloque-tipo">{b.nombre}</span>
+            <span class="bloque-min" data-min>{b.min}</span>
+          </header>
+          <h3 class="bloque-titulo" data-titulo></h3>
+          <p class="bloque-texto" data-texto hidden></p>
+          <a class="boton" data-accion hidden><span data-accion-texto></span><Icono nombre="flecha" /></a>
+        </article>
+      ))}
       <article class="bloque tarjeta bloque-vacio" data-bloque="radar">
         <header class="bloque-cabeza">
           <span class="bloque-icono"><Icono nombre="radar" /></span>
@@ -76,6 +61,7 @@ const datos = datosNavegador(await cargarContenido(), lang);
           <span class="bloque-min">Top 3</span>
         </header>
         <p class="bloque-texto">{T.hoy.radarPronto}</p>
+        <a class="boton boton-secundario" href={`${BASE}${rutaRelativa(lang, 'radar')}`}>{T.hoy.verRadar}<Icono nombre="flecha" /></a>
       </article>
     </div>
   </div>

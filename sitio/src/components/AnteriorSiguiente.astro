@@ -1,0 +1,22 @@
+---
+// «Anterior» y «siguiente» en el orden de lectura del temario: capítulo, sus lecciones y sus prácticas.
+import Icono from './Icono.astro';
+import { TEXTOS } from '../lib/textos.mjs';
+const { anterior, siguiente, lang } = Astro.props;
+const T = TEXTOS[lang];
+const BASE = import.meta.env.BASE_URL;
+---
+<nav class="anterior-siguiente" aria-label={`${T.pasos.anterior} / ${T.pasos.siguiente}`}>
+  {anterior ? (
+    <a class="paso-nav paso-anterior" href={`${BASE}${anterior.url}`} rel="prev">
+      <span class="paso-etiqueta"><Icono nombre="atras" />{T.pasos.anterior}</span>
+      <span class="paso-destino">{anterior.titulo}</span>
+    </a>
+  ) : <span></span>}
+  {siguiente ? (
+    <a class="paso-nav paso-siguiente" href={`${BASE}${siguiente.url}`} rel="next">
+      <span class="paso-etiqueta">{T.pasos.siguiente}<Icono nombre="flecha" /></span>
+      <span class="paso-destino">{siguiente.titulo}</span>
+    </a>
+  ) : <span></span>}
+</nav>

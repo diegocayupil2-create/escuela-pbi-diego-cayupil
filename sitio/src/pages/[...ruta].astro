@@ -1,13 +1,19 @@
 ---
-// Todas las páginas en los dos idiomas: Hoy, Mapa, capítulos, lecciones y prácticas.
-// Las rutas salen de src/lib/enlaces.mjs, así el botón ES/EN siempre apunta a la misma página en el otro idioma.
+// Todas las páginas en los dos idiomas: las cinco secciones, el glosario, y cada capítulo con sus lecciones,
+// prácticas y ficha. Las rutas salen de src/lib/enlaces.mjs, así el botón ES/EN apunta a la misma página.
 import { IDIOMAS, otroIdioma, rutaRelativa } from '../lib/enlaces.mjs';
 import { cargarContenido } from '../lib/contenido.mjs';
 import Hoy from '../vistas/Hoy.astro';
-import Mapa from '../vistas/Mapa.astro';
+import Temario from '../vistas/Temario.astro';
+import Repaso from '../vistas/Repaso.astro';
+import Radar from '../vistas/Radar.astro';
+import Mas from '../vistas/Mas.astro';
+import Glosario from '../vistas/Glosario.astro';
 import Capitulo from '../vistas/Capitulo.astro';
 import Leccion from '../vistas/Leccion.astro';
 import Practica from '../vistas/Practica.astro';
+import Ficha from '../vistas/Ficha.astro';
+import Redireccion from '../vistas/Redireccion.astro';
 
 export async function getStaticPaths() {
   const { capitulos } = await cargarContenido();
@@ -21,20 +27,25 @@ export async function getStaticPaths() {
       });
     }
   };
-  agregar('hoy');
-  agregar('mapa');
+  for (const tipo of ['hoy', 'temario', 'repaso', 'radar', 'mas', 'glosario']) agregar(tipo);
   for (const c of capitulos) {
     agregar('capitulo', { cap: c.id });
     for (const l of c.lecciones.es) agregar('leccion', { cap: c.id, id: l.data.id });
     for (const p of c.practicas) agregar('practica', { cap: c.id, id: p.id });
+    if (c.lecciones.es.length) agregar('ficha', { cap: c.id });
+  }
+  // El «Mapa» de la primera versión ahora es el Temario: su dirección vieja redirige.
+  for (const lang of IDIOMAS) {
+    paginas.push({
+      params: { ruta: rutaRelativa(lang, 'mapa').replace(/\/$/, '') },
+      props: { tipo: 'redireccion', lang, destino: rutaRelativa(lang, 'temario') },
+    });
   }
   return paginas;
 }
 
 const props = Astro.props;
+const VISTAS = { hoy: Hoy, temario: Temario, repaso: Repaso, radar: Radar, mas: Mas, glosario: Glosario, capitulo: Capitulo, leccion: Leccion, practica: Practica, ficha: Ficha, redireccion: Redireccion };
+const Vista = VISTAS[props.tipo];
 ---
-{props.tipo === 'hoy' && <Hoy {...props} />}
-{props.tipo === 'mapa' && <Mapa {...props} />}
-{props.tipo === 'capitulo' && <Capitulo {...props} />}
-{props.tipo === 'leccion' && <Leccion {...props} />}
-{props.tipo === 'practica' && <Practica {...props} />}
+<Vista {...props} />
