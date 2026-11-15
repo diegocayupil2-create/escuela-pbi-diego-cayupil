@@ -17,6 +17,8 @@ const DIAGRAMAS = new Map(Object.entries(SVG).map(([ruta, svg]) => [ruta.split('
 
 // Un capítulo sin contenido se estima con lo que trae uno típico: 4 micro-lecciones de 5 min y 2 prácticas de 30.
 export const MINUTOS_ESTIMADOS = 4 * 5 + 2 * 30;
+// La nivelación es una prueba de unos 35 minutos (propuesta, sección 5).
+export const MINUTOS_NIVELACION = 35;
 
 /** Un diagrama como <figure>, con el SVG en línea para que tome los colores del tema. */
 export function figuraDiagrama(id, lang, clase = 'diagrama') {
@@ -81,7 +83,7 @@ async function construir() {
     for (const lang of ['es', 'en']) c.lecciones[lang].sort((a, b) => a.data.id.localeCompare(b.data.id));
     c.practicas.sort((a, b) => a.id.localeCompare(b.id));
     const real = c.lecciones.es.reduce((s, l) => s + l.data.minutos, 0) + c.practicas.reduce((s, p) => s + p.minutos, 0);
-    c.minutos = real || MINUTOS_ESTIMADOS;
+    c.minutos = real || (c.id === 'c00' ? MINUTOS_NIVELACION : MINUTOS_ESTIMADOS);
     c.estimado = real === 0;
   }
   const ligeros = capitulos.map((c) => ({

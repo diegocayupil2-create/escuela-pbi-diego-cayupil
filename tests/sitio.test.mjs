@@ -11,7 +11,7 @@ import {
   fechaChile, diaSemana, lunesDe, temaDelDia, diaDelPlan, tarjetasDelDia, bloquesDeHoy, estadoAutomatizacion, armarMazo,
 } from '../sitio/src/lib/hoy.mjs';
 import { formatoNumero, reemplazarClaves } from '../sitio/src/lib/formato.mjs';
-import { PALETA, PARES, contraste, cssPaleta } from '../sitio/src/lib/paleta.mjs';
+import { PALETA, PARES, contraste, cssPaleta, nombreCss } from '../sitio/src/lib/paleta.mjs';
 import { TEXTOS, duracion, plural } from '../sitio/src/lib/textos.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -225,4 +225,15 @@ test('tiempos y plurales en los dos idiomas', () => {
   assert.equal(duracion(80, 'es', true), '≈ 1 h 20 min');
   assert.equal(plural(1, TEXTOS.es.temario.capitulos), '1 capítulo');
   assert.equal(plural(8, TEXTOS.en.temario.capitulos), '8 chapters');
+});
+
+test('cada variable de color que usa el CSS existe en la paleta', () => {
+  const css = readFileSync(join(RAIZ, 'sitio', 'src', 'estilos', 'global.css'), 'utf8');
+  const definidas = new Set(Object.keys(PALETA.claro).map(nombreCss));
+  const propias = new Set(['--avance']); // la pone el navegador en las barras de avance
+  const faltan = [...new Set([...css.matchAll(/var\((--[a-z0-9-]+)/g)].map((m) => m[1]))]
+    .filter((v) => !definidas.has(v) && !propias.has(v) && !v.startsWith('--shiki-'));
+  assert.deepEqual(faltan, [], `variables sin definir: ${faltan.join(', ')}`);
+  assert.equal(nombreCss('texto2'), '--texto2');
+  assert.equal(nombreCss('acentoSuave'), '--acento-suave');
 });

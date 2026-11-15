@@ -63,7 +63,8 @@ export function contraste(a, b) {
   return (l1 + 0.05) / (l2 + 0.05);
 }
 
-const nombreCss = (k) => `--${k.replace(/[A-Z0-9]/g, (m) => `-${m.toLowerCase()}`)}`;
+// acentoSuave → --acento-suave; texto2 → --texto2 (los números no llevan guion).
+export const nombreCss = (k) => `--${k.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}`;
 const variables = (modo) =>
   Object.entries(PALETA[modo]).map(([k, v]) => `${nombreCss(k)}:${v}`).join(';');
 

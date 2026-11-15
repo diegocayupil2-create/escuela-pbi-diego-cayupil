@@ -2,7 +2,7 @@
 
 Escuela diaria de Power BI y storytelling. Cada día trae el siguiente paso de una ruta por capítulos, lo más valorado de la comunidad y una mejora pequeña del propio sitio. Todo corre gratis en GitHub y Firebase, y la IA sale de la suscripción de Claude del dueño.
 
-> **Estado: fase 2 de 9.** El sitio ya está publicado y se instala en el celular: «Hoy», mapa de capítulos, los tres modos, lecciones y prácticas en español e inglés.
+> **Estado: fase 2 de 9.** El sitio ya está publicado y se instala en el celular: «Hoy», temario, repaso, capítulos con índice y ficha, lecciones con diagramas y prácticas, en español e inglés.
 
 **Sitio:** https://diegocayupil2-create.github.io/escuela-pbi-diego-cayupil/
 
@@ -10,7 +10,7 @@ Escuela diaria de Power BI y storytelling. Cada día trae el siguiente paso de u
 
 | Carpeta | Para qué |
 |---|---|
-| `sitio/` | La web (Astro): «Hoy», mapa, capítulos, lecciones y prácticas |
+| `sitio/` | La web (Astro): «Hoy», temario, repaso, radar, capítulos, lecciones, prácticas y fichas |
 | `contenido/` | Currículo, capítulos, fuentes, libros, retos, listas de exclusión y planes de la semana (YAML y Markdown) |
 | `datos/datasets/` | Datasets chicos con semilla fija para las prácticas |
 | `esquemas/` | Reglas de formato del contenido (las usan las pruebas y el sitio) |
@@ -44,7 +44,8 @@ Lo que ya abriste queda guardado para verlo sin conexión. Tus preferencias (mod
 ## Uso diario (por ahora)
 
 - Abre la app en el celular: «Hoy» te muestra la micro-lección, la práctica, el repaso y el radar.
-- Para elegir por dónde vas: en el **Mapa**, elige el modo y luego, dentro de un capítulo, **Elegir como mi capítulo**.
+- Para elegir por dónde vas: en **Más**, elige el modo; en el **Temario**, abre un capítulo y toca **Elegir como mi capítulo**.
+- Al terminar una lección o una práctica, márcala como hecha: el índice del capítulo te muestra «vas aquí».
 - En el PC, abre Claude Code en esta carpeta y escribe `/hoy`.
 - Guarda tus trabajos como PBIP en `trabajos\<práctica>\`: File → Save as → Power BI project (*.pbip).
 - Para corregir un trabajo: `/entregar c10-p01`.
