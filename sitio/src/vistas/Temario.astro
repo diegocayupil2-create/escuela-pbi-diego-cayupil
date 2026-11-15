@@ -57,12 +57,12 @@ const datos = datosNavegador(contenido, lang);
                   <span class="libro-tiempo">{duracion(c.minutos, lang, c.estimado)}</span>
                 </a>
                 <p class="libro-cap-meta">
-                  <span class="estado" data-estado-texto>
+                  <span class="estado pildora" data-estado-texto>
                     <Icono nombre={ICONO_ESTADO[inicial.get(c.id).estado]} /><span>{T.estados[inicial.get(c.id).estado]}</span>
                   </span>
                   <span class="libro-aqui"><Icono nombre="aqui" />{T.temario.actual}</span>
-                  <span>{c.requiere.length ? `${T.temario.requiere} ${c.requiere.map((r) => porId.get(r).num).join(', ')}` : T.temario.sinRequisitos}</span>
-                  {!c.lecciones[lang].length && <span>{T.temario.sinContenido}</span>}
+                  <span class="pildora">{c.requiere.length ? `${T.temario.requiere} ${c.requiere.map((r) => porId.get(r).num).join(', ')}` : T.temario.sinRequisitos}</span>
+                  {!c.lecciones[lang].length && <span class="pildora pildora-tenue">{T.temario.sinContenido}</span>}
                 </p>
                 {c.lecciones[lang].length > 0 && (
                   <ol class="libro-items">

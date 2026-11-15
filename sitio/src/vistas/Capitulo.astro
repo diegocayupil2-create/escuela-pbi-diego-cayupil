@@ -5,6 +5,7 @@ import Icono from '../components/Icono.astro';
 import Fuentes from '../components/Fuentes.astro';
 import IndiceCapitulo from '../components/IndiceCapitulo.astro';
 import AnteriorSiguiente from '../components/AnteriorSiguiente.astro';
+import Cuestionario from '../components/Cuestionario.astro';
 import { TEXTOS, t, duracion } from '../lib/textos.mjs';
 import { rutaRelativa } from '../lib/enlaces.mjs';
 import { cargarContenido, datosNavegador, jsonEnHtml, vecinos } from '../lib/contenido.mjs';
@@ -42,15 +43,24 @@ const segmentos = (n) => Array.from({ length: n }, () => '');
   </p>
   {cap.nota_estado && <p class="nota">{cap.nota_estado[lang]}</p>}
 
-  {cap.lecciones[lang].length || cap.practicas.length
-    ? <IndiceCapitulo cap={cap} lang={lang} contenido={contenido} variante="principal" />
-    : <p class="aviso-vacio">{T.capituloPagina.sinContenido}</p>}
-
   {cap.competencias.length > 0 && (
     <section class="logros" aria-labelledby="logros">
       <h2 id="logros" class="h-chica">{T.capituloPagina.competencias}</h2>
       <ul class="lista-logros">{cap.competencias.map((k) => <li><Icono nombre="objetivo" /><span>{k[lang]}</span></li>)}</ul>
     </section>
+  )}
+
+  {cap.lecciones[lang].length || cap.practicas.length
+    ? <IndiceCapitulo cap={cap} lang={lang} contenido={contenido} variante="principal" />
+    : <p class="aviso-vacio">{T.capituloPagina.sinContenido}</p>}
+
+  {cap.cierre && (
+    <Cuestionario
+      lang={lang}
+      titulo={T.capituloPagina.prueba}
+      para={t(T.capituloPagina.pruebaPara, { n: cap.cierre.preguntas.length })}
+      preguntas={cap.cierre.preguntas.map((q) => ({ enunciado: q.enunciado[lang], opciones: q.opciones.map((o) => o[lang]), correcta: q.correcta, explicacion: q.explicacion[lang] }))}
+    />
   )}
 
   {cap.id !== 'c00' && (
@@ -89,7 +99,9 @@ const segmentos = (n) => Array.from({ length: n }, () => '');
   <script>
     import { iniciarCapitulo } from '../lib/cliente/capitulo-vista.mjs';
     import { iniciarIndices } from '../lib/cliente/indice-vista.mjs';
+    import { iniciarPreguntas } from '../lib/cliente/preguntas-vista.mjs';
     iniciarCapitulo();
     iniciarIndices();
+    iniciarPreguntas();
   </script>
 </Base>

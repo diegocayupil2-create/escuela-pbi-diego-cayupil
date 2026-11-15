@@ -120,7 +120,8 @@ test('instalable: manifest con íconos que existen y sw.js con lo esencial para 
 
 test('cada lección trae objetivo, sus diagramas en línea y «Para recordar»; cada práctica, su boceto', () => {
   const leccion = leer('es/capitulos/c10/lecciones/c10-l01/index.html');
-  assert.match(leccion, /<p class="objetivo">/);
+  assert.match(leccion, /<div class="para-que">[\s\S]*Qué vas a aprender[\s\S]*Para qué te sirve/, 'arriba van qué vas a aprender y para qué te sirve');
+  assert.match(leccion, /<section class="seccion-leccion">/, 'cada parte de la lección va en su bloque');
   assert.match(leccion, /<figure class="diagrama"><svg[^>]*role="img"/, 'el diagrama va en línea, como SVG');
   assert.ok(!leccion.includes('[[diagrama'), 'quedó un marcador de diagrama sin reemplazar');
   assert.match(leccion, /<aside class="recordar"[\s\S]*CALCULATE convierte la fila en filter context/);
@@ -143,4 +144,16 @@ test('la navegación fija tiene las cinco secciones y el índice del capítulo q
 test('la dirección vieja del mapa lleva al temario', () => {
   assert.match(leer('es/mapa/index.html'), /http-equiv="refresh" content="0; url=\/escuela-pbi-diego-cayupil\/es\/temario\/"/);
   assert.match(leer('en/map/index.html'), /url=\/escuela-pbi-diego-cayupil\/en\/syllabus\//);
+});
+
+test('toda pregunta trae alternativas: en cada lección, en el cierre del capítulo y en el repaso', () => {
+  const leccion = leer('es/capitulos/c10/lecciones/c10-l01/index.html');
+  const preguntas = leccion.match(/<div class="pregunta" data-pregunta data-correcta="\d">/g) ?? [];
+  assert.ok(preguntas.length >= 1, 'la lección no trae preguntas');
+  for (const p of leccion.split('data-pregunta ').slice(1)) {
+    const opciones = (p.split('</div></div>')[0].match(/class="opcion"/g) ?? []).length;
+    assert.ok(opciones >= 3, 'cada pregunta necesita al menos 3 alternativas');
+  }
+  assert.match(leer('es/capitulos/c10/index.html'), /data-cuestionario[\s\S]*class="opcion"/, 'el capítulo trae su prueba con alternativas');
+  assert.match(leer('es/repaso/index.html'), /"opciones":\[/, 'el repaso recibe las alternativas');
 });

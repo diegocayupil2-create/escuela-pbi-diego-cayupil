@@ -108,7 +108,7 @@ body { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
 .intro { color: var(--texto2); font-size: 1.05rem; max-width: 42rem; }
 .nota { color: var(--texto2); font-size: 0.9rem; }
 .sobretitulo { color: var(--texto2); font-size: 0.82rem; font-weight: 650; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.3rem; }
-.h-chica { font-size: 0.92rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--texto2); margin: 1.75rem 0 0.75rem; }
+.h-chica { font-size: 0.92rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--texto2); margin: 2.25rem 0 0.85rem; }
 .tarjeta { background: var(--superficie); border: 1px solid var(--borde); border-radius: 14px; box-shadow: 0 1px 2px rgb(15 20 27 / 0.05); }
 :root[data-tema="oscuro"] .tarjeta { box-shadow: none; }
 
@@ -289,9 +289,12 @@ body { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
 .meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.6rem 0 0; }
 .objetivo { display: flex; gap: 0.6rem; align-items: flex-start; padding: 0.8rem 1rem; border-radius: 12px; background: var(--acento-suave); margin: 0 0 1.25rem; }
 .objetivo p { margin: 0; display: inline; }
-.prosa { font-size: 1.04rem; }
+.prosa { font-size: 1.06rem; line-height: 1.7; }
+.prosa p { max-width: 40rem; }
+.prosa strong { font-weight: 700; }
 .prosa h2 { font-size: 1.15rem; margin: 1.6rem 0 0.5rem; }
-.prosa p, .prosa ul, .prosa ol { margin: 0 0 0.9rem; }
+.prosa p, .prosa ul, .prosa ol { margin: 0 0 1.1rem; }
+.prosa > :last-child { margin-bottom: 0; }
 .prosa li + li { margin-top: 0.3rem; }
 .prosa pre { margin: 0 0 1rem; padding: 0.9rem 1rem; border-radius: 12px; border: 1px solid var(--borde); font-size: 0.9rem; line-height: 1.5; overflow-x: auto; }
 .prosa table { border-collapse: collapse; margin: 0 0 1rem; font-size: 0.92rem; }
@@ -386,35 +389,70 @@ body { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
 .repaso[open] .repaso-ver { visibility: hidden; }
 .repaso p { margin: 0; padding: 0.6rem 0.8rem 0.75rem; border-top: 1px dashed var(--borde); }
 
-/* ---------- Repaso: tarjetas que se dan vuelta ---------- */
+/* ---------- Repaso: una pregunta a la vez ---------- */
 .repaso-pagina:not([data-listo]) .mazo { visibility: hidden; }
 .repaso-pagina .segmentado { margin: 0.5rem 0 0.75rem; }
-.mazo { margin: 1rem 0 1.25rem; max-width: 34rem; }
+.mazo { margin: 1rem 0 1.25rem; padding: 1.1rem 1.2rem 1.25rem; max-width: 38rem; }
 .mazo-progreso { font-size: 0.85rem; color: var(--texto2); margin: 0 0 0.4rem; font-weight: 650; }
-.mazo .barra-avance { margin-bottom: 1rem; }
+.mazo .barra-avance { margin-bottom: 1.1rem; }
 .mazo .barra-avance::after { background: var(--acento); }
-.carta { all: unset; box-sizing: border-box; display: block; width: 100%; cursor: pointer; perspective: 1200px; border-radius: 18px; }
-.carta:focus-visible { outline: 3px solid var(--acento); outline-offset: 3px; }
-.carta-interior { position: relative; display: grid; min-height: 15rem; transform-style: preserve-3d; transition: transform 0.45s ease; }
-.carta.volteada .carta-interior { transform: rotateY(180deg); }
-.carta-cara {
-  grid-area: 1 / 1; display: flex; flex-direction: column; gap: 0.75rem; justify-content: center;
-  padding: 1.5rem 1.4rem; border-radius: 18px; border: 1px solid var(--borde); background: var(--superficie);
-  backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 0 6px 18px rgb(15 20 27 / 0.07);
-}
-.carta-reverso { transform: rotateY(180deg); background: var(--acento-suave); border-color: var(--acento); }
-.carta-tipo { font-size: 0.75rem; font-weight: 750; text-transform: uppercase; letter-spacing: 0.06em; color: var(--texto2); }
-.carta-reverso .carta-tipo { color: var(--acento); }
-.carta-texto { font-size: 1.15rem; font-weight: 650; line-height: 1.4; color: var(--texto); }
-.carta-ayuda { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: auto; font-size: 0.85rem; font-weight: 650; color: var(--acento); }
-@media (prefers-reduced-motion: reduce) { .carta-interior { transition: none; } }
-.respuestas { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem; }
-.respuestas[hidden] { display: none; }
-.boton-si { background: var(--si-fondo); color: var(--si); border-color: var(--si); }
-.boton-no { background: var(--no-fondo); color: var(--no); border-color: var(--no); }
-.mazo-fin { padding: 1.25rem; max-width: 34rem; margin: 1rem 0; }
+.mazo .pregunta { border: 0; padding: 0; background: none; }
+.boton-siguiente { margin-top: 1rem; }
+.mazo-fin { padding: 1.25rem; max-width: 38rem; margin: 1rem 0; }
 .fin-cuentas { display: flex; gap: 1.5rem; font-size: 1.4rem; }
 .fin-botones { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 0; }
+
+/* ---------- Lección por bloques: qué aprendes, para qué te sirve, la idea, el ejemplo y el «ojo» ---------- */
+.lectura-cabeza { margin-bottom: 1.25rem; }
+.para-pagina { color: var(--texto2); font-size: 1rem; margin: -0.1rem 0 0.75rem; max-width: 36rem; }
+.para-que { display: grid; gap: 0.9rem; padding: 1rem 1.1rem; margin: 0 0 1.5rem; border-radius: 14px; background: var(--acento-suave); }
+.para-que-fila { display: flex; gap: 0.8rem; align-items: flex-start; }
+.para-que-fila p { margin: 0; }
+.para-que-titulo { font-size: 0.8rem; font-weight: 750; text-transform: uppercase; letter-spacing: 0.05em; color: var(--acento); margin-bottom: 0.15rem !important; }
+.para-que .prosa { font-size: 1rem; }
+.seccion-icono { display: inline-grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: 10px; background: var(--acento-suave); color: var(--acento); flex: none; }
+.para-que .seccion-icono { background: var(--superficie); }
+.seccion-icono .icono { width: 1.2rem; height: 1.2rem; }
+.seccion-leccion { margin: 0 0 1.1rem; padding: 1.1rem 1.15rem 1.2rem; border: 1px solid var(--borde); border-radius: 14px; background: var(--superficie); }
+.seccion-titulo { display: flex; align-items: center; gap: 0.65rem; font-size: 1.12rem; margin: 0 0 0.85rem; }
+.seccion-leccion .diagrama { margin: 1rem 0; border: 0; padding: 0; background: none; max-width: 34rem; }
+.seccion-para { color: var(--texto2); margin: -0.35rem 0 1rem; }
+@media (max-width: 600px) {
+  .seccion-leccion { padding: 1rem 0.9rem; }
+  .seccion-leccion .diagrama { margin-inline: -0.6rem; padding: 0; }
+}
+
+/* ---------- Preguntas con alternativas ---------- */
+.cuestionario { margin: 1.75rem 0 1.25rem; padding: 1.1rem 1.15rem 1.2rem; border: 1px solid var(--borde); border-radius: 14px; background: var(--superficie); }
+.preguntas { display: grid; gap: 1.5rem; }
+.pregunta-tipo { font-size: 0.75rem; font-weight: 750; text-transform: uppercase; letter-spacing: 0.06em; color: var(--texto2); margin: 0 0 0.25rem; }
+.pregunta-enunciado { font-size: 1.08rem; font-weight: 650; line-height: 1.45; margin: 0 0 0.75rem; }
+.opciones { display: grid; gap: 0.5rem; }
+.opcion {
+  display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.7rem 0.85rem; text-align: left;
+  font: inherit; color: var(--texto); background: var(--superficie); border: 1px solid var(--borde); border-radius: 12px; cursor: pointer;
+}
+.opcion:hover:not(:disabled) { border-color: var(--acento); background: var(--acento-suave); }
+.opcion:disabled { cursor: default; }
+.opcion-letra { display: inline-grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 8px; background: var(--superficie2); color: var(--texto2); font-weight: 750; font-size: 0.85rem; flex: none; }
+.opcion-texto { flex: 1; line-height: 1.4; }
+.opcion-marca { display: inline-flex; }
+.opcion-si { border: 2px solid var(--si); background: var(--si-fondo); padding: calc(0.7rem - 1px) calc(0.85rem - 1px); }
+.opcion-si .opcion-letra { background: var(--si); color: var(--si-fondo); }
+.opcion-si .opcion-marca { color: var(--si); }
+.opcion-no { border: 2px solid var(--no); background: var(--no-fondo); padding: calc(0.7rem - 1px) calc(0.85rem - 1px); }
+.opcion-no .opcion-letra { background: var(--no); color: var(--no-fondo); }
+.opcion-no .opcion-marca { color: var(--no); }
+.pregunta[data-respondida] .opcion:not(.opcion-si):not(.opcion-no) { opacity: 0.6; }
+.pregunta-explicacion { margin-top: 0.75rem; padding: 0.75rem 0.9rem; border-radius: 12px; background: var(--superficie2); }
+.pregunta-explicacion p { margin: 0; }
+.pregunta-veredicto { margin-bottom: 0.3rem !important; }
+.cuestionario-resultado { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin: 1.25rem 0 0; padding-top: 1rem; border-top: 1px dashed var(--borde); font-size: 1.05rem; }
+
+/* Píldoras: datos cortos separados (estado, requisitos, contenido) */
+.pildora { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.12rem 0.55rem; border-radius: 999px; border: 1px solid var(--borde); background: var(--superficie); white-space: nowrap; }
+.pildora-tenue { border-style: dashed; }
+.bloque-para { color: var(--texto2); font-size: 0.92rem; margin: -0.2rem 0 0.1rem; }
 
 /* ---------- Radar ---------- */
 .radar-puntaje, .radar-ejemplo { padding: 1rem 1.1rem; margin: 1rem 0; }

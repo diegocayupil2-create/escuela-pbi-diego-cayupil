@@ -1,5 +1,5 @@
 ---
-// Repaso: tarjetas que se dan vuelta, una a la vez, con ✓ me acordaba o ✕ no me acordaba.
+// Repaso: una pregunta a la vez, con alternativas. Eliges, ves ✓ o ✕ con la explicación y sigues.
 import Base from '../layouts/Base.astro';
 import Icono from '../components/Icono.astro';
 import { TEXTOS } from '../lib/textos.mjs';
@@ -21,27 +21,11 @@ const datos = datosNavegador(await cargarContenido(), lang);
     </div>
     <p class="nota" data-respaldo hidden>{T.repaso.sinTarjetas}</p>
 
-    <div class="mazo" data-mazo>
+    <div class="mazo tarjeta" data-mazo>
       <p class="mazo-progreso" data-progreso></p>
       <span class="barra-avance" data-barra></span>
-      <button type="button" class="carta" data-carta>
-        <span class="carta-interior">
-          <span class="carta-cara carta-frente">
-            <span class="carta-tipo" data-tipo></span>
-            <span class="carta-texto" data-frente></span>
-            <span class="carta-ayuda"><Icono nombre="voltear" />{T.repaso.tocar}</span>
-          </span>
-          <span class="carta-cara carta-reverso" aria-hidden="true">
-            <span class="carta-tipo">{T.repaso.respuesta}</span>
-            <span class="carta-texto" data-reverso></span>
-          </span>
-        </span>
-      </button>
-      <p class="solo-lector" aria-live="polite" data-anuncio></p>
-      <div class="respuestas" data-respuestas hidden>
-        <button type="button" class="boton boton-no" data-no><Icono nombre="no" clase="icono sino-icono" />{T.repaso.no}</button>
-        <button type="button" class="boton boton-si" data-si><Icono nombre="si" clase="icono sino-icono" />{T.repaso.si}</button>
-      </div>
+      <div data-pregunta-actual></div>
+      <button type="button" class="boton boton-siguiente" data-siguiente hidden>{T.repaso.siguiente}<Icono nombre="flecha" /></button>
     </div>
 
     <div class="mazo-fin tarjeta" data-fin hidden>

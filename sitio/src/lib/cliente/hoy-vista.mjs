@@ -96,7 +96,7 @@ export function iniciarHoy() {
 
   const tarjetas = b.repaso.map((id) => datos.tarjetas[id]).filter(Boolean);
   if (tarjetas.length) {
-    pintarBloque($('[data-bloque="repaso"]'), { titulo: tarjetas[0].frente, minutos: plural(tarjetas.length, T.hoy.tarjetas), accion: T.hoy.repasar, url: datos.urls.repaso });
+    pintarBloque($('[data-bloque="repaso"]'), { titulo: tarjetas[0].frente, minutos: plural(tarjetas.length, T.hoy.tarjetas), accion: T.hoy.responder, url: datos.urls.repaso });
   } else {
     pintarBloque($('[data-bloque="repaso"]'), { titulo: '', texto: T.hoy.sinTarjetas, accion: T.hoy.repasar, url: datos.urls.repaso });
   }

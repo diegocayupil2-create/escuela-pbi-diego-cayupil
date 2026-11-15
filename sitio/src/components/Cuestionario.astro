@@ -1,0 +1,21 @@
+---
+// «Ponte a prueba»: preguntas con alternativas, la explicación al responder y el total de correctas al final.
+import Icono from './Icono.astro';
+import { TEXTOS } from '../lib/textos.mjs';
+import { htmlPregunta } from '../lib/preguntas.mjs';
+const { preguntas, lang, titulo, para } = Astro.props;
+const T = TEXTOS[lang];
+---
+{preguntas.length > 0 && (
+  <section class="cuestionario" data-cuestionario aria-label={titulo}>
+    <h2 class="seccion-titulo"><span class="seccion-icono"><Icono nombre="pregunta" /></span>{titulo}</h2>
+    {para && <p class="seccion-para">{para}</p>}
+    <div class="preguntas">
+      {preguntas.map((p) => <Fragment set:html={htmlPregunta(p)} />)}
+    </div>
+    <p class="cuestionario-resultado" data-resultado hidden>
+      <strong data-resultado-texto></strong>
+      <button type="button" class="boton boton-secundario boton-chico" data-otra-vez>{T.pregunta.otraVez}</button>
+    </p>
+  </section>
+)}

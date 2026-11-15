@@ -35,13 +35,28 @@ export function htmlLeccion(entrada) {
   return html.replace(/<p>\[\[diagrama (c\d{2}-d\d{2})\]\]<\/p>/g, (_, id) => figuraDiagrama(id, entrada.data.idioma));
 }
 
+/**
+ * La lección partida en sus secciones (La idea, Ejemplo, En el negocio, Ojo…), para mostrar cada una como un bloque.
+ * «En el negocio» sale aparte: va arriba, como «Para qué te sirve».
+ */
+export function seccionesLeccion(entrada) {
+  const partes = htmlLeccion(entrada).split(/(?=<h2[\s>])/).filter((p) => p.trim());
+  const secciones = partes.map((p) => {
+    const m = p.match(/^<h2[^>]*>([\s\S]*?)<\/h2>/);
+    const titulo = m ? m[1].replace(/<[^>]+>/g, '').trim() : null;
+    return { titulo, clave: titulo?.toLowerCase() ?? '', html: m ? p.slice(m[0].length) : p };
+  });
+  const esNegocio = (s) => s.clave === 'en el negocio' || s.clave === 'in the business';
+  return { paraQue: secciones.find(esNegocio) ?? null, secciones: secciones.filter((s) => !esNegocio(s)) };
+}
+
 /** Los diagramas que cita una lección, en orden. */
 export const diagramasDe = (entrada) => [...(entrada.body ?? '').matchAll(/^\[\[diagrama (c\d{2}-d\d{2})\]\]$/gm)].map((m) => m[1]);
 
 let cache;
 
-/** Todo el contenido, cargado una sola vez por compilación. */
-export const cargarContenido = () => (cache ??= construir());
+/** Todo el contenido, cargado una sola vez por compilación (en el servidor local, siempre fresco). */
+export const cargarContenido = () => (import.meta.env.DEV ? construir() : (cache ??= construir()));
 
 async function construir() {
   const curriculo = (await getEntry('curriculo', 'curriculo'))?.data;
@@ -151,7 +166,12 @@ export function datosNavegador(contenido, lang) {
     for (const p of c.practicas) {
       practicas[p.id] = { titulo: tituloPractica(p, lang, respuestas), minutos: p.minutos, url: rutaRelativa(lang, 'practica', { cap: c.id, id: p.id }) };
     }
-    for (const x of c.tarjetas) tarjetas[x.id] = { frente: x.frente[lang], reverso: x.reverso[lang], tipo: x.tipo, cap: c.id };
+    for (const x of c.tarjetas) {
+      tarjetas[x.id] = {
+        frente: x.frente[lang], reverso: x.reverso[lang], tipo: x.tipo, cap: c.id,
+        opciones: x.opciones.map((o) => o[lang]), correcta: x.correcta,
+      };
+    }
   }
   return {
     lang,

@@ -1,50 +1,61 @@
-// Repaso con tarjetas: una a la vez, se dan vuelta al tocarlas y se responde ✓ me acordaba o ✕ no me acordaba.
-// Las respuestas viven solo en esta sesión; el repaso espaciado (FSRS) llega con la fase 3.
+// Repaso: una pregunta a la vez, con alternativas. Al responder se ve ✓ o ✕ con la explicación, y al final
+// cuántas estuvieron bien, con la opción de repetir las que fallaste. Las respuestas se guardan desde la fase 3.
 import { armarMazo, fechaChile } from '../hoy.mjs';
 import { siguienteCapitulo } from '../ruta.mjs';
 import { t } from '../textos.mjs';
+import { htmlPregunta } from '../preguntas.mjs';
 import { preferencias, leerDatos } from './estado.mjs';
+import { marcarRespuesta } from './preguntas-vista.mjs';
 
 export function iniciarRepaso() {
   const datos = leerDatos('datos-repaso');
-  const T = datos.textos.repaso;
+  const T = datos.textos;
   const raiz = document.querySelector('[data-repaso]');
   const $ = (s) => raiz.querySelector(s);
-  const carta = $('[data-carta]');
-  const respuestas = $('[data-respuestas]');
-  const anuncio = $('[data-anuncio]');
+  const contenedor = $('[data-pregunta-actual]');
+  const siguiente = $('[data-siguiente]');
   let cola = [];
   let total = 0;
-  let si = 0;
+  let bien = 0;
   let fallidas = [];
 
   const mostrar = () => {
-    carta.classList.remove('volteada');
-    respuestas.hidden = true;
+    siguiente.hidden = true;
     const id = cola[0];
     const fin = !id;
     $('[data-mazo]').hidden = fin;
     $('[data-fin]').hidden = !fin || total === 0;
     $('[data-vacio]').hidden = total !== 0;
     if (fin) {
-      $('[data-cuenta-si]').textContent = String(si);
+      $('[data-cuenta-si]').textContent = String(bien);
       $('[data-cuenta-no]').textContent = String(fallidas.length);
       $('[data-repetir]').hidden = !fallidas.length;
       return;
     }
     const x = datos.tarjetas[id];
-    $('[data-tipo]').textContent = datos.textos.tipoTarjeta[x.tipo];
-    $('[data-frente]').textContent = x.frente;
-    $('[data-reverso]').textContent = x.reverso;
+    contenedor.innerHTML = htmlPregunta({
+      tipo: T.tipoTarjeta[x.tipo], enunciado: x.frente, opciones: x.opciones, correcta: x.correcta, explicacion: x.reverso,
+    });
+    const pregunta = contenedor.querySelector('[data-pregunta]');
+    for (const b of pregunta.querySelectorAll('.opcion')) {
+      b.addEventListener('click', () => {
+        const ok = marcarRespuesta(pregunta, Number(b.dataset.i), T);
+        if (ok === null) return;
+        if (ok) bien += 1;
+        else fallidas.push(id);
+        siguiente.hidden = false;
+        siguiente.focus({ preventScroll: true });
+      });
+    }
     const hechas = total - cola.length;
-    $('[data-progreso]').textContent = t(T.progreso, { i: hechas + 1, n: total });
+    $('[data-progreso]').textContent = t(T.repaso.progreso, { i: hechas + 1, n: total });
     $('[data-barra]').style.setProperty('--avance', String(hechas / total));
   };
 
   const empezar = (ids) => {
     cola = [...ids];
     total = cola.length;
-    si = 0;
+    bien = 0;
     fallidas = [];
     mostrar();
   };
@@ -58,21 +69,11 @@ export function iniciarRepaso() {
     empezar(ids);
   };
 
-  carta.addEventListener('click', (e) => {
-    const volteada = carta.classList.toggle('volteada');
-    respuestas.hidden = !volteada;
-    anuncio.textContent = volteada ? `${T.respuesta}: ${$('[data-reverso]').textContent}` : '';
-    if (volteada && e.detail === 0) $('[data-si]').focus({ preventScroll: true });
-  });
-  const responder = (meAcorde) => {
-    const id = cola.shift();
-    if (meAcorde) si += 1;
-    else fallidas.push(id);
+  siguiente.addEventListener('click', () => {
+    cola.shift();
     mostrar();
-    carta.focus({ preventScroll: true });
-  };
-  $('[data-si]').addEventListener('click', () => responder(true));
-  $('[data-no]').addEventListener('click', () => responder(false));
+    contenedor.querySelector('.opcion')?.focus({ preventScroll: true });
+  });
   $('[data-repetir]').addEventListener('click', () => empezar(fallidas));
   $('[data-otra-vez]').addEventListener('click', cargarMazo);
   for (const r of raiz.querySelectorAll('input[name="mazo"]')) r.addEventListener('change', cargarMazo);

@@ -31,6 +31,19 @@ export const ICONOS = {
   imprimir: '<path d="M7 8V3.5h10V8"/><rect x="3.5" y="8" width="17" height="8.5" rx="1.8"/><path d="M7 14h10v6.5H7z"/>',
   glosario: '<path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3"/><path d="m9.5 13.5 2.5-6.5 2.5 6.5M10.4 11.4h3.2"/>',
   voltear: '<rect x="4" y="5" width="11" height="14" rx="2"/><path d="M18 8.5a6 6 0 0 1 0 7M16.4 15.5H18v1.6"/>',
+  codigo: '<path d="m8.5 7.5-5 4.5 5 4.5M15.5 7.5l5 4.5-5 4.5M13.5 5l-3 14"/>',
+  maletin: '<rect x="3" y="7.5" width="18" height="12.5" rx="2.2"/><path d="M8.5 7.5V5.6A1.6 1.6 0 0 1 10.1 4h3.8a1.6 1.6 0 0 1 1.6 1.6v1.9M3 13h18"/>',
+  pregunta: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 4v-4h0A2.5 2.5 0 0 1 4 13.5z"/><path d="M10.2 7.9a1.9 1.9 0 1 1 2.6 1.8c-.5.2-.8.6-.8 1.1v.3"/><circle cx="12" cy="13.1" r=".6" fill="currentColor"/>',
+};
+
+// Ícono de cada sección de una lección, según su título (en los dos idiomas).
+export const ICONO_SECCION = {
+  'la idea': 'recordar', 'the idea': 'recordar',
+  ejemplo: 'codigo', example: 'codigo',
+  'en el negocio': 'maletin', 'in the business': 'maletin',
+  ojo: 'alerta', 'watch out': 'alerta',
+  'cómo evitarla': 'si', 'how to avoid it': 'si',
+  'regla práctica': 'objetivo', 'rule of thumb': 'objetivo',
 };
 
 // Ícono de cada estado de capítulo.

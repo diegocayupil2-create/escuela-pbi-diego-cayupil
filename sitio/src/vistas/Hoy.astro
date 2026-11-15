@@ -11,9 +11,9 @@ const T = TEXTOS[lang];
 const BASE = import.meta.env.BASE_URL;
 const datos = { ...datosNavegador(await cargarContenido(), lang), urls: { repaso: rutaRelativa(lang, 'repaso') } };
 const BLOQUES = [
-  { id: 'leccion', icono: 'leccion', nombre: T.hoy.leccion, min: `5 ${T.min}` },
-  { id: 'practica', icono: 'practica', nombre: T.hoy.practica, min: `20–40 ${T.min}` },
-  { id: 'repaso', icono: 'repaso', nombre: T.hoy.repaso, min: `5 ${T.min}` },
+  { id: 'leccion', icono: 'leccion', nombre: T.hoy.leccion, min: `5 ${T.min}`, para: T.hoy.para.leccion },
+  { id: 'practica', icono: 'practica', nombre: T.hoy.practica, min: `20–40 ${T.min}`, para: T.hoy.para.practica },
+  { id: 'repaso', icono: 'repaso', nombre: T.hoy.repaso, min: `5 ${T.min}`, para: T.hoy.para.repaso },
 ];
 ---
 <Base lang={lang} titulo={T.hoy.titulo} actual={actual} alterno={alterno} seccion="hoy">
@@ -22,6 +22,7 @@ const BLOQUES = [
       <div>
         <p class="sobretitulo" data-fecha>&nbsp;</p>
         <h1>{T.hoy.titulo}</h1>
+        <p class="para-pagina">{T.hoy.paraQue}</p>
         <p class="chip chip-acento" data-tema>&nbsp;</p>
       </div>
       <p class="estado-auto neutro" data-auto role="status">&nbsp;</p>
@@ -49,6 +50,7 @@ const BLOQUES = [
             <span class="bloque-tipo">{b.nombre}</span>
             <span class="bloque-min" data-min>{b.min}</span>
           </header>
+          <p class="bloque-para">{b.para}</p>
           <h3 class="bloque-titulo" data-titulo></h3>
           <p class="bloque-texto" data-texto hidden></p>
           <a class="boton" data-accion hidden><span data-accion-texto></span><Icono nombre="flecha" /></a>
@@ -60,6 +62,7 @@ const BLOQUES = [
           <span class="bloque-tipo">{T.hoy.radar}</span>
           <span class="bloque-min">Top 3</span>
         </header>
+        <p class="bloque-para">{T.hoy.para.radar}</p>
         <p class="bloque-texto">{T.hoy.radarPronto}</p>
         <a class="boton boton-secundario" href={`${BASE}${rutaRelativa(lang, 'radar')}`}>{T.hoy.verRadar}<Icono nombre="flecha" /></a>
       </article>

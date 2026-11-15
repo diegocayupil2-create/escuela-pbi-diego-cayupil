@@ -146,9 +146,13 @@ export const tarjetas = z
             id: z.string().regex(/^c\d{2}-t\d{2}$/),
             tipo: z.enum(['concepto', 'dax', 'diseno', 'storytelling', 'error']),
             frente: bilingue,
-            reverso: bilingue,
+            reverso: bilingue, // la explicación que se muestra al responder
+            // Toda pregunta trae alternativas: 3, una correcta.
+            opciones: z.array(bilingue).length(3),
+            correcta: z.number().int().min(0).max(2),
           })
-          .strict(),
+          .strict()
+          .refine((x) => new Set(x.opciones.map((o) => o.es)).size === 3, 'las alternativas no pueden repetirse'),
       )
       .min(1),
   })
