@@ -45,7 +45,7 @@ Estado: fase 2 de 9. Ya están el repo, las reglas, el currículo v1 y el sitio 
 
 ## Estructura
 - `contenido/curriculo.yaml`: niveles, capítulos (`c00` a `c32`), competencias, requisitos y regla de dominio.
-- `contenido/capitulos/cNN-nombre/`: `lecciones/*.es.md` y `*.en.md`, `practicas/*.yaml`, `tarjetas.yaml` y `cierre.yaml`.
+- `contenido/capitulos/cNN-nombre/`: `lecciones/*.es.md` y `*.en.md`, `practicas/*.yaml`, `tarjetas.yaml`, `cierre.yaml`, `glosario.yaml` y `diagramas/<id>.<es|en>.svg`.
 - `contenido/fuentes.yaml`, `biblioteca.yaml`, `retos.yaml`, `excluidos.yaml` y `deprecados.yaml`.
 - `datos/datasets/<nombre>/`: CSV chicos (menos de 5 MB) generados con semilla fija por `scripts/generar_dataset.py`, más `respuestas.json` para corregir.
 - `contenido/semanas/<lunes>.yaml`: plan de la semana (lo escribe la IA desde la fase 5). «Hoy» lo usa según la fecha de Chile; si no hay plan, muestra el siguiente paso de la ruta.
@@ -57,7 +57,13 @@ Estado: fase 2 de 9. Ya están el repo, las reglas, el currículo v1 y el sitio 
 
 ## Convenciones
 - Archivos y carpetas en español, en minúsculas y con guiones: `c10-transicion-de-contexto`.
-- Ids: capítulo `c10`, competencia `c10-k1`, lección `c10-l01`, práctica `c10-p01`, tarjeta `c10-t01`, pregunta `c10-q01`.
+- Ids: capítulo `c10`, competencia `c10-k1`, lección `c10-l01`, práctica `c10-p01`, tarjeta `c10-t01`, pregunta `c10-q01`, diagrama `c10-d01`, término del glosario `c10-g01`.
+- Todo contenido nuevo trae, para que se entienda y se recuerde (lo exigen las pruebas):
+  - lección: `objetivo` (qué vas a aprender), sección «En el negocio» (sale arriba como «Para qué te sirve»), al menos un diagrama SVG propio con la línea `[[diagrama cNN-dNN]]` y `recordar` (2 o 3 frases);
+  - práctica: `boceto`, un diagrama del visual final sin los números de la respuesta;
+  - tarjeta: 3 alternativas en `opciones` y la `correcta`; el `reverso` es la explicación;
+  - capítulo: `glosario.yaml` con los términos como aparecen en el producto.
+- Diagramas: SVG chicos (menos de 20 KB), con `<title>`, `role="img"` y colores solo con clases `dg-*` (siguen el tema claro u oscuro); sin colores fijos, código ni links.
 - En los textos de las prácticas, los números que salen del dataset van como `{{clave}}` de `respuestas.json`; dentro del código DAX van escritos.
 - Python con la librería estándar, más PyYAML cuando haga falta leer YAML. Node solo para el sitio y las pruebas del contenido.
 - Workflows: comentados en español, a minutos raros (`:17`, `:37`), con `timezone: America/Santiago`, `workflow_dispatch`, `concurrency`, `timeout-minutes` y commit solo si cambió algo. Respetan la variable `ESCUELA_PAUSA`.
